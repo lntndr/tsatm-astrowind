@@ -2,6 +2,7 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
+    /*
     {
       text: 'Programma',
       href: getPermalink('/programma'),
@@ -10,7 +11,7 @@ export const headerData = {
       text: 'Insegnanti',
       href: getPermalink('/insegnanti'),
     },
-    /* {
+ {
       text: 'Blog',
       links: [
         {
