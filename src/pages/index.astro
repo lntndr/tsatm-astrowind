@@ -11,6 +11,7 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import Courses from '~/components/widgets/Courses.astro';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -25,42 +26,35 @@ const metadata = {
     actions={[
       {
         variant: 'primary',
-        text: 'Get template',
+        text: 'Scarica il PDF',
         href: 'https://github.com/onwidget/astrowind',
         target: '_blank',
         icon: 'tabler:download',
       },
-      { text: 'Learn more', href: '#features' },
+      { text: 'Candìdati', href: '#features' },
     ]}
     image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}
   >
     <Fragment slot="title">
-      Free template for <span class="hidden xl:inline">creating websites with</span>
-      <span class="text-accent dark:text-white highlight"> Astro 4.0</span> + Tailwind CSS
+      Ci prendiamo cura del fotografo, non solo della fotografia.
     </Fragment>
 
     <Fragment slot="subtitle">
       <span class="hidden sm:inline">
-        <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro 4.0
-        + Tailwind CSS.</span
-      >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
-      Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages &
-      Blogs.
+        <span class="font-semibold">The Soul and The Machine</span> è un corso in fotografia 
+        autoriale che dal 2017 ruota intorno alla visione e all’esperienza di 
+        Nausicaa Giulia Bianchi, con la partecipazione di ospiti e docenti di fama internazionale.
+      </span>
     </Fragment>
   </Hero>
-
-  <!-- Note Widget ******************* -->
-
-  <Note />
 
   <!-- Features Widget *************** -->
 
   <Features
-    id="features"
-    tagline="Features"
-    title="What you get with AstroWind"
-    subtitle="One of the most professional and comprehensive templates currently on the market. Most starred & forked Astro theme in 2022."
+    id="corso-biennale"
+    tagline="Corso biennale"
+    title="Di che cosa si tratta"
+    subtitle="The Soul and The Machine è una vera scuola di autorialità, una officina di immagini, di pensieri e di esperienze nella quale usiamo il metodo di insegnamento dell’apprendimento attivo per stimolare e smuovere i nostri studenti: revisione continua del proprio lavoro fotografico con il mentore, seminari, laboratori, studio individuale e di gruppo, collaborazioni, ospiti e il supporto di una comunità fotografica."
     items={[
       {
         title: 'Astro + Tailwind CSS Integration',
@@ -100,6 +94,55 @@ const metadata = {
       },
     ]}
   />
+
+  <!-- Obiettivi del corso **************** -->
+
+  
+  <Courses
+  subtitle="Primo trimestre"
+  items={[
+    {
+      title: 'Il linguaggio fotografico',
+      teacher: 'Nausicaa Giulia Bianchi',
+      hours: '18',
+      online: true,
+      description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      title: 'Fotografia del reale',
+      teacher: 'Riccardo Bononi',
+      hours: '9',
+      online: true,
+      description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      title: 'Esercizi di intimità',
+      teacher: 'Elisa Mercadante',
+      hours: '9',
+      online: true,
+      description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      title: 'Storie della Fotografia',
+      teacher: 'Fosca Piccinelli',
+      hours: '6',
+      online: true,
+      description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      title: 'Meeting strangers: Ritratto',
+      teacher: 'Nausicaa Giulia Bianchi',
+      days: '2',
+      online: false,
+      description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+  ]}
+/>
 
   <!-- Content Widget **************** -->
 
@@ -256,9 +299,9 @@ const metadata = {
     tagline="Components"
     items={[
       {
-        title: 'Headers',
+        title: 'Il linguaggio fotografico',
         description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
-        icon: 'flat-color-icons:template',
+        icon: '',
       },
       {
         title: 'Heros',
