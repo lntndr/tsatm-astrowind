@@ -1,0 +1,79 @@
+---
+import type { ItemGrid as Props } from '~/types';
+import { Icon } from 'astro-icon/components';
+import { twMerge } from 'tailwind-merge';
+import Button from './Button.astro';
+
+const { items = [], columns, defaultIcon = '', classes = {} } = Astro.props;
+
+const {
+  container: containerClass = '',
+  // container: containerClass = "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+  panel: panelClass = '',
+  title: titleClass = '',
+  teacher: teacherClass = '',
+  hours: hoursClass = '',
+  description: descriptionClass = '',
+} = classes;
+---
+
+{
+  items && (
+    <div
+      class={twMerge(
+        `grid gap-8 gap-x-12 sm:gap-y-8 ${
+          columns === 4
+            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'
+            : columns === 3
+              ? 'lg:grid-cols-3 sm:grid-cols-2'
+              : columns === 2
+                ? 'sm:grid-cols-2 '
+                : ''
+        }`,
+        containerClass
+      )}
+    >
+      {items.map(({ title, teacher, hours, days, description, icon, online, classes: itemClasses = {} }) => (
+        <div class={twMerge('relative flex flex-col', panelClass, itemClasses?.panel)}>
+    <div 
+      class={twMerge(
+        'absolute top-0 left-0 right-0 py-1 px-2 text-sm text-center mb-2',
+        online ? 'bg-primary text-white' : 'bg-accent text-white'
+      )}
+    >
+      {online ? 'In diretta online' : 'Dal vivo'}
+    </div>
+          <div class='relative flex flex-row justify-between items-center mt-6'>
+            <div class='relative flex flex-col'>
+              <div class={twMerge('text-2xl font-bold', titleClass, itemClasses?.title)}>{title}</div>
+              {(teacher) && (
+            <div class={twMerge('font-semibold', teacherClass, itemClasses?.teacher)}>{teacher}</div>
+          )}
+            </div>
+              <div class='relative flex flex-col items-center justify-center'>
+                {(hours || days) && (
+                  <div class='relative flex flex-col items-center justify-center px-3'>
+                    {[
+                      { value: hours, label: 'ore' },
+                      { value: days, label: 'giorni' }
+                    ].map(({ value, label }) => 
+                      value && (
+                        <div class='flex flex-col items-center'>
+                          <div class='text-xl mb-0 font-extrabold'>{value}</div>
+                          <div class='text-xs'>{label}</div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+          </div>
+
+          {description && (
+            <p class={twMerge('text-muted mt-2', descriptionClass, itemClasses?.description)}>{description}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
