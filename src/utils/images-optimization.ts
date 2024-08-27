@@ -23,6 +23,9 @@ export interface ImageProps extends Omit<HTMLAttributes<'img'>, 'src'> {
   layout?: Layout;
   widths?: number[] | null;
   aspectRatio?: string | number | null;
+  objectFit?: string;
+  objectPosition?: string;
+  background?: string;
 }
 
 export type ImagesOptimizer = (
@@ -261,7 +264,20 @@ export const unpicOptimizer: ImagesOptimizer = async (image, breakpoints, width,
 /* ** */
 export async function getImagesOptimized(
   image: ImageMetadata | string,
-  { src: _, width, height, sizes, aspectRatio, widths, layout = 'constrained', style = '', ...rest }: ImageProps,
+  { 
+    src: _, 
+    width, 
+    height, 
+    sizes, 
+    aspectRatio, 
+    widths, 
+    layout = 'constrained', 
+    style = '', 
+    objectFit, 
+    objectPosition, 
+    background,
+    ...rest 
+  }: ImageProps,
   transform: ImagesOptimizer = () => Promise.resolve([])
 ): Promise<{ src: string; attributes: AttributesProps }> {
   if (typeof image !== 'string') {
@@ -318,6 +334,9 @@ export async function getImagesOptimized(
         height: height,
         aspectRatio: aspectRatio,
         layout: layout,
+        objectFit: objectFit,
+        objectPosition: objectPosition,
+        background: background,
       })}${style ?? ''}`,
       ...rest,
     },
