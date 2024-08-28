@@ -2,16 +2,13 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
-import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Steps from '~/components/widgets/Steps.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
 import Content from '~/components/widgets/Content.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import Courses from '~/components/widgets/Courses.astro';
+import Steps from '~/components/widgets/Steps.astro';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -26,7 +23,7 @@ const metadata = {
     actions={[
       {
         variant: 'primary',
-        text: 'Scarica il PDF',
+        text: 'Scarica il programma',
         href: 'https://github.com/onwidget/astrowind',
         target: '_blank',
         icon: 'tabler:download',
@@ -36,403 +33,122 @@ const metadata = {
     image={{ src: '~/assets/images/simonaramponi2_2.jpg', alt: 'Cover', objectPosition: '50% 16%' }}
   >
     <Fragment slot="title">
-      Ci prendiamo cura del fotografo, non solo delle foto 
+      <span class="inline-block">Ci prendiamo cura del fotografo,</span>
+      <span class="inline-block">non solo delle fotografie</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        <span class="font-semibold">The Soul and The Machine</span> è un corso in fotografia 
+      <span class=" inline">
+        <span class="font-semibold">The Soul and The Machine</span> è un corso biennale di fotografia 
         autoriale che dal 2017 ruota intorno alla visione e all’esperienza di 
-        Nausicaa Giulia Bianchi, con la partecipazione di ospiti e docenti di fama internazionale.
+        Nausicaa Giulia Bianchi con la partecipazione di docenti di fama internazionale.
       </span>
     </Fragment>
   </Hero>
 
-  <!-- Features Widget *************** -->
 
-  <Features
-    id="corso-biennale"
-    tagline="Corso biennale"
-    title="Di che cosa si tratta"
-    subtitle="The Soul and The Machine è una vera scuola di autorialità, una officina di immagini, di pensieri e di esperienze nella quale usiamo il metodo di insegnamento dell’apprendimento attivo per stimolare e smuovere i nostri studenti: revisione continua del proprio lavoro fotografico con il mentore, seminari, laboratori, studio individuale e di gruppo, collaborazioni, ospiti e il supporto di una comunità fotografica."
-    items={[
-      {
-        title: 'Astro + Tailwind CSS Integration',
-        description:
-          'A seamless integration between two great frameworks that offer high productivity, performance and versatility.',
-        icon: 'tabler:brand-tailwind',
-      },
-      {
-        title: 'Ready-to-use Components',
-        description:
-          'Widgets made with Tailwind CSS ready to be used in Marketing Websites, SaaS, Blogs, Personal Profiles, Small Business...',
-        icon: 'tabler:components',
-      },
-      {
-        title: 'Best Practices',
-        description:
-          'Creating secure, efficient, and user-friendly websites that deliver exceptional experiences and lasting value.',
-        icon: 'tabler:list-check',
-      },
-      {
-        title: 'Excellent Page Speed',
-        description:
-          'Having a good page speed impacts organic search ranking, improves user experience (UI/UX) and increase conversion rates.',
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'Search Engine Optimization (SEO)',
-        description:
-          "SEO lies in its ability to enhance a website's visibility, driving organic traffic and enabling it to reach a wider audience.",
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Open to new ideas and contributions',
-        description:
-          'Embracing a culture that is open to new ideas and contributions is integral fostering innovation, collaboration, and a dynamic user experience.',
-        icon: 'tabler:bulb',
-      },
-    ]}
-  />
-
-  <!-- Obiettivi del corso **************** -->
-
-  
-  <Courses
-  title="Obiettivi del corso",
-  terms={[
-    {
-      term: "Primo trimestre",
-      items: [
-        {
-          title: 'Il linguaggio fotografico',
-          teacher: 'Nausicaa Giulia Bianchi',
-          hours: '18',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Fotografia del reale',
-          teacher: 'Riccardo Bononi',
-          hours: '9',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Esercizi di intimità',
-          teacher: 'Elisa Mercadante',
-          hours: '9',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Storie della Fotografia I',
-          teacher: 'Fosca Piccinelli',
-          hours: '6',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Meeting strangers: Ritratto',
-          teacher: 'Nausicaa Giulia Bianchi',
-          days: '2',
-          online: false,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-      ]
-    },
-    {
-      term: "Secondo trimestre",
-      items: [
-        {
-          title: 'Linguaggio fotografico II',
-          teacher: 'Nausicaa Giulia Bianchi',
-          hours: '18',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Paesaggio e Territorio',
-          teacher: 'Serena Marchionni',
-          hours: '18',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Tecnica fotografica I',
-          teacher: 'Andrea Lanterna',
-          hours: '6',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        }
-      ]
-    },
-    {
-      term: "Terzo trimestre",
-      items: [
-        {
-          title: 'Forget Yourself: ricerca e progettualità',
-          teacher: 'Nausicaa Giulia Bianchi',
-          hours: '18',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Fotografia e Multimedialità',
-          teacher: 'Diambra Mariani',
-          hours: '9',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Tecnica fotografica II',
-          teacher: 'Andrea Lanterna',
-          hours: '6',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Storie della Fotografia II',
-          teacher: 'Fosca Piccinelli',
-          hours: '6',
-          online: true,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-        {
-          title: 'Chi sono?',
-          teacher: 'Nausicaa Giulia Bianchi',
-          days: '2',
-          online: false,
-          description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        },
-      ]
-    }
-  ]}
-/>
 
   <!-- Content Widget **************** -->
-
+  
   <Content
     isReversed
-    tagline="Inside template"
-    title="AstroWind's Blueprint: Fun Meets Functionality!"
-    items={[
-      {
-        title: 'Built on top of Astro 4.0',
-        description:
-          'Benefiting from the performance and developer-friendly features of this modern static site generator.',
-      },
-      {
-        title: 'Styled using Tailwind CSS',
-        description:
-          'Facilitating rapid design and consistent styling with this highly popular utility-first CSS framework.',
-      },
-      {
-        title: 'Cross-browser compatibility',
-        description:
-          'Ensure your website looks and functions consistently across various web browsers, delivering a seamless experience to all users.',
-      },
-    ]}
     image={{
       src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
       alt: 'Colorful Image',
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Building on modern foundations</h3>
-      Gain a competitive advantage by incorporating industry leading practices
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Che cos'è</h3>
+      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno <span class="small-caps"></span> ILGIOCO pensando a Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la consapevolezza dei partecipanti, allenarli al <b>rischio creativo</b>, alla ricerca <b>artistica e intellettuale</b>.</p>
+      <p>Il corso si articola in una serie di moduli, corsi monografici, lezioni di ospiti e workshop.
+      Tutti i moduli sono insegnati in diretta online il martedì e mercoledì sera e prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ogni volta.
+      I diversi “giochi” fotografici hanno lo scopo di approfondire temi quali il <b>linguaggio visuale</b>, lo stile, cosa è l’autorialità e il processo creativo. Il primo anno pone le basi per trovare la propria voce e mette l’accento, soprattutto, sul creare immagini forti.
+      </p>
     </Fragment>
 
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+  </Content>
+
+  <Content
+  isAfterContent
+  image={{
+    src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
+    alt: 'Blueprint Image',
+  }}
+>
+  <Fragment slot="content">
+    <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">A chi è rivolto</h3>
+    <p>
+      Il secondo anno di corso, LAMIAVOCE, sviluppa ciò che è stato seminato ampliando concetti quali il progetto fotografico e la narrativa visuale. Attraverso strumenti raffinati lavoriamo sul processo e sulla metodologia di lavoro di ogni partecipante. Inoltre approfondiamo l’editing per mostre e fotolibri con la partecipazione di un curatore o di un photo-book designer.
+    </p>
+    <p>
+      Gli ospiti e i laboratori di approfondimento vengono selezionati di anno in anno su misura per ogni classe.
+    </p>
+  </Fragment>
+
+</Content>
+
+<Steps
+    title="Obiettivi"
+    subtitle="Have questions? Feel free to contact us using the form below. We're here to help!"
+    items={[
+      {
+        title: 'Email us',
+        description: 'Crescere come autore significa innanzitutto trovare una voce personale: non insegniamo come arrivare ad un prodotto fotografico, non schiacciamo le persone dentro generi precostituiti, ma lavoriamo sulla crescita di ogni fotografo in modo libero e personalizzato.',
+        icon: 'tabler:mail',
+      },
+      {
+        title: 'Call us',
+        description: 'Alla fine di questo percorso il partecipante saprà guardare, parlare e fare fotografia con uno sguardo non commerciale e una comprensione profonda e filosofica della materia; sarà in grado di usare la fotografia come strumento di ricerca.',
+        icon: 'tabler:headset',
+      },
+      {
+        title: 'Follow us',
+        description: 'The Soul and the Machine prepara inoltre ad avere un approccio critico al proprio lavoro, a muoversi professionalmente nel mondo della fotografia e a interloquire con editori, musei, gallerie e fondazioni.',
+        icon: 'tabler:brand-twitter',
+      },
+    ]}
+  />
+
+  <Content
+    isReversed
+    tagline="Primo anno"
+    title="Programma del corso"
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Colorful Image',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Primo anno: ILGIOCO</h3>
+      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno <span class="small-caps"></span> ILGIOCO pensando a Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la consapevolezza dei partecipanti, allenarli al <b>rischio creativo</b>, alla ricerca <b>artistica e intellettuale</b>.</p>
+      <p>Il corso si articola in una serie di moduli, corsi monografici, lezioni di ospiti e workshop.
+      Tutti i moduli sono insegnati in diretta online il martedì e mercoledì sera e prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ogni volta.
+      I diversi “giochi” fotografici hanno lo scopo di approfondire temi quali il <b>linguaggio visuale</b>, lo stile, cosa è l’autorialità e il processo creativo. Il primo anno pone le basi per trovare la propria voce e mette l’accento, soprattutto, sul creare immagini forti.
+      </p>
     </Fragment>
+
   </Content>
 
   <!-- Content Widget **************** -->
 
   <Content
     isAfterContent
-    items={[
-      {
-        title: 'High level of customization',
-        description: `Tailor the template effortlessly to match your brand's identity and requirements, making your website distinct and saving you time.`,
-      },
-      {
-        title: 'Multiple layout possibilities',
-        description:
-          'Explore various layout options to find the structure that best presents your content, enhancing user engagement and navigation.',
-      },
-      {
-        title: 'Fully responsive design',
-        description:
-          "Ensure your website's optimal performance on various devices and screen sizes, providing a consistent and enjoyable user experience.",
-      },
-      {
-        title: 'Integration of media',
-        description:
-          'Seamlessly incorporate images, videos, and multimedia elements that enhance your content and engage visitors effectively.',
-      },
-    ]}
     image={{
       src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
       alt: 'Blueprint Image',
     }}
   >
-    <Fragment slot="content">Ensure your online presence truly represents you.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Secondo anno: LAMIAVOCE</h3>
+      <p>
+        Il secondo anno di corso, LAMIAVOCE, sviluppa ciò che è stato seminato ampliando concetti quali il progetto fotografico e la narrativa visuale. Attraverso strumenti raffinati lavoriamo sul processo e sulla metodologia di lavoro di ogni partecipante. Inoltre approfondiamo l’editing per mostre e fotolibri con la partecipazione di un curatore o di un photo-book designer.
+      </p>
+      <p>
+        Gli ospiti e i laboratori di approfondimento vengono selezionati di anno in anno su misura per ogni classe.
+      </p>
     </Fragment>
+
   </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Enhanced user engagement',
-        description:
-          'Captivate your audience with interactive elements, intuitive navigation, and visually appealing layouts, encouraging longer visits.',
-      },
-      {
-        title: 'Continuous improvement',
-        description:
-          'Ensure your website stays aligned with the latest trends and technologies through regular updates and enhancements.',
-      },
-      {
-        title: 'Time and resource efficiency',
-        description:
-          'Skip the time-consuming process of building a website from scratch and launch your online presence sooner with AstroWind.',
-      },
-      {
-        title: 'Community support',
-        description: `Join the growing AstroWind community for insights, resources, and assistance, ensuring you're never alone on your web development journey.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Astronauts Image',
-    }}
-  >
-    <Fragment slot="content">Designed to foster growth and success.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Steps Widget ****************** -->
-
-  <Steps
-    title="Get your dream website up and running in no time with AstroWind."
-    items={[
-      {
-        title: 'Step 1: <span class="font-medium">Download</span>',
-        description:
-          "Kickstart with GitHub! Either fork the AstroWind template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece. In just a few clicks, you've already set the foundation.",
-        icon: 'tabler:package',
-      },
-      {
-        title: 'Step 2: <span class="font-medium">Add content</span>',
-        description:
-          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story, so make it captivating.",
-        icon: 'tabler:letter-case',
-      },
-      {
-        title: 'Step 3: <span class="font-medium">Customize styles</span>',
-        description:
-          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by AstroWind! Precision in design ensures a seamless user experience.',
-        icon: 'tabler:paint',
-      },
-      {
-        title: 'Ready!',
-        icon: 'tabler:check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Most used widgets"
-    subtitle="Provides frequently used components for building websites using Tailwind CSS"
-    tagline="Components"
-    items={[
-      {
-        title: 'Il linguaggio fotografico',
-        description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
-        icon: '',
-      },
-      {
-        title: 'Heros',
-        description:
-          "Picture a superhero landing – epic, right? That's the job of a Hero section, making grand entrances!",
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Features',
-        description:
-          'Where websites strut their stuff and show off superpowers. No holding back on the bragging rights here!',
-        icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Content',
-        description:
-          "Dive into the meat and potatoes of a site; without it, you'd just be window shopping. Content is king.",
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Call-to-Action',
-        description:
-          'That enthusiastic friend who\'s always urging, "Do it! Do it!"? Yeah, that\'s this button nudging you towards adventure.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Pricing',
-        description: 'Behold the dessert menu of the website world. Tempting choices await, can you resist?',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Testimonial',
-        description: 'Step into the gossip corner! Here, other visitors spill the beans and share the juicy details.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Contact',
-        description:
-          'Like a digital mailbox, but faster! Drop a line, ask a question, or send a virtual high-five. Ding! Message in.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Footers',
-        description: "The footer's like the credits of a movie but sprinkled with easter eggs. Time to hunt!",
-        icon: 'flat-color-icons:database',
-      },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
 
   <!-- HighlightedPosts Widget ******* -->
 
@@ -447,53 +163,61 @@ const metadata = {
   <!-- FAQs Widget ******************* -->
 
   <FAQs
-    title="Frequently Asked Questions"
-    subtitle="Dive into the following questions to gain insights into the powerful features that AstroWind offers and how it can elevate your web development journey."
-    tagline="FAQs"
+    title="Domande più frequenti"
+    tagline="FAQ"
     classes={{ container: 'max-w-6xl' }}
     items={[
       {
-        title: 'Why AstroWind?',
+        title: 'Il corso è rivolto ai professionisti?',
         description:
           "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
       },
       {
-        title: 'What do I need to start?',
+        title: 'Ci sono obblighi di frequenza?',
         description:
           'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds. Many say exploration is part of our destiny, but it’s actually our duty to future generations.',
-      },
-      {
-        title: 'How to install the Astro + Tailwind CSS template?',
-        description:
-          "Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.",
-      },
-      {
-        title: "What's something that you don't understand?",
-        description:
-          "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
-      },
-      {
-        title: 'What is something that you would like to try again?',
-        description:
-          "A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in.",
-      },
-      {
-        title: 'If you could only ask one question to each person you meet, what would that question be?',
-        description:
-          "This is not about revenge. This is about justice. A lot of things can change in twelve years, Admiral. Well, that's certainly good to know. About four years. I got tired of hearing how young I looked.",
       },
     ]}
   />
 
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    stats={[
-      { title: 'Downloads', amount: '132K' },
-      { title: 'Stars', amount: '24.8K' },
-      { title: 'Forks', amount: '10.3K' },
-      { title: 'Users', amount: '48.4K' },
+  <Testimonials
+    title="What our users say?"
+    testimonials={[
+      {
+        testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
+        name: 'Cary Kennedy',
+        job: 'Film director',
+        image: {
+          src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: 'Cary Kennedy Image',
+        },
+      },
+      {
+        testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
+        name: 'Josh Wilkinson',
+        job: 'Product Manager',
+        image: {
+          src: 'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: 'Josh Wilkinson Image',
+        },
+      },
+      {
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Sidney Hansen',
+        job: 'Decorator',
+        image: {
+          src: 'https://images.unsplash.com/photo-1512361436605-a484bdb34b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          alt: 'Sidney Hansen Image',
+        },
+      },
     ]}
+    callToAction={{
+      target: '_blank',
+      text: 'Read more testimonials',
+      href: 'https://github.com/onwidget/astrowind',
+      icon: 'tabler:chevron-right',
+    }}
   />
 
   <!-- CallToAction Widget *********** -->
