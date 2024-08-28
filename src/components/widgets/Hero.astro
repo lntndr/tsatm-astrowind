@@ -68,12 +68,13 @@ const {
       <div>
         {
           image && (
-            <div class="relative w-screen max-w-[100vw] left-[calc(-50vw+50%)]">
+            <div class="relative">
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
               ) : (
                 <Image
-                  class="w-full h-[85vh] object-cover"
+                  class="w-full h-[85vh] overflow-hidden"
+                  objectFit='cover'
                   loading="eager"
                   {...image}
                 />
