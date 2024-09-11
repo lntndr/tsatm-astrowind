@@ -1,0 +1,44 @@
+---
+import type { NewsTicker as Props } from '~/types';
+
+const {
+  text,
+  speed = 20,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props as Props;
+---
+
+<div class:list={[
+  "relative w-full overflow-hidden",
+  isDark ? 'dark' : '',
+  classes?.container,
+]}>
+  <div 
+    class:list={[
+      "animate-marquee inline-block whitespace-nowrap hover:pause-animation focus-within:pause-animation",
+      classes?.inner
+    ]} 
+    style={`--marquee-duration: ${speed}s;`}
+  >
+    <span class:list={["inline-block", classes?.text]}>{text}</span>
+    <span class:list={["inline-block", classes?.text]}>{text}</span>
+  </div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee var(--marquee-duration, 20s) linear infinite;
+  }
+  .animate-marquee:hover,
+  .animate-marquee:focus-within {
+    animation-play-state: paused;
+  }
+</style>
+
