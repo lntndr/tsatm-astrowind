@@ -1,8 +1,9 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
+import NewsTicker from '~/components/widgets/NewsTicker.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Testimonials from '~/components/widgets/Testimonials.astro';
+import Testimonials2 from '~/components/widgets/Testimonials2.astro';
 import Content from '~/components/widgets/Content.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
@@ -17,8 +18,8 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
 
+  <!-- Hero Widget ******************* -->
   <Hero
     actions={[
       {
@@ -39,17 +40,25 @@ const metadata = {
 
     <Fragment slot="subtitle">
       <span class=" inline">
-        <span class="font-semibold">The Soul and The Machine</span> è un corso biennale di fotografia 
-        autoriale che dal 2017 ruota intorno alla visione e all’esperienza di 
-        Nausicaa Giulia Bianchi con la partecipazione di docenti di fama internazionale.
+        <span class="font-semibold">The Soul and The Machine</span> è
+        un percorso di fotografia autoriale che, dal 2017, si sviluppa
+        attorno alla visione e all’esperienza di Nausicaa Giulia Bianchi,
+        in collaborazione con docenti di fama internazionale.
       </span>
     </Fragment>
   </Hero>
 
+  <NewsTicker
+  text="AUTORIALITÀ DOCUMENTARISTICA ARTE RITRATTO PAESAGGIO FOTOLIBRO"
+  speed={50}
+  isDark={true}
+  classes={{
+    container: "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading py-2 border-y border-primary",
+    text: "px-0"
+  }}
+  />
 
-
-  <!-- Content Widget **************** -->
-  
+  <!-- A chi è rivolto -->
   <Content
     isReversed
     image={{
@@ -58,72 +67,73 @@ const metadata = {
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Che cos'è</h3>
-      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno <span class="small-caps"></span> ILGIOCO pensando a Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la consapevolezza dei partecipanti, allenarli al <b>rischio creativo</b>, alla ricerca <b>artistica e intellettuale</b>.</p>
-      <p>Il corso si articola in una serie di moduli, corsi monografici, lezioni di ospiti e workshop.
-      Tutti i moduli sono insegnati in diretta online il martedì e mercoledì sera e prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ogni volta.
-      I diversi “giochi” fotografici hanno lo scopo di approfondire temi quali il <b>linguaggio visuale</b>, lo stile, cosa è l’autorialità e il processo creativo. Il primo anno pone le basi per trovare la propria voce e mette l’accento, soprattutto, sul creare immagini forti.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">A chi è rivolto?</h3>
+      <p>
+        <strong>The Soul and the Machine</strong> è un programma rivolto a chi sia interessato
+        a lavorare nell'intersezione tra documentaristica e arte. Siamo aperti sia ai
+        fotografi professionisti che agli amatori: a tutti chiediamo un approccio 
+        professionale.
+      </p>
+      <p>
+        Non è un percorso adatto per la fotografia della domenica né per il lavoro commerciale.
+        <strong>The Soul and the Machine è pensato per chi vuole cambiare il mondo</strong>.
+        Sono parole forti, ma non usate a caso: crediamo nella potenza della fotografia come
+        strumento di ricerca e narrazione. Forniamo gli strumenti necessari per sfruttare a 
+        pieno le possibilità del mezzo.
       </p>
     </Fragment>
-
   </Content>
 
+  <!-- Obiettivi del corso-->
   <Content
-  isAfterContent
-  image={{
-    src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-    alt: 'Blueprint Image',
-  }}
->
-  <Fragment slot="content">
-    <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">A chi è rivolto</h3>
-    <p>
-      Il secondo anno di corso, LAMIAVOCE, sviluppa ciò che è stato seminato ampliando concetti quali il progetto fotografico e la narrativa visuale. Attraverso strumenti raffinati lavoriamo sul processo e sulla metodologia di lavoro di ogni partecipante. Inoltre approfondiamo l’editing per mostre e fotolibri con la partecipazione di un curatore o di un photo-book designer.
-    </p>
-    <p>
-      Gli ospiti e i laboratori di approfondimento vengono selezionati di anno in anno su misura per ogni classe.
-    </p>
-  </Fragment>
+    isAfterContent
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Colorful Image',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Obiettivi del corso</h3>
+      <p>
+        L'obiettivo del percorso è dare agli studenti tutti gli strumenti necessari per
+        crescere come autori indipendenti. 
+      </p>
+      <p>
+        Alla fine del biennio lo studente saprà guardare e fare fotografia con una 
+        comprensione profonda della materia; sarà in grado di usare la fotografia 
+        per fare ricerca e creare in maniera originale e consapevole nuovi progetti;
+        sarà in grado di muoversi nel mondo e nell'ambiente fotografico. 
+      </p>
+    </Fragment>
+  </Content>
 
-</Content>
-
-<Steps
-    title="Obiettivi"
-    subtitle="Have questions? Feel free to contact us using the form below. We're here to help!"
-    items={[
-      {
-        title: 'Email us',
-        description: 'Crescere come autore significa innanzitutto trovare una voce personale: non insegniamo come arrivare ad un prodotto fotografico, non schiacciamo le persone dentro generi precostituiti, ma lavoriamo sulla crescita di ogni fotografo in modo libero e personalizzato.',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Call us',
-        description: 'Alla fine di questo percorso il partecipante saprà guardare, parlare e fare fotografia con uno sguardo non commerciale e una comprensione profonda e filosofica della materia; sarà in grado di usare la fotografia come strumento di ricerca.',
-        icon: 'tabler:headset',
-      },
-      {
-        title: 'Follow us',
-        description: 'The Soul and the Machine prepara inoltre ad avere un approccio critico al proprio lavoro, a muoversi professionalmente nel mondo della fotografia e a interloquire con editori, musei, gallerie e fondazioni.',
-        icon: 'tabler:brand-twitter',
-      },
-    ]}
-  />
+  <!-- Numeri -->
+  <Stats
+  title="Edizione 2025"
+  subtitle="Con un approccio innovativo e un team di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, rivolto a chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale."
+  stats={[
+    { title: 'Ore di lezione in diretta online', amount: '160' },
+    { title: 'Docenti', amount: '11' },
+    { title: 'Ore di lezione on demand', amount: '120' },
+    { title: 'Workshop a Genova ogni anno', amount: '2' },
+  ]}
+/>
 
   <Content
     isReversed
     tagline="Primo anno"
-    title="Programma del corso"
+    title="ILGIOCO"
     image={{
       src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
       alt: 'Colorful Image',
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Primo anno: ILGIOCO</h3>
-      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno <span class="small-caps"></span> ILGIOCO pensando a Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la consapevolezza dei partecipanti, allenarli al <b>rischio creativo</b>, alla ricerca <b>artistica e intellettuale</b>.</p>
-      <p>Il corso si articola in una serie di moduli, corsi monografici, lezioni di ospiti e workshop.
-      Tutti i moduli sono insegnati in diretta online il martedì e mercoledì sera e prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ogni volta.
-      I diversi “giochi” fotografici hanno lo scopo di approfondire temi quali il <b>linguaggio visuale</b>, lo stile, cosa è l’autorialità e il processo creativo. Il primo anno pone le basi per trovare la propria voce e mette l’accento, soprattutto, sul creare immagini forti.
+      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando a Luciano
+        Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio
+        è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la
+        consapevolezza dei partecipanti, allenarli al <strong>rischio creativo</strong>, alla
+        ricerca <strong>artistica e intellettuale</strong>
       </p>
     </Fragment>
 
@@ -139,26 +149,46 @@ const metadata = {
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Secondo anno: LAMIAVOCE</h3>
-      <p>
-        Il secondo anno di corso, LAMIAVOCE, sviluppa ciò che è stato seminato ampliando concetti quali il progetto fotografico e la narrativa visuale. Attraverso strumenti raffinati lavoriamo sul processo e sulla metodologia di lavoro di ogni partecipante. Inoltre approfondiamo l’editing per mostre e fotolibri con la partecipazione di un curatore o di un photo-book designer.
+      <p>Il percorso si articola in tre trimestri, ciascuno composto da diversi corsi con
+        laboratorio e corsi teorici.
       </p>
       <p>
-        Gli ospiti e i laboratori di approfondimento vengono selezionati di anno in anno su misura per ogni classe.
+        Tutti i corsi sono insegnati in diretta online il martedì e mercoledì sera e quelli con
+        laboratorio prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei
+        partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta
+        al mese. 
+      </p>
+      <p>Ogni corso è interconnesso e pensato per costruire un percorso coerente che permette
+        ai partecipanti di affinare le proprie competenze, esplorare nuove modalità espressive
+        e trovare il proprio posto nel panorama della fotografia contemporanea.
       </p>
     </Fragment>
 
   </Content>
 
-  <!-- HighlightedPosts Widget ******* -->
+  <Content
+  isAfterContent
+  isReversed
+  image={{
+    src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
+    alt: 'Blueprint Image',
+  }}
+>
+  <Fragment slot="content">
+    <p>Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è
+      l’autorialità. Il percorso <strong>The Soul and the Machine</strong> vuole andare al di là
+      dei generi fotografici tradizionali, una tendenza della maggior parte degli autori fine-art
+      dell’ultima generazione: noi ci occuperemo in particolare di esplorare e rafforzare
+      fotografia del reale (fotogiornalismo e documentaristica), di ritratto e di paesaggio fine-art. 
+    </p>
+    <p>
+      Ci sono anche due corsi monografici a supporto: storia della fotografia (documentaria e 
+      artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento a
+      esplorare la fotografia analogica e tutto il necessario supporto.
+    </p>
+  </Fragment>
 
-  <BlogLatestPosts
-    title="Find out more content in our Blog"
-    information={`The blog is used to display AstroWind documentation.
-                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro + Tailwind CSS.
-                        Astro is a very interesting technology. Thanks.
-                `}
-  />
+  </Content>
 
   <!-- FAQs Widget ******************* -->
 
@@ -180,44 +210,113 @@ const metadata = {
     ]}
   />
 
-  <Testimonials
-    title="What our users say?"
+  <Testimonials2
+    title="Insegnanti de ILGIOCO 2025"
     testimonials={[
       {
-        testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
-        name: 'Cary Kennedy',
-        job: 'Film director',
+        title: "Seminar leader",
+        testimonial: `Ha studiato all’ICP di New York ed è stata assistente di Mary Ellen Mark e Suzanne Opton per poi intraprendere la propria carriera di fotografa nel 2011. Il suo lavoro investiga con una macchina di grande formato alcuni dei misteri della nostra società come la religione o il legame tra vita e morte. NGB insegna fotografia in diverse scuole: ICP New York, Camera Torino, Università di Padova, etc. Dal 2016 crea percorsi formativi indipendenti e innovativi.`,
+        name: 'Nausicaa Giulia Bianchi',
+        job: 'Fine-art documentary photographer e insegnante di fotografia',
         image: {
-          src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-          alt: 'Cary Kennedy Image',
+          src: '~/assets/images/NGB_portrait.JPG',
+          alt: 'Nausicaa Giulia Bianchi Image',
         },
       },
       {
+        title: "Corso di Arianna",
         testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
-        name: 'Josh Wilkinson',
-        job: 'Product Manager',
+        name: 'Arianna Arcara',
+        job: 'Fotografa, Cesura',
         image: {
-          src: 'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+          src: '~/assets/images/AA_Arianna-Arcara.jpg',
           alt: 'Josh Wilkinson Image',
         },
       },
       {
+        title: "Corso di Steve",
         testimonial:
           'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-        name: 'Sidney Hansen',
-        job: 'Decorator',
+        name: 'Steve Bisson',
+        job: 'Curatore e insegnante',
         image: {
-          src: 'https://images.unsplash.com/photo-1512361436605-a484bdb34b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-          alt: 'Sidney Hansen Image',
+          src: '~/assets/images/SB_Ritratto_SteveBisson_orizzontale.jpg',
+          alt: 'Steve Bisson Image',
         },
       },
+      {
+      title: 'Fotografia del Reale',
+      testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
+      name: 'Riccardo Bononi',
+      job: 'Film director',
+      image: {
+        src: '~/assets/images/RB_Riccardo Bononi - Parallelozero.jpeg',
+        alt: 'Cary Kennedy Image',
+      },
+      },
+      {
+      title: 'Corso di Caimi+Piccinni',
+      testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
+      name: 'Jean-Marc Caimi e Valentina Piccinni',
+      job: 'Product Manager',
+      image: {
+        src: '~/assets/images/CP_CaimiPiccinni portrait.jpg',
+        alt: 'Josh Wilkinson Image',
+      },
+      },
+      {
+      title: 'Corso di Serena',
+      testimonial:
+        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+      name: 'Serena Marchionni',
+      job: 'Decorator',
+      image: {
+        src: '~/assets/images/SM_serena_marchionni.jpg',
+        alt: 'Sidney Hansen Image',
+      },
+      },
+      {
+      title: 'Corso di Diambra',
+      testimonial:
+        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+      name: 'Diambra Mariani',
+      job: 'Decorator',
+      image: {
+        src: '~/assets/images/DM_diambra-mariani-portrait.jpg',
+        alt: 'Sidney Hansen Image',
+      },
+      },
+      {
+      title: 'Tecnica fotografica',
+      testimonial:
+        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+      name: 'Andrea Lanterna',
+      image: {
+        src: '~/assets/images/AL_andrealanterna_pic.jpg',
+        alt: 'Sidney Hansen Image',
+      },
+      },
+      {
+      title: 'Assistente del programma',
+      testimonial:
+        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+      name: 'Elisa Mercadante',
+      image: {
+        src: '~/assets/images/EM_Elisa_new_BW.jpg',
+        alt: 'Sidney Hansen Image',
+      },
+      },
+      {
+      title: 'Storia della fotografia',
+      testimonial:
+        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+      name: 'Fosca Piccinelli',
+      image: {
+        src: '~/assets/images/FP_FoscaPiccinelli_BIO_BW.jpg',
+        alt: 'Sidney Hansen Image',
+      },
+      },
     ]}
-    callToAction={{
-      target: '_blank',
-      text: 'Read more testimonials',
-      href: 'https://github.com/onwidget/astrowind',
-      icon: 'tabler:chevron-right',
-    }}
   />
 
   <!-- CallToAction Widget *********** -->
