@@ -3,9 +3,9 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import NewsTicker from '~/components/widgets/NewsTicker.astro';
 import Hero from '~/components/widgets/Hero.astro';
+import Testimonials3 from '~/components/widgets/Testimonials3.astro';
 import Testimonials2 from '~/components/widgets/Testimonials2.astro';
 import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
@@ -15,6 +15,7 @@ const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
   ignoreTitleTemplate: true,
 };
+
 ---
 
 <Layout metadata={metadata}>
@@ -41,7 +42,7 @@ const metadata = {
     <Fragment slot="subtitle">
       <span class=" inline">
         <span class="font-semibold">The Soul and The Machine</span> è
-        un percorso di fotografia autoriale che, dal 2017, si sviluppa
+        un percorso biennale di fotografia autoriale che, dal 2017, si sviluppa
         attorno alla visione e all’esperienza di Nausicaa Giulia Bianchi,
         in collaborazione con docenti di fama internazionale.
       </span>
@@ -49,14 +50,13 @@ const metadata = {
   </Hero>
 
   <NewsTicker
-  text="AUTORIALITÀ DOCUMENTARISTICA ARTE RITRATTO PAESAGGIO FOTOLIBRO"
-  speed={50}
-  isDark={true}
-  classes={{
-    container: "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading py-2 border-y border-primary",
-    text: "px-0"
-  }}
-  />
+    text="AUTORIALITÀ DOCUMENTARISTICA ARTE RITRATTO PAESAGGIO FOTOLIBRO"
+    speed={50}
+    isDark={true}
+    classes={{
+      container: "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading py-2 border-y border-primary",
+      text: "px-0"
+    }}  />
 
   <!-- A chi è rivolto -->
   <Content
@@ -109,16 +109,38 @@ const metadata = {
 
   <!-- Numeri -->
   <Stats
-  title="Edizione 2025"
-  subtitle="Con un approccio innovativo e un team di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, rivolto a chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale."
-  stats={[
-    { title: 'Ore di lezione in diretta online', amount: '160' },
-    { title: 'Docenti', amount: '11' },
-    { title: 'Ore di lezione on demand', amount: '120' },
-    { title: 'Workshop a Genova ogni anno', amount: '2' },
-  ]}
-/>
+    title="Edizione 2025"
+    classes={{
+      container: 'mb-0',
+    }}
+    subtitle="Con un approccio innovativo e un team di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, rivolto a chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale."
+    stats={[
+      { title: 'Ore di lezione in diretta online', amount: '160' },
+      { title: 'Docenti', amount: '11' },
+      { title: 'Ore di lezione on demand', amount: '120' },
+      { title: 'Workshop a Genova ogni anno', amount: '2' },
+    ]}  />
 
+  <Steps
+    isAfterContent
+    classes={{
+      container: 'my-0 pt-0 lg:pt-0',
+    }}
+    items={[
+      {
+        icon: 'tabler:brand-apple-arcade',
+        title: 'Primo anno: ILGIOCO',
+        description:
+          'Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum.',
+      },
+      {
+        icon: 'tabler:speakerphone',
+        title: 'Secondo anno: LAMIAVOCE',
+        description:
+          'Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo.',
+      },
+    ]}
+  />
   <Content
     isReversed
     tagline="Primo anno"
@@ -136,11 +158,9 @@ const metadata = {
         ricerca <strong>artistica e intellettuale</strong>
       </p>
     </Fragment>
-
   </Content>
 
   <!-- Content Widget **************** -->
-
   <Content
     isAfterContent
     image={{
@@ -154,7 +174,7 @@ const metadata = {
       </p>
       <p>
         Tutti i corsi sono insegnati in diretta online il martedì e mercoledì sera e quelli con
-        laboratorio prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei
+        laboratorio prevedono la produzione di lavoro fotografico, detto "gioco", da parte dei
         partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta
         al mese. 
       </p>
@@ -163,52 +183,29 @@ const metadata = {
         e trovare il proprio posto nel panorama della fotografia contemporanea.
       </p>
     </Fragment>
-
   </Content>
 
   <Content
-  isAfterContent
-  isReversed
-  image={{
-    src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-    alt: 'Blueprint Image',
-  }}
->
-  <Fragment slot="content">
-    <p>Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è
-      l’autorialità. Il percorso <strong>The Soul and the Machine</strong> vuole andare al di là
-      dei generi fotografici tradizionali, una tendenza della maggior parte degli autori fine-art
-      dell’ultima generazione: noi ci occuperemo in particolare di esplorare e rafforzare
-      fotografia del reale (fotogiornalismo e documentaristica), di ritratto e di paesaggio fine-art. 
-    </p>
-    <p>
-      Ci sono anche due corsi monografici a supporto: storia della fotografia (documentaria e 
-      artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento a
-      esplorare la fotografia analogica e tutto il necessario supporto.
-    </p>
-  </Fragment>
-
-  </Content>
-
-  <!-- FAQs Widget ******************* -->
-
-  <FAQs
-    title="Domande più frequenti"
-    tagline="FAQ"
-    classes={{ container: 'max-w-6xl' }}
-    items={[
-      {
-        title: 'Il corso è rivolto ai professionisti?',
-        description:
-          "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
-      },
-      {
-        title: 'Ci sono obblighi di frequenza?',
-        description:
-          'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds. Many say exploration is part of our destiny, but it’s actually our duty to future generations.',
-      },
-    ]}
-  />
+    isAfterContent
+    isReversed
+    image={{
+      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
+      alt: 'Blueprint Image',
+    }}
+  >
+    <Fragment slot="content">
+      <p>Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è
+        l’autorialità. Il percorso <strong>The Soul and the Machine</strong> vuole andare al di là
+        dei generi fotografici tradizionali, una tendenza della maggior parte degli autori fine-art
+        dell’ultima generazione: noi ci occuperemo in particolare di esplorare e rafforzare
+        fotografia del reale (fotogiornalismo e documentaristica), di ritratto e di paesaggio fine-art. 
+      </p>
+      <p>
+        Ci sono anche due corsi monografici a supporto: storia della fotografia (documentaria e 
+        artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento a
+        esplorare la fotografia analogica e tutto il necessario supporto.
+      </p>
+    </Fragment>  </Content>
 
   <Testimonials2
     title="Insegnanti de ILGIOCO 2025"
@@ -245,76 +242,173 @@ const metadata = {
         },
       },
       {
-      title: 'Fotografia del Reale',
-      testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
-      name: 'Riccardo Bononi',
-      job: 'Film director',
-      image: {
-        src: '~/assets/images/RB_Riccardo Bononi - Parallelozero.jpeg',
-        alt: 'Cary Kennedy Image',
-      },
+        title: 'Fotografia del Reale',
+        testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
+        name: 'Riccardo Bononi',
+        job: 'Film director',
+        image: {
+          src: '~/assets/images/RB_Riccardo Bononi - Parallelozero.jpeg',
+          alt: 'Cary Kennedy Image',
+        },      },
+      {
+        title: 'Corso di Caimi+Piccinni',
+        testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
+        name: 'Jean-Marc Caimi e Valentina Piccinni',
+        job: 'Product Manager',
+        image: {
+          src: '~/assets/images/CP_CaimiPiccinni portrait.jpg',
+          alt: 'Josh Wilkinson Image',
+        },      },
+      {
+        title: 'Paesaggio e Territorio',
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Serena Marchionni',
+        job: 'Decorator',
+        image: {
+          src: '~/assets/images/SM_serena_marchionni.jpg',
+          alt: 'Sidney Hansen Image',
+        },      },
+      {
+        title: 'Corso di Diambra',
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Diambra Mariani',
+        job: 'Decorator',
+        image: {
+          src: '~/assets/images/DM_diambra-mariani-portrait.jpg',
+          alt: 'Sidney Hansen Image',
+        },      },
+      {
+        title: 'Tecnica fotografica',
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Andrea Lanterna',
+        image: {
+          src: '~/assets/images/AL_andrealanterna_pic.jpg',
+          alt: 'Sidney Hansen Image',
+        },      },
+      {
+        title: 'Esercizi di intimità',
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Elisa Mercadante',
+        image: {
+          src: '~/assets/images/EM_Elisa_new_BW.jpg',
+          alt: 'Sidney Hansen Image',
+        },      },
+      {
+        title: 'Storie della fotografia',
+        testimonial:
+          'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Fosca Piccinelli',
+        image: {
+          src: '~/assets/images/FP_FoscaPiccinelli_BIO_BW.jpg',
+          alt: 'Sidney Hansen Image',
+        },      },
+    ]}
+  />
+
+  <Content
+    isAfterContent
+    isReversed
+    tagline="Secondo anno"
+    title="LAMIAVOCE"
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Colorful Image',
+    }}
+  >
+    
+    <Fragment slot="content">
+      <p>Nel secondo anno del programma, LAMIAVOCE, approfondiremo quanto appreso nel primo anno
+         e ci concentreremo sullo sviluppo di progetti fotografici e sulla narrativa visuale.
+         I partecipanti lavoreranno su progetti personali, affinando le loro competenze con
+         il supporto di esperti nel settore. Questo anno include anche l'apprendimento di
+         competenze professionali come la ricerca giornalistica, l'editing per mostre e
+         fotolibri, e la presentazione del proprio lavoro.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Testimonials3
+    title="I nostri alunni"
+    testimonials={[
+      {
+        testimonial: 'La volpe col suo balzo raggiunse il quieto fido ma con gran pena le reca giù ',
+        name: 'Studente 1',
+        job: 'ILGIOCO 2021',
+        image: {
+          src: '~/assets/images/NGB_portrait.JPG',
+          alt: 'Nausicaa Giulia Bianchi Image',
+        },
       },
       {
-      title: 'Corso di Caimi+Piccinni',
-      testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
-      name: 'Jean-Marc Caimi e Valentina Piccinni',
-      job: 'Product Manager',
-      image: {
-        src: '~/assets/images/CP_CaimiPiccinni portrait.jpg',
-        alt: 'Josh Wilkinson Image',
-      },
-      },
-      {
-      title: 'Corso di Serena',
-      testimonial:
-        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-      name: 'Serena Marchionni',
-      job: 'Decorator',
-      image: {
-        src: '~/assets/images/SM_serena_marchionni.jpg',
-        alt: 'Sidney Hansen Image',
-      },
+        testimonial: `The app's seamless download process and intuitive layout have made selecting templates an enjoyable experience. Being able to preview and experiment with different designs before committing has saved me time and ensured I get the perfect look for my website.`,
+        name: 'Studente 2',
+        job: 'ILGIOCO 2022',
+        image: {
+          src: '~/assets/images/AA_Arianna-Arcara.jpg',
+          alt: 'Josh Wilkinson Image',
+        },
       },
       {
-      title: 'Corso di Diambra',
-      testimonial:
-        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-      name: 'Diambra Mariani',
-      job: 'Decorator',
-      image: {
-        src: '~/assets/images/DM_diambra-mariani-portrait.jpg',
-        alt: 'Sidney Hansen Image',
-      },
+        testimonial: 'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
+        name: 'Studente 3',
+        job: 'ILGIOCO 2023',
+        image: {
+          src: '~/assets/images/SB_Ritratto_SteveBisson_orizzontale.jpg',
+          alt: 'Steve Bisson Image',
+        },
       },
       {
-      title: 'Tecnica fotografica',
-      testimonial:
-        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-      name: 'Andrea Lanterna',
-      image: {
-        src: '~/assets/images/AL_andrealanterna_pic.jpg',
-        alt: 'Sidney Hansen Image',
+        testimonial: `It's made exploring and downloading website templates a breeze. The interface is intuitive, and I had no trouble finding the perfect template for my project. It's an app that truly empowers users.`,
+        name: 'Studente 4',
+        job: 'ILGIOCO 2024',
+        image: {
+          src: '~/assets/images/RB_Riccardo Bononi - Parallelozero.jpeg',
+          alt: 'Cary Kennedy Image',
+        },
       },
+    ]}
+  />
+  <Content
+    isAfterContent
+    isReversed
+    image={{
+      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      alt: 'Colorful Image',
+    }}
+  >
+    
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">La comunità di The Soul and The Machine</h3>
+      <p>Uno degli elementi distintivi di The Soul and The Machine è la creazione di una comunità
+        affiatata di fotografi e docenti. Crediamo fermamente che il confronto costante e il
+        sostegno reciproco siano fondamentali per la crescita artistica. Ogni partecipante entra
+        a far parte di una rete di professionisti e appassionati che condividono idee, esperienze
+        e critiche costruttive. Gli studenti creano relazioni che spesso si estendono oltre la
+        durata del corso. Questo dialogo continuo arricchisce il processo creativo e apre nuove
+        possibilità di collaborazione anche al di fuori del programma.
+      </p>
+    </Fragment>  </Content>
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="Domande più frequenti"
+    tagline="FAQ"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        title: 'Quanto costa The Soul and The Machine?',
+        description:
+          "Il prezzo del programma, insieme a tutti i dettagli sul contenuto e la durata dei corsi, è disponibile nel programma dettagliato in PDF scaricabile qui.",
       },
       {
-      title: 'Assistente del programma',
-      testimonial:
-        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-      name: 'Elisa Mercadante',
-      image: {
-        src: '~/assets/images/EM_Elisa_new_BW.jpg',
-        alt: 'Sidney Hansen Image',
-      },
-      },
-      {
-      title: 'Storia della fotografia',
-      testimonial:
-        'I was able to download and use a professional website template within minutes. The step-by-step process and user-friendly interface made it easy for me to create a website that looks as if it was designed by a pro.',
-      name: 'Fosca Piccinelli',
-      image: {
-        src: '~/assets/images/FP_FoscaPiccinelli_BIO_BW.jpg',
-        alt: 'Sidney Hansen Image',
-      },
+        title: 'Il corso è rivolto ai professionisti?',
+        description:
+          "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
       },
     ]}
   />
@@ -333,12 +427,16 @@ const metadata = {
     ]}
   >
     <Fragment slot="title">
-      Astro&nbsp;+&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Tailwind CSS</span>
+      Iscrizioni
     </Fragment>
 
     <Fragment slot="subtitle">
-      Be very surprised by these huge fake numbers you are seeing on this page. <br class="hidden md:inline" />Don't
-      waste more time! :P
+      Per poter garantire un livello adeguato e seguire singolarmente ogni studente The Soul and
+      The Machine è un corso a numero chiuso.
     </Fragment>
+    Per partecipare è possibile inviare la propria candidatura spontanea fino al 18 novembre
+    compilando un form. Se superate la prima selezione, verrete contattati per sostenere un
+    breve colloquio on-line. In caso di esito positivo, sarete invitati ad associarvi a IDA
+    Fotografia per partecipare a The Soul and The Machine.
   </CallToAction>
 </Layout>
