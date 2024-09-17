@@ -22,7 +22,7 @@ const {
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
   <Headline title={title} subtitle={subtitle} tagline={tagline} />
 
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid lg:grid-cols-2 gap-6">
     {
       testimonials &&
         testimonials.map(({ title, testimonial, name, job, image }) => (
@@ -31,7 +31,7 @@ const {
               {title && <h2 class="text-lg font-medium leading-6 pb-4">{title}</h2>}
               {testimonial && (
                 <blockquote class="flex-auto">
-                  <p class="text-muted">" {testimonial} "</p>
+                  <p set:html={testimonial} class="text-muted"> </p>
                 </blockquote>
               )}
 
