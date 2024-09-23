@@ -5,6 +5,7 @@ import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
 import ItemGrid from '../ui/ItemGrid.astro';
+import { twMerge } from 'tailwind-merge';
 
 const {
   title = await Astro.slots.render('title'),
@@ -15,14 +16,18 @@ const {
   items = [],
   columns,
   image = await Astro.slots.render('image'),
+  imageOverlayText,
+  imageOverlayX,
+  imageOverlayY,
   isReversed = false,
   isAfterContent = false,
-
   id,
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
+  imageCredit,
 } = Astro.props;
+
 ---
 
 <WidgetWrapper
@@ -69,26 +74,53 @@ const {
         />
       </div>
       <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
-        {
-          image && (
-            <div class="relative m-auto max-w-4xl">
-              {typeof image === 'string' ? (
-                <Fragment set:html={image} />
-              ) : (
-                <Image
-                  class="mx-auto w-full"
-                  width={500}
-                  height={500}
-                  widths={[400, 768]}
-                  sizes="(max-width: 768px) 100vw, 432px"
-                  layout="responsive"
-                  {...image}
-                />
-              )}
-            </div>
-          )
-        }
+        {image && (
+          <div class="m-auto max-w-4xl">
+            {typeof image === 'string' ? (
+              <Fragment set:html={image} />
+            ) : (
+              <div class="flex flex-col items-center">
+                <div class="relative w-full">
+                  <Image
+                    class="mx-auto w-full"
+                    width={500}
+                    height={500}
+                    widths={[400, 768]}
+                    sizes="(max-width: 768px) 100vw, 432px"
+                    layout="contained"
+                    {...image}
+                  />
+                  {imageOverlayText && (
+                    <div 
+                      class={twMerge(
+                        'absolute inset-0',
+                        classes.imageOverlay
+                      )}
+                    >
+                      <p 
+                        class={twMerge('absolute text-white text-2xl font-bold', classes.imageOverlayText)}
+                        style={{
+                          left: imageOverlayX || '50%',
+                          top: imageOverlayY || '50%',
+                          transform: `translate(${imageOverlayX ? '0' : '-50%'}, ${imageOverlayY ? '0' : '-50%'})`,
+                        }}
+                      >
+                        {imageOverlayText}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {imageCredit && (
+                  <p class={twMerge('text-sm text-gray-600 mt-2 text-center w-full', classes.imageCredit)}>
+                    {imageCredit}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   </div>
 </WidgetWrapper>
+
