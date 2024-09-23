@@ -11,6 +11,7 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Features3 from '~/components/widgets/Features3.astro';
+import VideoHero from '~/components/widgets/VideoHero.astro';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -21,8 +22,10 @@ const metadata = {
 
 <Layout metadata={metadata}>
 
-  <!-- Hero Widget ******************* -->
-  <Hero
+  <VideoHero
+    title="The Soul and The Machine"
+    videoSrc="src/assets/videos/countdown-stopmotion.mp4"
+    poster="src/assets/images/simonaramponi2_2.jpg"
     actions={[
       {
         variant: 'primary',
@@ -33,22 +36,17 @@ const metadata = {
       },
       { text: 'Candìdati', href: '#features' },
     ]}
-    image={{ src: '~/assets/images/simonaramponi2_2.jpg', alt: 'Cover', objectPosition: '50% 16%' }}
+    anchorId="a-chi"
   >
-    <Fragment slot="title">
-      <span class="inline-block">Ci prendiamo cura del fotografo,</span>
-      <span class="inline-block">non solo delle fotografie</span>
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <span class=" inline">
-        <span class="font-semibold">The Soul and The Machine</span> è
-        un percorso biennale di fotografia autoriale che, dal 2017, si sviluppa
-        attorno alla visione e all’esperienza di Nausicaa Giulia Bianchi,
-        in collaborazione con docenti di fama internazionale.
-      </span>
-    </Fragment>
-  </Hero>
+  <Fragment slot="subtitle">
+    <span class=" inline">
+      <span class="font-semibold">The Soul and The Machine</span> è
+      un percorso biennale di fotografia autoriale che, dal 2017, si sviluppa
+      attorno alla visione e all’esperienza di Nausicaa Giulia Bianchi,
+      in collaborazione con docenti di fama internazionale.
+    </span>
+  </Fragment>
+  </VideoHero>
 
   <NewsTicker
     text="AUTORIALITÀ DOCUMENTARISTICA ARTE RITRATTO PAESAGGIO FOTOLIBRO"
@@ -60,7 +58,7 @@ const metadata = {
     }}  />
 
   <!-- A chi è rivolto -->
-  <Content
+  <Content id="a-chi"
     isReversed
     image={{
       src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',

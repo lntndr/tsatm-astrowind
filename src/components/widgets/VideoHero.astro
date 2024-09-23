@@ -12,6 +12,7 @@ const {
   videoSrc,
   poster,
   id,
+  anchorId, // Change from anchorLink to anchorId
 } = Astro.props;
 ---
 
@@ -20,20 +21,12 @@ const {
     src={poster}
     alt="Background"
     class="absolute top-0 left-0 w-full h-full object-cover"
+    loading="eager"
   />
   
-  <video 
-    class="absolute top-0 left-0 w-full h-full object-cover hidden md:block"
-    autoplay
-    loop
-    muted
-    playsinline
-    poster={poster}
-  >
-    <source src={videoSrc} type="video/mp4" />
-    <source src={videoSrc.replace('.mp4', '.webm')} type="video/webm" />
-    Your browser does not support the video tag.
-  </video>
+  <div id="video-container" class="absolute top-0 left-0 w-full h-full hidden md:block">
+    <!-- Video will be inserted here for non-mobile devices -->
+  </div>
 
   <!-- Content Overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -53,7 +46,7 @@ const {
       <div class="max-w-3xl mx-auto">
         {subtitle && <p class="text-xl text-white mb-6" set:html={subtitle} />}
         {actions && (
-          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4">
+          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 mb-8">
             {Array.isArray(actions) ? (
               actions.map((action) => (
                 <div class="flex w-full sm:w-auto">
@@ -65,9 +58,83 @@ const {
             )}
           </div>
         )}
+        {anchorId && (
+          <div class="mt-12 flex justify-center">
+            <a href={`#${anchorId}`} class="js-scroll bg-transparent hover:bg-white/10 text-white rounded-full p-3 transition-all duration-300 transform hover:translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
       {content && <Fragment set:html={content} />}
     </div>
   </div>
 </section>
+
+<script define:vars={{ videoSrc, poster }}>
+  function handleIntersection(entries) {
+    entries.forEach(entry => {
+      const video = entry.target.querySelector('video');
+      if (video) {
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    });
+  }
+
+  function initVideo() {
+    const videoContainer = document.getElementById('video-container');
+    if (videoContainer && window.innerWidth >= 768) { // 768px is typically the 'md' breakpoint
+      const video = document.createElement('video');
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.poster = poster; // Use the poster from Astro props
+      video.className = 'absolute top-0 left-0 w-full h-full object-cover';
+
+      const source1 = document.createElement('source');
+      source1.src = videoSrc; // Use the videoSrc from Astro props
+      source1.type = 'video/mp4';
+      video.appendChild(source1);
+
+      const source2 = document.createElement('source');
+      source2.src = videoSrc.replace('.mp4', '.webm'); // Assume WebM version exists
+      source2.type = 'video/webm';
+      video.appendChild(source2);
+
+      videoContainer.appendChild(video);
+
+      // Set up Intersection Observer
+      const observer = new IntersectionObserver(handleIntersection, {
+        threshold: 0.5 // Trigger when 50% of the video is visible
+      });
+      observer.observe(videoContainer);
+    }
+  }
+
+  // Run initVideo when the DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', initVideo);
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollLinks = document.querySelectorAll('.js-scroll');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  });
+</script>
 
