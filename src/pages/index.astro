@@ -24,18 +24,9 @@ const metadata = {
 
   <VideoHero
     title="The Soul and The Machine"
-    videoSrc="/assets/videos/countdown-stopmotion.mp4"
+    videoSrc="/assets/videos/Videotsatm_v5.mp4"
     poster="/assets/images/simonaramponi2_2.jpg"
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Scarica il programma',
-        href: 'https://github.com/onwidget/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-      { text: 'Candìdati', href: '#features' },
-    ]}
+    videoSpeed={0.6}
     anchorId="a-chi"
   >
   <Fragment slot="subtitle">
@@ -47,15 +38,6 @@ const metadata = {
     </span>
   </Fragment>
   </VideoHero>
-
-  <NewsTicker
-    text="AUTORIALITÀ DOCUMENTARISTICA ARTE RITRATTO PAESAGGIO FOTOLIBRO"
-    speed={50}
-    isDark={true}
-    classes={{
-      container: "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading py-2 shadow-xl dark:shadow-none",
-      text: "px-0"
-    }}  />
 
   <!-- A chi è rivolto -->
   <Content id="a-chi"
