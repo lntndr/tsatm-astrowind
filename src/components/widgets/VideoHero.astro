@@ -13,6 +13,7 @@ const {
   poster,
   id,
   anchorId, // Change from anchorLink to anchorId
+  videoSpeed = 1, // Add this line with a default value of 1
 } = Astro.props;
 ---
 
@@ -73,13 +74,13 @@ const {
   </div>
 </section>
 
-<script define:vars={{ videoSrc, poster }}>
+<script define:vars={{ videoSrc, poster, videoSpeed }}>
   function handleIntersection(entries) {
     entries.forEach(entry => {
       const video = entry.target.querySelector('video');
       if (video) {
         if (entry.isIntersecting) {
-          video.play();
+          video.play().catch(e => console.error("Error playing video:", e));
         } else {
           video.pause();
         }
@@ -89,24 +90,32 @@ const {
 
   function initVideo() {
     const videoContainer = document.getElementById('video-container');
-    if (videoContainer && window.innerWidth >= 768) { // 768px is typically the 'md' breakpoint
+    if (videoContainer && window.innerWidth >= 768) { 
       const video = document.createElement('video');
       video.autoplay = true;
       video.loop = true;
       video.muted = true;
       video.playsInline = true;
-      video.poster = poster; // Use the poster from Astro props
+      video.poster = poster; 
       video.className = 'absolute top-0 left-0 w-full h-full object-cover';
 
+      // Set playbackRate immediately
+      video.playbackRate = videoSpeed;
+
       const source1 = document.createElement('source');
-      source1.src = videoSrc; // Use the videoSrc from Astro props
+      source1.src = videoSrc; 
       source1.type = 'video/mp4';
       video.appendChild(source1);
 
       const source2 = document.createElement('source');
-      source2.src = videoSrc.replace('.mp4', '.webm'); // Assume WebM version exists
+      source2.src = videoSrc.replace('.mp4', '.webm'); 
       source2.type = 'video/webm';
       video.appendChild(source2);
+
+      video.addEventListener('loadedmetadata', () => {
+        // Set playbackRate again after video has loaded
+        video.playbackRate = videoSpeed;
+      });
 
       videoContainer.appendChild(video);
 
@@ -138,3 +147,4 @@ const {
   });
 </script>
 
+            </
