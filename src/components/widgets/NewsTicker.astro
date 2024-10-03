@@ -4,15 +4,18 @@ import type { NewsTicker as Props } from '~/types';
 const {
   text,
   speed = 20,
-  id,
   isDark = false,
-  classes = {},
+  classes = {
+    container: '',
+    inner: '',
+    text: '',
+  },
   bg = await Astro.slots.render('bg'),
 } = Astro.props as Props;
 ---
 
 <div class:list={[
-  "relative w-full overflow-hidden",
+  "relative w-full overflow-hidden ",
   isDark ? 'dark' : '',
   classes?.container,
 ]}>
@@ -41,4 +44,5 @@ const {
     animation-play-state: paused;
   }
 </style>
+
 
