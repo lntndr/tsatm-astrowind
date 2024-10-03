@@ -1,8 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import NewsTicker from '~/components/widgets/NewsTicker.astro';
-import Hero from '~/components/widgets/Hero.astro';
 import Testimonials3 from '~/components/widgets/Testimonials3.astro';
 import Testimonials2 from '~/components/widgets/Testimonials2.astro';
 import Content from '~/components/widgets/Content.astro';
@@ -31,16 +29,14 @@ const metadata = {
   >
   <Fragment slot="subtitle">
     <span class=" inline">
-      <span class="font-semibold">The Soul and The Machine</span> è
-      un percorso biennale di fotografia autoriale che, dal 2017, si sviluppa
-      attorno alla visione e all’esperienza di Nausicaa Giulia Bianchi,
-      in collaborazione con docenti di fama internazionale.
+    Programma biennale di fotografia autoriale
     </span>
   </Fragment>
   </VideoHero>
 
-  <!-- A chi è rivolto -->
-  <Content id="a-chi"
+  <!-- A chi-->
+  <Content
+    id="a-chi"
     isReversed
     image={{
       src: '~/assets/images/NGB_portrait.JPG',
@@ -48,11 +44,11 @@ const metadata = {
     }}
     imageOverlayText="Your overlay text here"
     imageOverlayX="50%"
-    imageOverlayY="20%"
+    imageOverlayY="10%"
     imageCredit="© Photographer Name"
     classes={{
     imageOverlay: '',
-    imageOverlayText: 'text-text-[clamp(1rem,4vw,2rem)] text-yellow-500 font-semibold'
+    imageOverlayText: ' text-green-500 font-semibold'
   }}
   >
     <Fragment slot="content">
@@ -222,7 +218,7 @@ const metadata = {
     </Fragment>
   </Content>
 
-  <Testimonials2
+  <Testimonials2 id="insegnanti"
   title="Insegnanti de ILGIOCO 2025"
   testimonials={[
     {
@@ -513,4 +509,5 @@ const metadata = {
     Fotografia per partecipare a The Soul and The Machine.
   </CallToAction>
 </Layout>
+
 
