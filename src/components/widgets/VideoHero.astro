@@ -90,7 +90,7 @@ const {
 
   function initVideo() {
     const videoContainer = document.getElementById('video-container');
-    if (videoContainer && window.innerWidth >= 768) { 
+    if (videoContainer && window.innerWidth >= 0) {  //768 for excluding mobile
       const video = document.createElement('video');
       video.autoplay = true;
       video.loop = true;
