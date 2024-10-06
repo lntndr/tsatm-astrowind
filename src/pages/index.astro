@@ -35,55 +35,62 @@ const metadata = {
   </Fragment>
   </VideoHero>
 
-  <!-- A chi-->
-  <Content
-  id="intro"
-    isReversed
-    image={{
-      src: '~/assets/images/studenti/simoneletari8.jpg',
-      alt: 'Colorful Image',
-    }}
-    imageOverlayText=""
-    imageOverlayX="50%"
-    imageOverlayY="10%"
-    imageCredit="© Simone Letari"
+  <Stats
+    id="intro"
+    title="Edizione 2025"
     classes={{
-    imageOverlay: '',
-    imageOverlayText: 'text-green-400 font-semibold'
-  }}
-  >
-    <Fragment slot="content">
-      <p>
-        <strong>The Soul and the Machine</strong> è un programma biennale di fotografia
-        autoriale ideato da Nausicaa Giulia Bianchi  nel 2017, che unisce studio, ricerca e
-        pratica intensiva. Con un approccio innovativo e un team di docenti di fama
-        internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica
-        attraverso un percorso continuo, online e in presenza, rivolto a chi desidera
-        esplorare la fotografia come strumento di ricerca e narrazione del reale.
-      </p>
-    </Fragment>
-  </Content>
+      container: 'mb-0',
+      headline: {subtitle: 'text-blue'},
+    }}
+    subtitle="The Soul and the Machine è un programma biennale di fotografia autoriale, ideato da Nausicaa Giulia Bianchi nel 2017, che unisce studio, ricerca e pratica intensiva. Con un approccio innovativo e un gruppo di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, per chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale."
+    stats={[
+      { title: 'Docenti', amount: '11' },
+      { title: 'Ore di lezione in diretta online', amount: '160' },
+      { title: 'Ore di lezione on demand', amount: '120' },
+      { title: 'Workshop a Genova', amount: '2' },
+    ]}
+    />
+
+  <Steps
+    classes={{
+      container: 'my-0 pt-0 lg:pt-0',
+    }}
+    items={[
+      {
+        icon: 'tabler:brand-apple-arcade',
+        title: 'Primo anno: ILGIOCO',
+        description:
+          'Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è l’autorialità. Costruiamo le basi per trovare la propria voce e mettiamo l’accento, soprattutto, sul creare immagini forti.',
+      },
+      {
+        icon: 'tabler:speakerphone',
+        title: 'Secondo anno: LAMIAVOCE',
+        description:
+          'Se in principio era l’immagine, per diventare autori esse non bastano. Quest’anno approfondiremo il processo di selezione e ordinazione (editing) al fine di creare mostre e fotolibri, e impareremo a presentare noi stessi e il nostro lavoro in modo professionale all’interno del mondo fine-art.',
+      },
+    ]}
+  />
 
   <Content
     id="a-chi"
     isAfterContent
     image={{
-      src: '~/assets/images/studenti/simoneletari8.jpg',
+      src: '~/assets/images/insegnanti/1_caimipiccinni_fastidiosa.jpeg',
       alt: 'Colorful Image',
     }}
     imageOverlayText=""
     imageOverlayX="50%"
     imageOverlayY="10%"
-    imageCredit="© Simone Letari"
+    imageCredit="© Jean-Marc Caimi e Valentina Piccinni"
     classes={{
     imageOverlay: '',
     imageOverlayText: 'text-green-400 font-semibold'
   }}
   >
     <Fragment slot="content">
-      <PortraTitle title="A chi è rivolto"> A chi è rivolto </PortraTitle>
+      <PortraTitle title="A chi è rivolto"/>
       <p>
-        <strong class="text-[#e51d25]">The Soul and the Machine</strong> è rivolto a chi vuole essere fotografo
+        <strong class="text-primary">The Soul and the Machine</strong> è rivolto a chi vuole essere fotografo
          e sente di avere qualcosa da dire attraverso la fotografia. È rivolto a tutti
          quei fotografi il cui lavoro si posiziona tra la documentaristica e l’arte, a
          chi vuole fotografare per cambiare il mondo.
@@ -110,20 +117,20 @@ const metadata = {
   <Content
     isAfterContent
     image={{
-      src: '~/assets/images/studenti/silviacriara.jpg',
+      src: '~/assets/images/insegnanti/2_MARIANI_Diambra_3.jpg',
       alt: 'Colorful Image',
     }}
-    imageOverlayText="Quando credi che una cosa sia impossibile da realizzare, prima o poi arriva qualcuno che riesce a farla."
+    imageOverlayText=""
     imageOverlayX="5%"
     imageOverlayY="0%"
-    imageCredit="© Silvia Criara"
+    imageCredit="© Diambra Mariani"
     classes={{
       imageOverlay: '',
       imageOverlayText: ' text-primary text-lg'
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Obiettivi del corso</h3>
+      <PortraTitle title="Obiettivi del corso"/>
       <p>
         L’obiettivo del percorso è la crescita come autori indipendenti. Crescere
         come autore significa innanzitutto trovare una voce personale:
@@ -144,79 +151,26 @@ const metadata = {
     </Fragment>
   </Content>
 
-  <!-- Numeri -->
-  <Stats
-    title="Edizione 2025"
-    classes={{
-      container: 'mb-0',
-    }}
-    subtitle="Con un approccio innovativo e un team di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, rivolto a chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale."
-    stats={[
-      { title: 'Ore di lezione in diretta online', amount: '160' },
-      { title: 'Docenti', amount: '11' },
-      { title: 'Ore di lezione on demand', amount: '120' },
-      { title: 'Workshop a Genova ogni anno', amount: '2' },
-    ]}  />
-
-  <Steps
-    classes={{
-      container: 'my-0 pt-0 lg:pt-0',
-    }}
-    items={[
-      {
-        icon: 'tabler:brand-apple-arcade',
-        title: 'Primo anno: ILGIOCO',
-        description:
-          'Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum.',
-      },
-      {
-        icon: 'tabler:speakerphone',
-        title: 'Secondo anno: LAMIAVOCE',
-        description:
-          'Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo.',
-      },
-    ]}
-  />
-  <Content
-    isReversed
-    tagline="Primo anno"
-    title="ILGIOCO"
-    image={{
-      src: '~/assets/images/studenti/filippotaddei.jpg',
-      alt: 'Colorful Image',
-    }}
-  >
-    <Fragment slot="content">
-      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando a Luciano
-        Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio
-        è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la
-        consapevolezza dei partecipanti, allenarli al <strong>rischio creativo</strong>, alla
-        ricerca <strong>artistica e intellettuale</strong>
-      </p>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
   <Content
     isAfterContent
+    isReversed
     image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-      alt: 'Blueprint Image',
+      src: '~/assets/images/insegnanti/3_Arianna-Arcara-Luca-Santese-The-Flag.jpg',
+      alt: 'Colorful Image',
     }}
+    imageCredit="© Arianna Arcara"
   >
     <Fragment slot="content">
-      <p>Il percorso si articola in tre trimestri, ciascuno composto da diversi corsi con
-        laboratorio e corsi teorici.
+      <PortraTitle tagline="primo anno" title="ILGIOCO"/>
+      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando all’artista Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di mettere in moto la consapevolezza dei partecipanti, allenarli al rischio creativo, alla ricerca artistica e intellettuale.
       </p>
-      <p>
-        Tutti i corsi sono insegnati in diretta online il martedì e mercoledì sera e quelli con
-        laboratorio prevedono la produzione di lavoro fotografico, detto "gioco", da parte dei
-        partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta
-        al mese. 
+      <p>Il percorso si articola in tre trimestri, ciascuno composto da diversi corsi con laboratorio e corsi teorici. Tutti i corsi sono insegnati in diretta online il martedì e mercoledì sera e quelli con laboratorio prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta al mese. 
       </p>
-      <p>Ogni corso è interconnesso e pensato per costruire un percorso coerente che permette
-        ai partecipanti di affinare le proprie competenze, esplorare nuove modalità espressive
-        e trovare il proprio posto nel panorama della fotografia contemporanea.
+      <p>Ogni corso è interconnesso e pensato per costruire un percorso coerente che permette ai partecipanti di affinare le proprie competenze, esplorare nuove modalità espressive e trovare il proprio posto nel panorama della fotografia contemporanea.
+      </p>
+      <p>Approfondiremo temi quali il linguaggio visuale, lo stile, il processo creativo e cosa è l’autorialità. Il percorso TSATM vuole andare al di là della separazione dei generi fotografici, una tendenza comune alla maggior parte degli autori fine-art dell’ultima generazione: ci occuperemo di esplorare e rafforzare tutti i generi necessari per fare fotografia del reale (fotogiornalismo e documentaristica), e in particolare il ritratto e il paesaggio fine-art. Un corso si occuperà anche di esplorare la fotografia in modo multidisciplinare: come interagire con le foto attraverso collage, disegno o l’aggiunta di testo?
+      </p>
+      <p>Ci sono anche due corsi monografici a supporto: storia e filosofia della fotografia (documentaria e artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento ad esplorare la fotografia analogica.
       </p>
     </Fragment>
   </Content>
@@ -225,49 +179,27 @@ const metadata = {
     isAfterContent
     isReversed
     image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-      alt: 'Blueprint Image',
-    }}
-  >
-    <Fragment slot="content">
-      <p>Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è
-        l’autorialità. Il percorso <strong>The Soul and the Machine</strong> vuole andare al di là
-        dei generi fotografici tradizionali, una tendenza della maggior parte degli autori fine-art
-        dell’ultima generazione: noi ci occuperemo in particolare di esplorare e rafforzare
-        fotografia del reale (fotogiornalismo e documentaristica), di ritratto e di paesaggio fine-art. 
-      </p>
-      <p>
-        Ci sono anche due corsi monografici a supporto: storia della fotografia (documentaria e 
-        artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento a
-        esplorare la fotografia analogica e tutto il necessario supporto.
-      </p>
-    </Fragment> 
-  </Content>
-
-  <Content
-    isAfterContent
-    isReversed
-    tagline="Secondo anno"
-    title="LAMIAVOCE"
-    image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      src: '~/assets/images/insegnanti/4_nausicaagiuliabianchi_2021_14_D-web 2.jpg',
       alt: 'Colorful Image',
     }}
+    imageCredit="© Nausicaa Giulia Bianchi"
   >
     
     <Fragment slot="content">
-      <p>Nel secondo anno del programma, LAMIAVOCE, approfondiremo quanto appreso nel primo anno
-         e ci concentreremo sullo sviluppo di progetti fotografici e sulla narrativa visuale.
-         I partecipanti lavoreranno su progetti personali, affinando le loro competenze con
-         il supporto di esperti nel settore. Questo anno include anche l'apprendimento di
-         competenze professionali come la ricerca giornalistica, l'editing per mostre e
-         fotolibri, e la presentazione del proprio lavoro.
+      <PortraTitle tagline="Secondo anno" title="LAMIAVOCE"/>
+      <p>Quali sono le paure che vi attanagliano? Chi siete quando nessuno vi vede? Per che cosa sareste disposti a dare la vita senza avere niente in cambio? Nel secondo anno continuiamo a scoprire chi siete in un percorso sempre più individuale.
+      </p>
+      <p>Adesso che i partecipanti hanno più consapevolezza del tipo di immagini che gli appartengono, dei temi che gli stanno a cuore, di cosa si può fare con la fotografia e di quante strade diverse e originali si possono prender, è il momento di spingere la loro fotografia verso i campi di ricerca di loro scelta, sia giornalistica che artistica. Ci occuperemo di cosa sono i progetti fotografici e di come costruire un processo di ricerca che eviti essi diventino il regno dei nostri stereotipi e del già noto. I partecipanti capiranno come relazionarsi al proprio lavoro e farlo crescere sempre più in direzioni nuove e inaspettate.
+      </p>
+      <p>Come le immagini interagiscono tra di loro? Dittici, serialità, narrativa visuale. Grazie a ben quattro professionisti del settore, i partecipanti sperimenteranno con il libro fotografico, la fanzine e la mostra come dispositivo di comunicazione. Un corso si occuperà anche di esplorare la fotografia vernacolare e l’approccio autoriale agli archivi.
+      </p>
+      <p>Si lavorerà inoltre sulla presentazione di noi stessi e dei nostri progetti nel mondo professionale della fotografia autoriale, i nostri destinatari saranno sia i magazine che le gallerie e le residenze artistiche.
       </p>
     </Fragment>
   </Content>
 
   <Testimonials2 id="insegnanti"
-  title="Insegnanti de ILGIOCO 2025"
+  title="Insegnanti"
   testimonials={[
     {
       title: "Seminar leader",
@@ -361,9 +293,33 @@ const metadata = {
       },      },
   ]}
   />
+  
+  <Content
+    isAfterContent
+    isReversed
+    image={{
+      src: '~/assets/images/insegnanti/5_riccardo-bononi-irfoss_madagascar-2.jpg',
+      alt: 'Colorful Image',
+    }}
+    imageCredit="© Riccardo Bononi"
+  >
+    
+    <Fragment slot="content">
+      <PortraTitle title="La comunità "/>
+      <p>Uno degli elementi distintivi di The Soul and The Machine è la creazione di una comunità
+        affiatata di fotografi e docenti. Crediamo fermamente che il confronto costante e il
+        sostegno reciproco siano fondamentali per la crescita artistica. Ogni partecipante entra
+        a far parte di una rete di professionisti e appassionati che condividono idee, esperienze
+        e critiche costruttive. Gli studenti creano relazioni che spesso si estendono oltre la
+        durata del corso. Questo dialogo continuo arricchisce il processo creativo e apre nuove
+        possibilità di collaborazione anche al di fuori del programma.
+      </p>
+    </Fragment>
+  </Content>
 
   <Testimonials3
-    title="I nostri alunni"
+    id="recensioni"
+    title="Dicono di noi"
     testimonials={[
       {
         testimonial: `Ho frequentato moltissimi corsi ma il percorso di ngb è diverso da tutti per serietà, profondità, intensità e ricchezza dei contenuti. I docenti sono super preparati, generosi, molto disponibili e sempre propositivi. Le lezioni online sono strutturate molto bene e la presenza del tutor completa l'opera. <br> L'impegno è consistente, c'è tanto da studiare e da lavorare, non è un "corsettino" serale da frequentare come passatempo ma un vero master che tocca e approfondisce moltissimi aspetti della fotografia e non solo.`,
@@ -440,30 +396,9 @@ const metadata = {
     ]}
   />
 
-  <Content
-    isAfterContent
-    isReversed
-    image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Colorful Image',
-    }}
-  >
-    
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">La comunità di The Soul and The Machine</h3>
-      <p>Uno degli elementi distintivi di The Soul and The Machine è la creazione di una comunità
-        affiatata di fotografi e docenti. Crediamo fermamente che il confronto costante e il
-        sostegno reciproco siano fondamentali per la crescita artistica. Ogni partecipante entra
-        a far parte di una rete di professionisti e appassionati che condividono idee, esperienze
-        e critiche costruttive. Gli studenti creano relazioni che spesso si estendono oltre la
-        durata del corso. Questo dialogo continuo arricchisce il processo creativo e apre nuove
-        possibilità di collaborazione anche al di fuori del programma.
-      </p>
-    </Fragment>
-  </Content>
 
   <Features3
-    title="Perché ci hanno scelto"
+    title="Perché sceglierci"
     subtitle="Discover the proficiencies that allow me to bring imagination to life through design."
     columns={4}
     defaultIcon="tabler:point-filled"
@@ -499,9 +434,6 @@ const metadata = {
         title: "Perché entri a far parte di una comunità, i partecipanti diventano parte di una rete di supporto e scambio, che va oltre la fine del corso",
       },
       {
-        title: "Perché entri a far parte di una comunità, i partecipanti diventano parte di una rete di supporto e scambio, che va oltre la fine del corso",
-      },
-      {
         title: "Perché lavori su progetti autentici, ogni immagine nasce da una ricerca personale, lontano dai cliché, e ogni partecipante è per noi un fotografo unico e irripetibile",
       },
       {
@@ -510,7 +442,7 @@ const metadata = {
     ]}
   />
 
-  <!-- FAQs Widget ******************* -->
+  <!-- FAQs Widget *******************
 
   <FAQs
     title="Domande più frequenti"
@@ -528,7 +460,7 @@ const metadata = {
           "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
       },
     ]}
-  />
+  /> -->
 
   <!-- CallToAction Widget *********** -->
 
@@ -548,23 +480,10 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      Per poter garantire un livello adeguato e seguire singolarmente ogni studente The Soul and
-      The Machine è un corso a numero chiuso.
+      Per poter garantire un livello adeguato e seguire singolarmente ogni studente The Soul and The Machine è un corso su invito a numero chiuso. 
+      Per partecipare è possibile inviare la propria candidatura spontanea. Se superate la prima selezione, verrete contattati per sostenere un breve colloquio on-line.
     </Fragment>
-    Per partecipare è possibile inviare la propria candidatura spontanea fino al 18 novembre
-    compilando un form. Se superate la prima selezione, verrete contattati per sostenere un
-    breve colloquio on-line. In caso di esito positivo, sarete invitati ad associarvi a IDA
-    Fotografia per partecipare a The Soul and The Machine.
+
   </CallToAction>
+
 </Layout>
-
-
-
-        autoriale ideato da Nausicaa Giulia Bianchi  nel 2017
-</Layout>
-
-
-
-  <Fragment slot="subtitle
-
-    videoSrc="/assets/videos/V
