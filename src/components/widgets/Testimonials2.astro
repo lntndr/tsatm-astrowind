@@ -47,13 +47,13 @@ const {
           )}
           <div class="md:w-2/3">
             <div> 
-              {testimonials[0].title && <p class="text-xs text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">{testimonials[0].title}</p>}
+              {testimonials[0].title && <p class="text-xs text-primary dark:text-blue-200 font-bold tracking-wide uppercase">{testimonials[0].title}</p>}
               {testimonials[0].name && <h3 class="text-lg font-semibold">{testimonials[0].name}</h3>}
               {testimonials[0].job && <p class="text-xs text-muted">{testimonials[0].job}</p>}
             </div>
             <hr class="border-slate-200 dark:border-slate-600 my-4" />
             {testimonials[0].testimonial && (
-              <p class="text-muted">{testimonials[0].testimonial}</p>
+              <p class="font-serif">{testimonials[0].testimonial}</p>
             )}
           </div>
         </div>
@@ -89,7 +89,7 @@ const {
             </div>
             <hr class="border-slate-200 dark:border-slate-600 my-4" />
             {testimonial && (
-              <p class="text-muted">{testimonial}</p>
+              <p class="font-serif">{testimonial}</p>
             )}
           </div>
         </div>
