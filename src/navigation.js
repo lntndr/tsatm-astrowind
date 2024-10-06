@@ -2,14 +2,17 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
-
     {
-      text: 'A chi',
-      href: getPermalink('/#a-chi'),
+      text: 'Edizione 2025',
+      href: getPermalink('/#intro'),
     },
     {
-      text: 'Insegnanti',
+      text: 'Docenti',
       href: getPermalink('/#insegnanti'),
+    },
+    {
+      text: 'Recensioni',
+      href: getPermalink('/#recensioni'),
     },
         /*
     {
