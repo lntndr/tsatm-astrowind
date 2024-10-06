@@ -1,0 +1,33 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  classes?: {
+    container?: string;
+    title?: string;
+  };
+}
+
+const {
+  classes = {},
+} = Astro.props;
+
+const {
+  container: containerClass = '',
+  title: titleClass = 'text-3xl md:text-4xl',
+} = classes;
+---
+
+<div class={twMerge('inline-block max-w-full p-2 px-2 mb-1', containerClass)}>
+  <h3
+    class={twMerge(
+      'inline-block font-bold font-heading text-heading text-3xl text-white',
+      'px-3 py-1 bg-gradient-to-r from-[#7879b9] to-[#b82f92]',
+      'whitespace-nowrap max-w-full',
+      titleClass
+    )}
+  >
+    <slot />
+  </h3>
+</div>
+
