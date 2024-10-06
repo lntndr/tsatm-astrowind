@@ -1,29 +1,39 @@
 ---
-import '@fontsource-variable/space-grotesk';
-
-// 'DM Sans'
-// Nunito
-// Dosis
-// Outfit
-// Roboto
-// Literata
-// 'IBM Plex Sans'
-// Karla
-// Poppins
-// 'Fira Sans'
-// 'Libre Franklin'
-// Inconsolata
-// Raleway
-// Oswald
-// 'Space Grotesk'
-// Urbanist
 ---
+
+<style is:global>
+  @font-face {
+    font-family: 'Satoshi Variable';
+    src: url('/assets/fonts/Satoshi-Variable.woff2') format('woff2'),
+         url('/assets/fonts/Satoshi-Variable.woff') format('woff'),
+         url('/assets/fonts/Satoshi-Variable.eot') format('embedded-opentype'),
+         url('/assets/fonts/Satoshi-Variable.ttf') format('truetype');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Erode Variable';
+    src: url('/assets/fonts/Erode-Variable.woff2') format('woff2'),
+         url('/assets/fonts/Erode-Variable.woff') format('woff'),
+         url('/assets/fonts/Erode-Variable.eot') format('embedded-opentype'),
+         url('/assets/fonts/Erode-Variable.ttf') format('truetype');
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Space Grotesk Variable';
-    --aw-font-serif: 'Space Grotesk Variable';
-    --aw-font-heading: 'Space Grotesk Variable';
+    --aw-font-sans: 'Satoshi Variable';
+    --aw-font-serif: 'Erode Variable';
+    --aw-font-heading: 'Satoshi Variable';
+
+    --aw-font-weight-normal: 450;
+    --aw-font-weight-medium: 550;
+    --aw-font-weight-semibold: 650;
+    --aw-font-weight-bold: 750;
 
     --aw-color-primary: rgb(242, 48, 48);
     --aw-color-secondary: rgb(242, 99, 99);
@@ -42,9 +52,6 @@ import '@fontsource-variable/space-grotesk';
   }
 
   .dark {
-    --aw-font-sans: 'Space Grotesk Variable';
-    --aw-font-serif: 'Space Grotesk Variable';
-    --aw-font-heading: 'Space Grotesk Variable';
 
     --aw-color-primary: rgb(242, 48, 48);
     --aw-color-secondary: rgb(242, 99, 99);
