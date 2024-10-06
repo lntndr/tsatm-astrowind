@@ -1,33 +1,39 @@
 ---
+import type { Headline as Props } from '~/types';
 import { twMerge } from 'tailwind-merge';
 
-interface Props {
-  classes?: {
-    container?: string;
-    title?: string;
-  };
-}
-
 const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
   classes = {},
 } = Astro.props;
 
 const {
-  container: containerClass = '',
+  container: containerClass = 'max-w-3xl',
   title: titleClass = 'text-3xl md:text-4xl',
+  subtitle: subtitleClass = 'text-xl',
 } = classes;
 ---
 
-<div class={twMerge('inline-block max-w-full p-2 px-2 mb-1', containerClass)}>
-  <h3
-    class={twMerge(
-      'inline-block font-bold font-heading text-heading text-3xl text-white',
-      'px-3 py-1 bg-gradient-to-r from-[#7879b9] to-[#b82f92]',
-      'whitespace-nowrap max-w-full',
-      titleClass
+{(title || subtitle || tagline) && (
+  <div class={twMerge('max-w-full', containerClass)}>
+    {tagline && (
+      <p class=" px-2 text-base text-primary dark:text-blue-200 font-bold font-sans tracking-wide uppercase">{tagline}</p>
     )}
-  >
-    <slot />
-  </h3>
-</div>
+    <div class="inline-block max-w-full p-2 px-2 mb-1">
+      <h3
+        class={twMerge(
+          'inline-block font-bold font-heading text-heading text-3xl text-white',
+          'px-3 py-1 bg-gradient-to-r from-[#7879b9] to-[#b82f92]',
+          'whitespace-nowrap max-w-full',
+          titleClass
+        )}
+      >
+        {title}
+      </h3>
+    </div>
+    {subtitle && <p class={twMerge('mt-4 font-serif', subtitleClass)}>{subtitle}</p>}
+  </div>
+)}
 
