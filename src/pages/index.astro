@@ -100,7 +100,7 @@ const metadata = {
         fotografia come un passatempo o un mezzo commerciale. Noi crediamo che la
         fotografia, insieme ad altri medium, sia uno strumento essenziale per investigare
         il reale. Fotografare nasce di solito da un bisogno egocentrico di esprimersi,
-        ma questo talento è un dono che va condiviso. Essere fotografi significa assumersi
+        ma questo talento è un dono che va condiviso. <div class= "highlighter">Essere fotografi significa assumersi</div>
         la responsabilità di vedere il mondo con occhi nuovi e di narrarlo agli altri.
         Il nostro approccio mette al centro la postura morale dell'autore e il suo ruolo
         nella società contemporanea.
@@ -197,6 +197,27 @@ const metadata = {
       </p>
     </Fragment>
   </Content>
+
+  <CallToAction
+    classes={{
+        container: '!pt-0 !md:pt-0',
+    }}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Scarica il programma in PDF',
+        href: 'https://github.com/onwidget/astrowind',
+        target: '_blank',
+        icon: 'tabler:download',
+      },
+    ]}
+  >
+
+    <Fragment slot="subtitle">
+      Il programma dettagliato del percorso con le informazioni riguardo i contenuti dei corsi e i prezzi è disponibile per il download
+    </Fragment>
+
+  </CallToAction>
 
   <Testimonials2 id="insegnanti"
   title="Insegnanti"
