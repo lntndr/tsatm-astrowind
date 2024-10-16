@@ -1,0 +1,37 @@
+---
+interface Props {
+  tags: { text: string; weight: number }[];
+  classes?: {
+    container?: string;
+    tag?: string;
+  };
+}
+
+const { tags = [], classes = {} } = Astro.props;
+
+const {
+  container: containerClass = 'flex flex-wrap justify-center items-center p-4',
+  tag: tagClass = 'inline-block m-1 transition-all duration-200 ease-in-out',
+} = classes;
+
+// Function to calculate font size based on weight
+const getFontSize = (weight: number) => {
+  const minSize = 0.8;
+  const maxSize = 2;
+  return Math.max(minSize, Math.min(maxSize, 0.8 + weight * 0.1)) + 'rem';
+};
+
+// Sort tags by weight for consistent rendering
+const sortedTags = [...tags].sort((a, b) => b.weight - a.weight);
+---
+
+<div class={containerClass}>
+  {sortedTags.map(({ text, weight }) => (
+    <span 
+      class={`${tagClass} cursor-pointer hover:text-blue-500`}
+      style={`font-size: ${getFontSize(weight)};`}
+    >
+      {text}
+    </span>
+  ))}
+</div>

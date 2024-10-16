@@ -1,0 +1,32 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Props {
+  phrases: string[];
+  classes?: {
+    container?: string;
+    item?: string;
+    text?: string;
+  };
+}
+
+const {
+  phrases = [],
+  classes = {},
+} = Astro.props;
+
+const {
+  container: containerClass = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4',
+  item: itemClass = 'bg-gray-100 rounded-lg p-4 flex items-center justify-center text-center min-h-[100px] shadow-md transition-transform hover:scale-105',
+  text: textClass = 'text-sm md:text-base',
+} = classes;
+
+---
+
+<div class={twMerge(containerClass)}>
+  {phrases.map((phrase, index) => (
+    <div class={twMerge(itemClass, 'overflow-hidden')}>
+      <p class={twMerge(textClass, 'text-gray-800 break-words')}>{phrase}</p>
+    </div>
+  ))}
+</div>
