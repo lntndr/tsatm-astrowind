@@ -36,6 +36,11 @@
   .btn-tertiary {
     @apply btn border-none shadow-none text-muted hover:text-gray-900 dark:text-gray-400 dark:hover:text-white;
   }
+
+  .highlighter{
+    @apply inline;
+    background: linear-gradient(180deg, transparent 40%, var(--aw-color-accent) 40%);
+  }
 }
 
 #header.scroll > div:first-child {
