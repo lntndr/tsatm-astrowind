@@ -22,12 +22,10 @@ const { metadata } = Astro.props;
     </slot>
   -->
   <slot name="header">
-    <Header {...headerData} showToggleTheme isSticky />
   </slot>
   <main>
     <slot />
   </main>
   <slot name="footer">
-    <Footer {...footerData} />
   </slot>
 </Layout>
