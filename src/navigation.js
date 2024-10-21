@@ -8,7 +8,7 @@ export const headerData = {
     },
     {
       text: 'Docenti',
-      href: getPermalink('/#insegnanti'),
+      href: getPermalink('/#docenti'),
     },
     {
       text: 'Recensioni',
