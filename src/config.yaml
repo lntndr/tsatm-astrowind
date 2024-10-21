@@ -1,6 +1,6 @@
 site:
   name: The Soul and The Machine
-  site: 'https://tsatm-astrowind.netlify.app'
+  site: 'https://www.thesoulandthemachine.com'
   base: '/'
   trailingSlash: false
 
