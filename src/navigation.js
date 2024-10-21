@@ -38,18 +38,17 @@ export const headerData = {
 
 export const footerData = {
   links: [
-  
+    
   ],
   secondaryLinks: [
+    { text: 'IDA Fotografia', href: 'https://idafotografia.com', target: '_blank' },
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'IDA Fotografia', icon: 'tabler:app-window', href: '#' },
     { ariaLabel: 'E-mail', icon: 'tabler:mail', href: 'mailto:education@idafotografia.com'},
   ],
   footNote: `
-    <!-- Made by <a class="text-blue-600 underline dark:text-muted" href="https://onwidget.com/"> onWidget</a> · All rights reserved. -->
-    Un corso di Nausicaa Giulia Bianchi per IDA
+    Un corso di <a href="https://giuliabianchi.com/" target="_blank" >Nausicaa Giulia Bianchi</a> per <a href="https://idafotografia.com/" target="_blank" >IDA</a>
   `,
 };
