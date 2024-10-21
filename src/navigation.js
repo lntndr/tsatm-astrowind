@@ -31,8 +31,8 @@ export const headerData = {
     */
   ],
   actions: [
-    { text: 'Scarica il PDF', href: 'https://github.com/onwidget/astrowind', target: '_blank' },
-    { text: 'Candìdati', href: 'https://github.com/onwidget/astrowind', target: '_blank' },
+    { text: 'Scarica il PDF', href: 'https://forms.gle/zD1s7GxFS88tBmXk9', target: '_blank' },
+    { text: 'Candìdati', href: 'https://forms.gle/gMPq1WAKezoVYBZj8', target: '_blank' },
   ], 
 };
 
@@ -45,14 +45,12 @@ export const footerData = {
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
-    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/onwidget/astrowind' },
+    { ariaLabel: 'IDA Fotografia', icon: 'tabler:app-window', href: '#' },
+    { ariaLabel: 'E-mail', icon: 'tabler:mail', href: 'mailto:education@idafotografia.com'},
   ],
   footNote: `
     <!-- Made by <a class="text-blue-600 underline dark:text-muted" href="https://onwidget.com/"> onWidget</a> · All rights reserved. -->
-    Un corso di Nausicaa Giulia Bianchi per IDA ETS
+    Un corso di Nausicaa Giulia Bianchi per IDA
   `,
 };
