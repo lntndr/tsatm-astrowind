@@ -51,4 +51,4 @@ export const footerData = {
   footNote: `
     Un corso di <a href="https://giuliabianchi.com/" target="_blank" >Nausicaa Giulia Bianchi</a> per <a href="https://idafotografia.com/" target="_blank" >IDA</a>
   `,
-};
+}; 
