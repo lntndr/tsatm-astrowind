@@ -91,4 +91,13 @@ export default defineConfig({
       },
     },
   },
+
+  redirects: {
+    '/iscrizioni': '/#iscrizioni',
+    '/ngb': '/#docenti',
+    '/docenti+ospiti': '/#docenti',
+    '/cosa': '/#intro',
+    '/programma': '/#programma',
+    '/credits': '/',
+  },
 });
