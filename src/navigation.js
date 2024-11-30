@@ -32,7 +32,7 @@ export const headerData = {
   ],
   actions: [
     { text: 'Scarica il PDF', href: 'https://forms.gle/zD1s7GxFS88tBmXk9', target: '_blank' },
-    { text: 'Candìdati', href: 'https://forms.gle/gMPq1WAKezoVYBZj8', target: '_blank' },
+    { text: "Lista d'attesa", href: 'https://forms.gle/gMPq1WAKezoVYBZj8', target: '_blank' },
   ], 
 };
 
