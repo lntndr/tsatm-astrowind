@@ -31,7 +31,7 @@ export const headerData = {
     */
   ],
   actions: [
-    { text: 'Scarica il PDF', href: 'https://forms.gle/zD1s7GxFS88tBmXk9', target: '_blank' },
+    { text: 'Scarica il PDF', href: '#anno-prossimo' },
     { text: 'Contattaci', href: 'mailto:education@idafotografia.com', target: '_blank' },
   ],
 };
