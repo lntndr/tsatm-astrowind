@@ -10,6 +10,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import VideoHero from '~/components/widgets/VideoHero.astro';
+import SlideHero from '~/components/widgets/SlideHero.astro';
 import PortraTitle from '~/components/ui/PortraTitle.astro';
 
 const metadata = {
@@ -20,20 +21,40 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-
-  <VideoHero
-    title="THE SOUL AND THE MACHINE"
-    videoSrc="/assets/videos/Videotsatm_v5.mp4"
-    poster="/assets/images/FOTO1VIDEO_fiammetta_cerreti.jpg"
-    videoSpeed={0.6}
-    anchorId="intro"
+  <SlideHero
+  anchorId="intro"
+  images={[
+    '/assets/images/JPG-slide/00010.jpg',
+    '/assets/images/JPG-slide/00018.jpg',
+    '/assets/images/JPG-slide/00026.jpg',
+    '/assets/images/JPG-slide/00034.jpg',
+    '/assets/images/JPG-slide/00035.jpg',
+    '/assets/images/JPG-slide/00052.jpg',
+    '/assets/images/JPG-slide/00053.jpg',
+    '/assets/images/JPG-slide/00069.jpg',
+    '/assets/images/JPG-slide/00077.jpg',
+    '/assets/images/JPG-slide/00085.jpg',
+    '/assets/images/JPG-slide/00093.jpg',
+    '/assets/images/JPG-slide/00101.jpg',
+    '/assets/images/JPG-slide/00109.jpg',
+    '/assets/images/JPG-slide/00116.jpg',
+    '/assets/images/JPG-slide/00125.jpg',
+    '/assets/images/JPG-slide/00141.jpg',
+    '/assets/images/JPG-slide/00142.jpg',
+    '/assets/images/JPG-slide/00150.jpg',
+    '/assets/images/JPG-slide/00165.jpg',
+    '/assets/images/JPG-slide/00181.jpg',
+  ]}
+  imageDuration={500}
+  title="THE SOUL AND THE MACHINE"
+  subtitle="Programma biennale di fotografia autoriale"
   >
-  <Fragment slot="subtitle">
+    <Fragment slot="subtitle">
     <span class=" inline">
     Programma biennale di fotografia autoriale
     </span>
   </Fragment>
-  </VideoHero>
+</SlideHero>
 
   <Stats
     id="intro"
@@ -42,10 +63,11 @@ const metadata = {
       container: 'mb-0',
       headline: {subtitle: 'text-blue'},
     }}
-    subtitle="The Soul and the Machine è un programma biennale di fotografia autoriale, ideato da Nausicaa Giulia Bianchi nel 2017, che unisce studio, ricerca e pratica intensiva. Con un approccio innovativo e un gruppo di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, per chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale. <br> <span class='highlighter'>Ogni anno offriamo:</span>"
+    subtitle="The Soul and the Machine è un programma biennale <em>part-time</em> di fotografia autoriale, ideato da Nausicaa Giulia Bianchi nel 2017, che unisce studio, ricerca e pratica intensiva. Con un approccio innovativo e un gruppo di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, per chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale. <br> <span class='highlighter'>Ogni anno offriamo:</span>"
     stats={[
       { title: 'Ore di lezione in diretta online', amount: '160' },
-      { title: 'Ore di lezione on demand', amount: '120' },
+      { title: 'Serate al mese online', amount: '5'},
+      { title: 'Ore di lezione on demand', amount: '120' }, 
       { title: 'Workshop a Genova', amount: '2' },
     ]}
     />
@@ -59,13 +81,13 @@ const metadata = {
         icon: 'tabler:brand-apple-arcade',
         title: 'Primo anno: ILGIOCO',
         description:
-          'Approfondiremo temi quali il linguaggio visuale, lo stile, ll processo creativo e cosa è l’autorialità. Costruiamo le basi per trovare la propria voce e mettiamo l’accento, soprattutto, sul creare immagini forti.',
+          'Ci prendiamo cura di ogni aspetto del fotografo: partiamo dal corpo, dalle sue azioni, e lo spingiamo verso l’accesso alle storie e alla costruzione della relazione con i soggetti. Trovare l’autore in sé significa lavorare sul punto di vista, sulla composizione, sul linguaggio visivo. Paesaggio e ritratto diventano campi di esercizio per mettere in discussione lo sguardo. Il gioco è un metodo: attiva relazioni, mette in crisi le abitudini, apre domande. In questo anno poniamo le basi per la propria voce e mettiamo l’accento, soprattutto, sulla creazione di immagini forti e personali.',
       },
       {
         icon: 'tabler:speakerphone',
         title: 'Secondo anno: LAMIAVOCE',
         description:
-          'Se in principio era l’immagine, per diventare autori esse non bastano. Quest’anno approfondiremo il processo di selezione e ordinazione (editing) al fine di creare mostre e fotolibri, e impareremo a presentare noi stessi e il nostro lavoro in modo professionale all’interno del mondo fine-art.',
+          'Fare un progetto fotografico non è una passeggiata: è costruire un sistema di scelte che evolvono nel tempo. Spingiamo gli studenti a cambiare ricerca ogni tre mesi, sperimentando metodi di creazione e produzione diversi e rispondendo a stimoli sempre nuovi. Imparano cosa significa davvero progettualità in ambito artistico, e affrontano montaggio, editing, strutture narrative non lineari e contenitori concettuali. I progetti prendono forma come libri, mostre, installazioni, e gli studenti imparano a presentarli con coerenza e consapevolezza.',
       },
     ]}
   />
@@ -185,6 +207,22 @@ const metadata = {
       <p>Come le immagini interagiscono tra di loro? Dittici, serialità, narrativa visuale. Grazie a ben quattro professionisti del settore, i partecipanti sperimenteranno con il libro fotografico, la fanzine e la mostra come dispositivo di comunicazione. Un corso si occuperà anche di esplorare la fotografia vernacolare e l’approccio autoriale agli archivi.
       </p>
       <p>Si lavorerà inoltre sulla presentazione di noi stessi e dei nostri progetti nel mondo professionale della fotografia autoriale, i nostri destinatari saranno sia i magazine che le gallerie e le residenze artistiche.
+      </p>
+    </Fragment>
+  </Content>
+
+    <Content
+    isAfterContent
+    image={{
+      src: '~/assets/images/materia-paranoica.jpg',
+      alt: 'Colorful Image',
+    }}
+    imageCredit="© Le(Serre, IDA ETS"
+  >
+    
+    <Fragment slot="content">
+      <PortraTitle tagline="Residenza" title="Materia Paranoica" gradientFrom="#3d518a" gradientTo="#5cce59"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <span class="highlighter">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</span> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
       </p>
     </Fragment>
   </Content>
@@ -504,5 +542,7 @@ const metadata = {
     </Fragment>
 
   </CallToAction>
+
+  
 
 </Layout>
