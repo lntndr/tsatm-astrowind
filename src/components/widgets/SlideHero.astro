@@ -1,0 +1,238 @@
+---
+import Button from '~/components/ui/Button.astro';
+
+import type { Hero as Props } from '~/types';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
+  images = [], // Array of image sources
+  poster, // Fallback image for initial display
+  id,
+  anchorId,
+  imageDuration = 3000, // Duration for each image in milliseconds (default 3 seconds)
+} = Astro.props;
+---
+
+<section class="relative h-screen w-full overflow-hidden not-prose select-none" {...id ? { id } : {}}>
+  <img 
+    src={poster || (images.length > 0 ? images[0] : '')}
+    alt="Background"
+    class="absolute top-0 left-0 w-full h-full object-cover"
+    loading="eager"
+  />
+  
+  <div id="slideshow-container" class="absolute top-0 left-0 w-full h-full">
+    <!-- Slideshow images will be inserted here -->
+  </div>
+
+  <!-- Content Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="text-center max-w-5xl mx-auto px-4 sm:px-6">
+      {tagline && (
+        <p
+          class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase"
+          set:html={tagline}
+        />
+      )}
+      {title && (
+        <h1
+          class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading text-white"
+          set:html={title}
+        />
+      )}
+      <div class="max-w-3xl mx-auto">
+        {subtitle && <p class="text-xl text-white mb-6" set:html={subtitle} />}
+        {actions && (
+          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 mb-8">
+            {Array.isArray(actions) ? (
+              actions.map((action) => (
+                <div class="flex w-full sm:w-auto">
+                  <Button {...(action || {})} class="w-full sm:mb-0" />
+                </div>
+              ))
+            ) : (
+              <Fragment set:html={actions} />
+            )}
+          </div>
+        )}
+        {anchorId && (
+          <div class="mt-12 flex justify-center">
+            <a href={`#${anchorId}`} class="js-scroll bg-transparent hover:bg-white/10 text-white rounded-full p-3 transition-all duration-300 transform hover:translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        )}
+      </div>
+      {content && <Fragment set:html={content} />}
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ images, imageDuration }}>
+  let currentImageIndex = 0;
+  let slideshowInterval;
+  let observer;
+  let isHolding = false;
+  let lastImageChangeTime = 0;
+
+  function createSlideshow() {
+    const slideshowContainer = document.getElementById('slideshow-container');
+    if (slideshowContainer && images && images.length > 0) {
+      // Create all image elements
+      images.forEach((imageSrc, index) => {
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = `Slide ${index + 1}`;
+        img.className = 'absolute top-0 left-0 w-full h-full object-cover';
+        img.style.display = index === 0 ? 'block' : 'none';
+        img.loading = index === 0 ? 'eager' : 'lazy';
+        slideshowContainer.appendChild(img);
+      });
+    }
+  }
+
+  function nextImage() {
+    const slideshowContainer = document.getElementById('slideshow-container');
+    if (slideshowContainer && images && images.length > 1) {
+      const allImages = slideshowContainer.querySelectorAll('img');
+      
+      // Hide current image
+      allImages[currentImageIndex].style.display = 'none';
+      
+      // Move to next image
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      
+      // Show next image
+      allImages[currentImageIndex].style.display = 'block';
+      
+      // Update last change time
+      lastImageChangeTime = Date.now();
+    }
+  }
+
+  function startSlideshow() {
+    if (images && images.length > 1 && !isHolding) {
+      // Clear any existing interval to prevent multiple intervals
+      stopSlideshow();
+      
+      // Reset timing reference
+      lastImageChangeTime = Date.now();
+      
+      // Use setTimeout instead of setInterval for more precise timing
+      function scheduleNext() {
+        if (!isHolding && images && images.length > 1) {
+          slideshowInterval = setTimeout(() => {
+            nextImage();
+            scheduleNext(); // Schedule the next one
+          }, imageDuration);
+        }
+      }
+      
+      scheduleNext();
+    }
+  }
+
+  function stopSlideshow() {
+    if (slideshowInterval) {
+      clearTimeout(slideshowInterval);
+      slideshowInterval = null;
+    }
+  }
+
+  function handleHoldStart(e) {
+    // Only prevent default for mouse events, not touch events
+    if (e.type === 'mousedown') {
+      e.preventDefault();
+    }
+    isHolding = true;
+    stopSlideshow();
+  }
+
+  function handleHoldEnd(e) {
+    // Only prevent default for mouse events, not touch events  
+    if (e && e.type === 'mouseup') {
+      e.preventDefault();
+    }
+    isHolding = false;
+    
+    // Only restart if the slideshow container is in view
+    const slideshowContainer = document.getElementById('slideshow-container');
+    if (slideshowContainer) {
+      const rect = slideshowContainer.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInView) {
+        // Small delay to ensure clean restart
+        setTimeout(() => {
+          startSlideshow();
+        }, 50);
+      }
+    }
+  }
+
+  function handleIntersection(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !isHolding) {
+        startSlideshow();
+      } else {
+        stopSlideshow();
+      }
+    });
+  }
+
+  function initSlideshow() {
+    createSlideshow();
+    
+    // Set up Intersection Observer to start/stop slideshow when in/out of view
+    const slideshowContainer = document.getElementById('slideshow-container');
+    if (slideshowContainer) {
+      observer = new IntersectionObserver(handleIntersection, {
+        threshold: 0.5 // Trigger when 50% of the slideshow is visible
+      });
+      observer.observe(slideshowContainer);
+
+      // Add hold event listeners for desktop and mobile
+      const heroSection = slideshowContainer.closest('section');
+      if (heroSection) {
+        // Desktop: mouse events (keep passive: false for preventDefault)
+        heroSection.addEventListener('mousedown', handleHoldStart, { passive: false });
+        heroSection.addEventListener('mouseup', handleHoldEnd, { passive: false });
+        heroSection.addEventListener('mouseleave', handleHoldEnd, { passive: false });
+
+        // Mobile: touch events (use passive: true to allow scrolling)
+        heroSection.addEventListener('touchstart', handleHoldStart, { passive: true });
+        heroSection.addEventListener('touchend', handleHoldEnd, { passive: true });
+        heroSection.addEventListener('touchcancel', handleHoldEnd, { passive: true });
+      }
+    }
+  }
+
+  // Run initSlideshow when the DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', initSlideshow);
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollLinks = document.querySelectorAll('.js-scroll');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  });
+
+  // Clean up on page unload
+  window.addEventListener('beforeunload', () => {
+    stopSlideshow();
+    if (observer) {
+      observer.disconnect();
+    }
+  });
+</script>
