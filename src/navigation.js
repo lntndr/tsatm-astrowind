@@ -3,7 +3,7 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Edizione 2025',
+      text: 'Edizione 2026',
       href: getPermalink('/#intro'),
     },
     {
