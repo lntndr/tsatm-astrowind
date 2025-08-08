@@ -10,6 +10,7 @@ import Steps from '~/components/widgets/Steps.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import SlideHero from '~/components/widgets/SlideHero.astro';
 import PortraTitle from '~/components/ui/PortraTitle.astro';
+import ContentMultiImage from '~/components/widgets/ContentMultiImage.astro';
 
 const metadata = {
   title: 'THE SOUL AND THE MACHINE',
@@ -375,14 +376,31 @@ const IDENTICAL_CTA_SUBTITLE = "Il programma dettagliato della prossima edizione
   ]}
   />
   
-  <Content
-    isAfterContent
+<ContentMultiImage
     isReversed
-    image={{
-      src: '~/assets/images/insegnanti_opere/5_riccardo-bononi-irfoss_madagascar-2.jpg',
+    images={[
+      {
+        src: '~/assets/images/community/community8.jpg',
+        alt: 'Colorful Image',
+      },
+      {
+        src: '~/assets/images/community/community2.jpg',
+        alt: 'Colorful Image',
+      },
+      {
+        src: '~/assets/images/community/community6.jpg',
+        alt: 'Colorful Image',
+      },
+      {
+        src: '~/assets/images/community/community4.jpg',
+        alt: 'Colorful Image',
+      },
+      {
+        src: '~/assets/images/community/community5.jpg',
       alt: 'Colorful Image',
-    }}
-    imageCredit="© Riccardo Bononi"
+      },
+
+    ]}
   >
     
     <Fragment slot="content">
@@ -396,7 +414,7 @@ const IDENTICAL_CTA_SUBTITLE = "Il programma dettagliato della prossima edizione
         possibilità di collaborazione anche al di fuori del programma.
       </p>
     </Fragment>
-  </Content>
+</ContentMultiImage>
 
   <Testimonials3
     id="recensioni"
