@@ -17,16 +17,16 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative h-screen w-full overflow-hidden not-prose select-none" {...id ? { id } : {}}>
+<section class="relative w-full overflow-hidden not-prose select-none" id="slide-hero-section" {...id ? { id } : {}}>
   <img 
     src={poster || (images.length > 0 ? images[0] : '')}
     alt="Background"
     class="absolute top-0 left-0 w-full h-full object-cover"
     loading="eager"
   />
-  
+
   <div id="slideshow-container" class="absolute top-0 left-0 w-full h-full">
-    <!-- Slideshow images will be inserted here -->
+    <!-- Slideshow images will be inserted here by JavaScript -->
   </div>
 
   <!-- Content Overlay -->
@@ -84,14 +84,15 @@ const {
   function createSlideshow() {
     const slideshowContainer = document.getElementById('slideshow-container');
     if (slideshowContainer && images && images.length > 0) {
-      // Create all image elements
+      // Create simple img elements
       images.forEach((imageSrc, index) => {
         const img = document.createElement('img');
         img.src = imageSrc;
         img.alt = `Slide ${index + 1}`;
         img.className = 'absolute top-0 left-0 w-full h-full object-cover';
-        img.style.display = index === 0 ? 'block' : 'none';
         img.loading = index === 0 ? 'eager' : 'lazy';
+        img.style.display = index === 0 ? 'block' : 'none';
+        
         slideshowContainer.appendChild(img);
       });
     }
@@ -233,6 +234,18 @@ const {
     stopSlideshow();
     if (observer) {
       observer.disconnect();
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('header'); // Adjust selector as needed
+    const heroSection = document.getElementById('slide-hero-section');
+    
+    if (header && heroSection) {
+      const headerHeight = header.offsetHeight;
+      heroSection.style.height = `calc(100vh - ${headerHeight}px)`;
     }
   });
 </script>
