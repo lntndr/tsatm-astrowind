@@ -1,0 +1,40 @@
+---
+import Stats from '~/components/widgets/Stats.astro';
+import Steps from '~/components/widgets/Steps.astro';
+---
+
+<Stats
+  id="intro"
+  title="Edizione 2026"
+  classes={{
+    container: 'mb-0',
+    headline: {subtitle: 'text-blue'},
+  }}
+  subtitle="The Soul and the Machine è un programma biennale <em>part-time</em> di fotografia autoriale, ideato da Nausicaa Giulia Bianchi nel 2017, che unisce studio, ricerca e pratica intensiva. Con un approccio innovativo e un gruppo di docenti di fama internazionale, TSATM aiuta i partecipanti a sviluppare la propria voce artistica attraverso un percorso continuo, online e in presenza, per chi desidera esplorare la fotografia come strumento di ricerca e narrazione del reale. <br> <span class='highlighter'>Ogni anno offriamo:</span>"
+  stats={[
+    { title: 'Ore di lezione in diretta online', amount: '160' },
+    { title: 'Serate al mese online', amount: '5'},
+    { title: 'Ore di lezione on demand', amount: '120' }, 
+    { title: 'Workshop a Genova', amount: '2' },
+  ]}
+/>
+
+<Steps
+  classes={{
+    container: 'my-0 pt-0 lg:pt-0',
+  }}
+  items={[
+    {
+      icon: 'tabler:brand-apple-arcade',
+      title: 'Primo anno: ILGIOCO',
+      description:
+        "Ci prendiamo cura di ogni aspetto del fotografo: partiamo dal corpo, dalle sue azioni, e lo spingiamo verso l'accesso alle storie e alla costruzione della relazione con i soggetti. Trovare l'autore in sé significa lavorare sul punto di vista, sulla composizione, sul linguaggio visivo. Paesaggio e ritratto diventano campi di esercizio per mettere in discussione lo sguardo. Il gioco è un metodo: attiva relazioni, mette in crisi le abitudini, apre domande. In questo anno poniamo le basi per la propria voce e mettiamo l'accento, soprattutto, sulla creazione di immagini forti e personali.",
+    },
+    {
+      icon: 'tabler:speakerphone',
+      title: 'Secondo anno: LAMIAVOCE',
+      description:
+        'Fare un progetto fotografico non è una passeggiata: è costruire un sistema di scelte che evolvono nel tempo. Spingiamo gli studenti a cambiare ricerca ogni tre mesi, sperimentando metodi di creazione e produzione diversi e rispondendo a stimoli sempre nuovi. Imparano cosa significa davvero progettualità in ambito artistico, e affrontano montaggio, editing, strutture narrative non lineari e contenitori concettuali. I progetti prendono forma come libri, mostre, installazioni, e gli studenti imparano a presentarli con coerenza e consapevolezza.',
+    },
+  ]}
+/>
