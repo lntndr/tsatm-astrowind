@@ -60,8 +60,9 @@ const {
       </div>
     )}
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">      {testimonials && testimonials.slice(1).map(({ title, testimonial, name, job, image}) => (
-        <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
+    <div class="flex flex-wrap gap-6 justify-center">
+      {testimonials && testimonials.slice(1).map(({ title, testimonial, name, job, image}) => (
+        <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
           {image && (
             <div class="aspect-square w-full relative overflow-hidden">
               <div class="absolute inset-0 flex items-center justify-center">
