@@ -2,6 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroSection from '~/components/sections/HeroSection.astro';
 import ProgramOverviewSection from '~/components/sections/ProgramOverviewSection.astro';
+import TargetAudienceSection from '~/components/sections/TargetAudienceSection.astro';
 
 import Testimonials3 from '~/components/widgets/Testimonials3.astro';
 import Testimonials2 from '~/components/widgets/Testimonials2.astro';
@@ -45,45 +46,7 @@ const IDENTICAL_CTA_SUBTITLE = "Il programma dettagliato della prossima edizione
 <Layout metadata={metadata}>
   <HeroSection />
   <ProgramOverviewSection />
-
-
-  <Content
-    id="a-chi"
-    isAfterContent
-    image={{
-      src: '~/assets/images/studenti_opere/sara-castiglioni.jpg',
-      alt: 'Colorful Image',
-    }}
-    imageOverlayText=""
-    imageOverlayX="50%"
-    imageOverlayY="10%"
-    imageCredit="© Sara Castiglioni"
-  >
-    <Fragment slot="content">
-      <PortraTitle title="A chi è rivolto"/>
-      <p>
-        <strong>The Soul and the Machine</strong> è rivolto a chi vuole essere fotografo
-         e sente di avere qualcosa da dire attraverso la fotografia. È rivolto a tutti
-         quei fotografi il cui lavoro si posiziona tra la <span class="highlighter">documentaristica e l’arte</span>, a
-         chi vuole fotografare per cambiare il mondo.
-      </p>
-      <p>
-        Sono parole forti, ma non usate a caso. Questo corso non è per chi vede la
-        fotografia come un passatempo o un mezzo commerciale. Noi crediamo che la
-        fotografia, insieme ad altri medium, sia uno <span class="highlighter">strumento essenziale per investigare
-        il reale.</span> Fotografare nasce di solito da un bisogno egocentrico di esprimersi,
-        ma questo talento è un dono che va condiviso. Essere fotografi significa assumersi
-        la responsabilità di vedere il mondo con occhi nuovi e di narrarlo agli altri.
-        Il nostro approccio mette al centro <span class="highlighter">la postura morale dell'autore</span>
-        e il suo ruolo nella società contemporanea.
-      </p>
-      <p>
-        Si tratta di un corso impegnativo, che richiede studio e pratica, ma non è un
-        corso full-time. È concepito per coesistere con altre attività, con altri studi
-        o con periodi di viaggio.
-      </p>
-    </Fragment>
-  </Content>
+  <TargetAudienceSection />
 
   <!-- Obiettivi del corso-->
   <Content
