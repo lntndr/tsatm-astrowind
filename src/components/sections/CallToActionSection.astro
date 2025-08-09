@@ -1,0 +1,35 @@
+---
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+interface Props {
+  id?: string;
+}
+
+const { id = "default" } = Astro.props;
+
+const callToActionData = {
+  id,
+  actions: [
+    {
+      variant: 'secondary',
+      text: "Invia la tua candidatura",
+      href: 'https://forms.gle/gMPq1WAKezoVYBZj8',
+      target: '_blank',
+    },
+    {
+      variant: 'primary',
+      text: "Scarica il programma",
+      href: 'https://forms.gle/1iC8wvqYNbffmzJr5',
+      target: '_blank',
+    },
+  ]
+};
+
+const subtitle = "Il programma dettagliato della prossima edizione di The Soul and The Machine sarà disponibile a fine agosto. Puoi iscriverti alla lista d'attesa per riceverlo non appena sarà disponibile.";
+---
+
+<CallToAction {...callToActionData}>
+  <Fragment slot="subtitle">
+    {subtitle}
+  </Fragment>
+</CallToAction>

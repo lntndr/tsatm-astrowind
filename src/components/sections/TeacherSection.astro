@@ -1,0 +1,129 @@
+---
+import Testimonials2 from '~/components/widgets/Testimonials2.astro';
+
+const testimonials = [
+  {
+    title: "Direttrice del programma",
+    testimonial: `Ha studiato all'ICP di New York ed è stata assistente di Mary Ellen Mark e Suzanne Opton per poi intraprendere la propria carriera di fotografa nel 2011. Il suo lavoro investiga con una macchina di grande formato alcuni dei misteri della nostra società come la religione o il legame tra vita e morte. NGB insegna fotografia in diverse scuole: ICP New York, Camera Torino, Università di Padova, etc. Dal 2016 crea percorsi formativi indipendenti e innovativi.`,
+    name: 'Nausicaa Giulia Bianchi',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/NGB_portrait.JPG',
+      alt: 'Ritratto di Nausicaa Giulia Bianchi',
+    },
+  },
+  {
+    title: "All'unisono: il fotolibro",
+    testimonial: `Ha co-fondato nel 2008 il collettivo fotografico Cesura e nel 2010 la casa editrice Cesura Publish di cui è ancora direttore artistico. Ha vinto numerosi premi fotografici tra cui il premio Marco Pesaresi. Ha pubblicato su diverse testate internazionali, ha esposto in importanti musei come Le Bal a Parigi o la Triennale a Milano. Ha pubblicato diversi libri tra cui nel 2010 "Found Photos in Detroit" che diventa un successo planetario per la fotografia contemporanea.`,
+    name: 'Arianna Arcara',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/AA_Arianna-Arcara.jpg',
+      alt: 'Ritratto di Arianna Arcara',
+    },
+  },
+  {
+    title: "Mostrarsi: sperimentare il dialogo tra opera e spazio",
+    testimonial: `Curatore, scrittore, educatore e direttore del dipartimento di fotografia al Paris College of Art. È co-fondatore di "Blurring the Lines", una rete accademica internazionale che promuove il dialogo sulla produzione di immagini nella società. Ha fondato l'Istituto Urbanautica, polo sull'antropologia e alfabetizzazione visiva, e la casa editrice Penisola Edizioni. È direttore artistico di Lab27 a Treviso, epicentro culturale per la promozione della cultura fotografica.`,
+    name: 'Steve Bisson',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/SB_Ritratto_SteveBisson_orizzontale.jpg',
+      alt: 'Ritratto di Steve Bisson',
+    },
+  },
+  {
+    title: 'Fotografia del Reale',
+    testimonial: `Laureato in Psicologia e Antropologia, lavora come antropologo presso l'Istituto Irfoss a Padova e dal 2015 è membro dell'agenzia fotografica internazionale Prospekt Photographers. Ha lavorato in Africa, Sudamerica, Asia ed Europa combinando fotografia ed audiovisivo. È anche direttore artistico di IMP Festival Internazionale di Fotogiornalismo e coordinatore del Corso di Perfezionamento "Creative Arts Therapies" all'università di Padova.`,
+    name: 'Riccardo Bononi',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/RB_Riccardo Bononi - Parallelozero.jpeg',
+      alt: 'Ritratti di Riccardo Bononi',
+    },
+  },
+  {
+    title: 'Oltre lo scatto',
+    testimonial: `Jean-Marc e Valentina collaborano dal 2013 per progetti di fotografia documentaria legati alla grandi tematiche contemporanee: problematiche ambientali, di genere, migrazioni, conflitti o religione. Le loro storia sono regolarmente pubblicate dalla stampa e dai media di tutto il mondo, esposte in gallerie e festival in Europa e Asia e premiate in concorsi e grant. Hanno pubblicato sei libri tra cui Fastidiosa, casa editrice Overlapse, e Güle güle, André Frère Éditions.`,
+    name: 'Caimi e Piccinni',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/CP_CaimiPiccinni portrait.jpg',
+      alt: 'Ritratto di Caimi e Piccinni',
+    },
+  },
+  {
+    title: 'Corso di fotografia',
+    testimonial: `Jean-Marc e Valentina collaborano dal 2013 per progetti di fotografia documentaria legati alla grandi tematiche contemporanee: problematiche ambientali, di genere, migrazioni, conflitti o religione. Le loro storia sono regolarmente pubblicate dalla stampa e dai media di tutto il mondo, esposte in gallerie e festival in Europa e Asia e premiate in concorsi e grant. Hanno pubblicato sei libri tra cui Fastidiosa, casa editrice Overlapse, e Güle güle, André Frère Éditions.`,
+    name: 'Nome Cognome',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/CP_CaimiPiccinni portrait.jpg',
+      alt: 'Ritratto di Caimi e Piccinni',
+    },
+  },
+  {
+    title: 'Paesaggio e Territorio; Pensare per immagini',
+    testimonial: `Storica dell'arte e ricercatrice indipendente che studia l'iconologia del paesaggio nelle arti contemporanee. Nel 2013 fonda Ikonemi con Daniele Cinciripini, centro indipendente di fotografia e immagini di paesaggio. Dal 2018 è coordinatrice, insieme a Luca Lazzarini, del Laboratorio del Cammino, una rete di studenti e ricercatori che esplora le potenzialità metodologiche del camminare nella pianificazione urbana`,
+    name: 'Serena Marchionni',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/SM_serena_marchionni.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Freeing The Voice: Manipolazione, narrativa e concetto',
+    testimonial: `Dal 2018 organizza workshops incentrati sui temi dell'autoritratto e del progetto autobiografico mescolando fotografia, poesia, letteratura, collage e disegno. Nel 2011 entra a far parte della agenzia Prospekt Photographers e da quel momento la sua carriera continua a crescere attraverso pubblicazioni internazionali e premi: vincitrice del premio Cortona New Visions 2019, finalista al Gomma Prize 2023 e 2022, selezionata per il festival Circulation(s) a Parigi nel 2024.`,
+    name: 'Diambra Mariani',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/DM_diambra-mariani-portrait.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Tecnica fotografica',
+    testimonial: `Dagli studi di fisica quantistica alla fotografia, ha portato la sua curiosità e la sua precisione all'interno dei laboratori fotografici e della camera oscura analogica. Dal 2022 assiste tutta la produzione fotografica di Nausicaa Giulia Bianchi ed è responsabile della formazione tecnica degli studenti per Idafotografia. Ha fondato il workshop "Darkroom with a view" nel 2023`,
+    name: 'Andrea Lanterna',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/AL_andrealanterna_pic.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Esercizi di intimità',
+    testimonial: `Fotografa di origine milanese che esplora temi quali le relazioni e l'impermanenza. Affascinata dall'arte, poeta, studentessa poliedrica (dal ballo di coppia alla sceneggiatura), porta nel mondo della fotografia una consapevolezza profonda di cosa voglia dire essere vulnerabili e veri. Si è formata con Davide Monteleone, Lorenzo Castore ed NGB. Ha collaborato per anni con la Casa di Reclusione di Opera, e da diversi anni è nel corpo insegnanti di Idafotografia.`,
+    name: 'Elisa Mercadante',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/EM_Elisa_new_BW.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Corso Modica',
+    testimonial: `Andrea Modica (Brooklyn, 1960) è una fotografa statunitense nota per l'uso del banco ottico 8x10 e per le sue stampe al platino. Ha conseguito un BFA presso la State University of New York a Purchase e un MFA alla Yale University. Il suo lavoro si concentra sulle relazioni e sulla psicologia dei soggetti, spesso attraverso immagini messe in scena. È autrice del libro Treadwell, un progetto decennale che documenta la vita di una ragazza e della sua famiglia in un'area rurale dello Stato di New York. Insegna fotografia alla Drexel University e all'International Center of Photography di New York.`,
+    name: 'Andrea Modica',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/AM_Andrea-Modica_BW.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Storie della fotografia; Archivio Mon Amour',
+    testimonial: `Fotografa e insegnante di fotografia, specializzata nel mondo degli archivi e della fotografia vernacolare. Ogni sua lezione è testimonianza di come ciascuna fotografia esista sempre all'interno di una complessa rete di relazioni storiche e concettuali. Felo de Se è il progetto che sta sviluppando da qualche anno, volto a mappare i ponti italiani che nel tempo hanno mutuato l'appellativo "dei suicidi"`,
+    name: 'Fosca Piccinelli',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/FP_FoscaPiccinelli_BIO_BW.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+  {
+    title: 'Adobe Lightroom',
+    testimonial: `Francesco Ricci è un fotografo, ritoccatore ed insegnante di fotografia e post produzione con base a Bari, dove è titolare di uno studio fotografico e dove collabora con la scuola Spazio Tempo. Dal 2019 ha acquisito la certificazione Adobe Certified Expert in Photoshop CC. È un professionista conosciuto e stimato per gli aspetti più delicati dello sviluppo digitale dei file raw attraverso Lightroom e Photoshop.`,
+    name: 'Francesco Ricci',
+    image: {
+      src: '~/assets/images/insegnanti_ritratti/FR_Autoritratto-Quadrato-Francesco-Ricci.jpg',
+      alt: 'Sidney Hansen Image',
+    },
+  },
+];
+---
+
+<Testimonials2 
+  id="docenti"
+  title="Docenti"
+  testimonials={testimonials}
+/>
