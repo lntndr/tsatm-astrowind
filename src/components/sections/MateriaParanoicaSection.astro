@@ -1,0 +1,45 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+---
+
+<Content
+  isAfterContent
+  image={{
+    src: '~/assets/images/studenti_opere/Elisa-Brandi-MATERIA.jpg',
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Elisa Brandi"
+>
+  <Fragment slot="content">
+    <PortraTitle tagline="Residenza" title="Materia Paranoica" gradientFrom="#3d518a" gradientTo="#5cce59"/>
+    <p>Materia Paranoica è un progetto triennale ideato da IDA ETS in collaborazione con Le(Serre. Si articola in <span class="highlighter">sei residenze d'artista, distribuite tra il 2025 e il 2027, rivolte agli studenti del secondo anno del programma biennale</span> TSATM. Ogni residenza si svolge per una settimana in provincia di Udine, con il supporto logistico e organizzativo di Le(Serre.
+    </p>
+    <p>I partecipanti lavorano a <span class="highlighter">un progetto fotografico collettivo dedicato a un materiale specifico, inteso non come semplice oggetto, ma come campo di forze, traccia storica, simbolica, ecologica</span>. L'ispirazione nasce da una riflessione riportata dal fotografo Robert Adams, che cita un manuale di pittura cinese del Quindicesimo secolo: "Le rocce senza ch'i sono rocce morte, così come le ossa, prive dello stesso spirito vivificante, sono ossa secche e spoglie. Come potrebbe una persona colta dipingere una roccia priva di vita?" Da qui, nasce una proposta: ogni residenza sarà dedicata a un materiale. Non come oggetto statico, ma come campo di ricerca, come veicolo per costruire narrazioni. Cosa possiamo imparare attraverso i materiali di un territorio?
+    </p>
+    <p>Ciascuna residenza si conclude con <span class="highlighter">una mostra finale</span> sul territorio, curata da Nausicaa Giulia Bianchi in dialogo con Le(Serre e con gli autori. Al termine del triennio, le sei residenze andranno a comporre un "atlante parziale": una narrazione a più voci, stratificata e visionaria, dedicata al tema dei materiali.
+    </p>
+    
+    <!-- Partner logos -->
+    <div class="mt-8 pt-6 border-t border-gray-200">
+      <!-- Promosso da -->
+      <div class="mb-6">
+        <p class="text-center text-sm text-gray-600 mb-3 font-medium">Promosso da</p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <img src="/assets/images/logos/Zeroidee.png" alt="Zeroidee" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+          <img src="/assets/images/logos/LOGO_NERO.png" alt="Logo Nero" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+          <img src="/assets/images/logos/logotipo-ida-grande.png" alt="IDA" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+        </div>
+      </div>
+      
+      <!-- Con il contributo di -->
+      <div>
+        <p class="text-center text-sm text-gray-600 mb-3 font-medium">Con il contributo di</p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <img src="/assets/images/logos/logo_fvg_nero.png" alt="FVG Logo Nero" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+          <img src="/assets/images/logos/FVG_denominativo_riquadro_bianco_RGB.png" alt="Regione Friuli Venezia Giulia" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+        </div>
+      </div>
+    </div>
+  </Fragment>
+</Content>

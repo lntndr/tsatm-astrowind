@@ -3,6 +3,11 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroSection from '~/components/sections/HeroSection.astro';
 import ProgramOverviewSection from '~/components/sections/ProgramOverviewSection.astro';
 import TargetAudienceSection from '~/components/sections/TargetAudienceSection.astro';
+import CourseObjectivesSection from '~/components/sections/CourseObjectivesSection.astro';
+import IlGiocoSection from '~/components/sections/IlGiocoSection.astro';
+import LaMiaVoceSection from '~/components/sections/LaMiaVoceSection.astro';
+import MateriaParanoicaSection from '~/components/sections/MateriaParanoicaSection.astro';
+
 
 import Testimonials3 from '~/components/widgets/Testimonials3.astro';
 import Testimonials2 from '~/components/widgets/Testimonials2.astro';
@@ -44,86 +49,14 @@ const IDENTICAL_CTA_SUBTITLE = "Il programma dettagliato della prossima edizione
 ---
 
 <Layout metadata={metadata}>
+
   <HeroSection />
   <ProgramOverviewSection />
   <TargetAudienceSection />
-
-  <!-- Obiettivi del corso-->
-  <Content
-    isAfterContent
-    image={{
-      src: '~/assets/images/insegnanti_opere/2_MARIANI_Diambra_3.jpg',
-      alt: 'Colorful Image',
-    }}
-    imageOverlayText=""
-    imageOverlayX="5%"
-    imageOverlayY="0%"
-    imageCredit="© Diambra Mariani"
-    classes={{
-      imageOverlay: '',
-      imageOverlayText: ' text-primary text-lg'
-    }}
-  >
-    <Fragment slot="content">
-      <PortraTitle title="Obiettivi del corso"/>
-      <p>
-        L’obiettivo del percorso è la crescita come autori indipendenti. Crescere come autore significa innanzitutto trovare una voce personale: non ci occupiamo di fotografia commerciale, non limitiamo i partecipanti a generi fotografici predefiniti, ma lavoriamo sulla <span class="highlighter">crescita di ogni fotografo in modo individuale</span>.
-      </p>
-      <p>
-        Alla fine di questo percorso il partecipante saprà guardare e fare fotografia con una comprensione profonda della materia; sarà in grado di usare la fotografia come strumento di ricerca per creare in modo originale e consapevole i propri progetti e disseminarli nel mondo sotto forma di libri e mostre.
-      </p>
-      <p>
-        The Soul and the Machine prepara inoltre ad avere un approccio critico al proprio lavoro e a muoversi professionalmente nel mondo della fotografia.
-      </p>
-    </Fragment>
-  </Content>
-
-  <Content
-    isAfterContent
-    isReversed
-    image={{
-      src: '~/assets/images/insegnanti_opere/3_Arianna-Arcara-Luca-Santese-The-Flag.jpg',
-      alt: 'Colorful Image',
-    }}
-    imageCredit="© Arianna Arcara"
-  >
-    <Fragment slot="content">
-      <PortraTitle tagline="primo anno" title="ILGIOCO"/>
-      <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando all’artista Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di <span class="highlighter">mettere in moto la consapevolezza dei partecipanti, allenarli al rischio creativo, alla ricerca artistica e intellettuale.</span>
-      </p>
-      <p>Il percorso si articola in tre trimestri, ciascuno composto da diversi corsi con laboratorio e corsi teorici. Tutti i corsi sono insegnati in diretta online il <span class="highlighter">martedì e mercoledì sera</span> e quelli con laboratorio prevedono la produzione di lavoro fotografico, detto “gioco”, da parte dei partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta al mese. 
-      </p>
-      <p>Ogni corso è interconnesso e pensato per costruire un percorso coerente che permette ai partecipanti di affinare le proprie competenze, <span class="highlighter">esplorare nuove modalità espressive</span> e trovare il proprio posto nel panorama della fotografia contemporanea.
-      </p>
-      <p>Approfondiremo temi quali il linguaggio visuale, lo stile, il processo creativo e cosa è l’autorialità. Il percorso TSATM vuole andare al di là della separazione dei generi fotografici, una tendenza comune alla maggior parte degli autori fine-art dell’ultima generazione: ci occuperemo di esplorare e rafforzare tutti i generi necessari per fare fotografia del reale (fotogiornalismo e documentaristica), e in particolare il ritratto e il paesaggio fine-art. Un corso si occuperà anche di esplorare la fotografia in modo multidisciplinare: come interagire con le foto attraverso collage, disegno o l’aggiunta di testo?
-      </p>
-      <p>Ci sono anche due corsi monografici a supporto: storia e filosofia della fotografia (documentaria e artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento ad esplorare la fotografia analogica.
-      </p>
-    </Fragment>
-  </Content>
-
-  <Content
-    isAfterContent
-    isReversed
-    image={{
-      src: '~/assets/images/insegnanti_opere/4_nausicaagiuliabianchi_2021_14_D-web 2.jpg',
-      alt: 'Colorful Image',
-    }}
-    imageCredit="© Nausicaa Giulia Bianchi"
-  >
-    
-    <Fragment slot="content">
-      <PortraTitle tagline="Secondo anno" title="LAMIAVOCE"/>
-      <p>Quali sono le paure che vi attanagliano? <span class="highlighter">Chi siete quando nessuno vi vede? Per che cosa sareste disposti a dare la vita senza avere niente in cambio?</span> Nel secondo anno continuiamo a scoprire chi siete in un percorso sempre più individuale.
-      </p>
-      <p>Adesso che i partecipanti hanno più consapevolezza del tipo di immagini che gli appartengono, dei temi che gli stanno a cuore, di cosa si può fare con la fotografia e di quante strade diverse e originali si possono prendere, è il momento di spingere la loro fotografia verso i campi di ricerca di loro scelta, sia giornalistica che artistica. Ci occuperemo di cosa sono i <span class="highlighter">progetti fotografici</span> e di come costruire un <span class="highlighter">processo di ricerca</span> che eviti essi diventino il regno dei nostri stereotipi e del già noto. I partecipanti capiranno come relazionarsi al proprio lavoro e farlo crescere sempre più in direzioni nuove e inaspettate.
-      </p>
-      <p>Come le immagini interagiscono tra di loro? Dittici, serialità, narrativa visuale. Grazie a ben quattro professionisti del settore, i partecipanti sperimenteranno con il libro fotografico, la fanzine e la mostra come dispositivo di comunicazione. Un corso si occuperà anche di esplorare la fotografia vernacolare e l’approccio autoriale agli archivi.
-      </p>
-      <p>Si lavorerà inoltre sulla presentazione di noi stessi e dei nostri progetti nel mondo professionale della fotografia autoriale, i nostri destinatari saranno sia i magazine che le gallerie e le residenze artistiche.
-      </p>
-    </Fragment>
-  </Content>
+  <CourseObjectivesSection />
+  <IlGiocoSection />
+  <LaMiaVoceSection />
+  <MateriaParanoicaSection />
 
     <Content
     isAfterContent

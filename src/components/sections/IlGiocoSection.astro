@@ -1,0 +1,28 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+---
+
+<Content
+  isAfterContent
+  isReversed
+  image={{
+    src: '~/assets/images/insegnanti_opere/3_Arianna-Arcara-Luca-Santese-The-Flag.jpg',
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Arianna Arcara"
+>
+  <Fragment slot="content">
+    <PortraTitle tagline="primo anno" title="ILGIOCO"/>
+    <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando all'artista Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di <span class="highlighter">mettere in moto la consapevolezza dei partecipanti, allenarli al rischio creativo, alla ricerca artistica e intellettuale.</span>
+    </p>
+    <p>Il percorso si articola in tre trimestri, ciascuno composto da diversi corsi con laboratorio e corsi teorici. Tutti i corsi sono insegnati in diretta online il <span class="highlighter">martedì e mercoledì sera</span> e quelli con laboratorio prevedono la produzione di lavoro fotografico, detto "gioco", da parte dei partecipanti. Il lavoro di tutti viene revisionato ad ogni incontro, almeno una volta al mese. 
+    </p>
+    <p>Ogni corso è interconnesso e pensato per costruire un percorso coerente che permette ai partecipanti di affinare le proprie competenze, <span class="highlighter">esplorare nuove modalità espressive</span> e trovare il proprio posto nel panorama della fotografia contemporanea.
+    </p>
+    <p>Approfondiremo temi quali il linguaggio visuale, lo stile, il processo creativo e cosa è l'autorialità. Il percorso TSATM vuole andare al di là della separazione dei generi fotografici, una tendenza comune alla maggior parte degli autori fine-art dell'ultima generazione: ci occuperemo di esplorare e rafforzare tutti i generi necessari per fare fotografia del reale (fotogiornalismo e documentaristica), e in particolare il ritratto e il paesaggio fine-art. Un corso si occuperà anche di esplorare la fotografia in modo multidisciplinare: come interagire con le foto attraverso collage, disegno o l'aggiunta di testo?
+    </p>
+    <p>Ci sono anche due corsi monografici a supporto: storia e filosofia della fotografia (documentaria e artistica) e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento ad esplorare la fotografia analogica.
+    </p>
+  </Fragment>
+</Content>
