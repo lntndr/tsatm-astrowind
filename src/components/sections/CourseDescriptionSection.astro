@@ -1,0 +1,30 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+---
+
+<Content
+  isAfterContent
+  image={{
+    src: '~/assets/images/insegnanti_opere/2_MARIANI_Diambra_3.jpg',
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Diambra Mariani"
+  classes={{
+    imageOverlay: '',
+    imageOverlayText: ' text-primary text-lg'
+  }}
+>
+  <Fragment slot="content">
+    <PortraTitle title="Il percorso"/>
+    <p>
+      L'obiettivo del percorso è la crescita come autori indipendenti. Crescere come autore significa innanzitutto trovare una voce personale: non ci occupiamo di fotografia commerciale, non limitiamo i partecipanti a generi fotografici predefiniti, ma lavoriamo sulla <span class="highlighter">crescita di ogni fotografo in modo individuale</span>.
+    </p>
+    <p>
+      Alla fine di questo percorso il partecipante saprà guardare e fare fotografia con una comprensione profonda della materia; sarà in grado di usare la fotografia come strumento di ricerca per creare in modo originale e consapevole i propri progetti e disseminarli nel mondo sotto forma di libri e mostre.
+    </p>
+    <p>
+      The Soul and the Machine prepara inoltre ad avere un approccio critico al proprio lavoro e a muoversi professionalmente nel mondo della fotografia.
+    </p>
+  </Fragment>
+</Content>
