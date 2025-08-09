@@ -1,5 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import HeroSection from '~/components/sections/HeroSection.astro';
+import ProgramOverviewSection from '~/components/sections/ProgramOverviewSection.astro';
 
 import Testimonials3 from '~/components/widgets/Testimonials3.astro';
 import Testimonials2 from '~/components/widgets/Testimonials2.astro';
@@ -41,40 +43,8 @@ const IDENTICAL_CTA_SUBTITLE = "Il programma dettagliato della prossima edizione
 ---
 
 <Layout metadata={metadata}>
-  <SlideHero
-  anchorId="intro"
-  images={[
-    '/assets/images/top-slideshow/0010.jpg',
-    '/assets/images/top-slideshow/0020.jpg',
-    '/assets/images/top-slideshow/0030.jpg',
-    '/assets/images/top-slideshow/0040.jpg',
-    '/assets/images/top-slideshow/0050.jpg',
-    '/assets/images/top-slideshow/0060.jpg',
-    '/assets/images/top-slideshow/0070.jpg',
-    '/assets/images/top-slideshow/0080.jpg',
-    '/assets/images/top-slideshow/0090.jpg',
-    '/assets/images/top-slideshow/0100.jpg',
-    '/assets/images/top-slideshow/0110.jpg',
-    '/assets/images/top-slideshow/0120.jpg',
-    '/assets/images/top-slideshow/0130.jpg',
-    '/assets/images/top-slideshow/0140.jpg',
-    '/assets/images/top-slideshow/0150.jpg',
-    '/assets/images/top-slideshow/0160.jpg',
-    '/assets/images/top-slideshow/0170.jpg',
-    '/assets/images/top-slideshow/0180.jpg',
-    '/assets/images/top-slideshow/0190.jpg',
-    '/assets/images/top-slideshow/0200.jpg',
-  ]}
-  imageDuration={500}
-  title="THE SOUL AND THE MACHINE"
-  subtitle="Programma biennale di fotografia autoriale"
-  >
-    <Fragment slot="subtitle">
-    <span class=" inline">
-    Programma biennale di fotografia autoriale
-    </span>
-  </Fragment>
-</SlideHero>
+  <HeroSection />
+  <ProgramOverviewSection />
 
   <Stats
     id="intro"
