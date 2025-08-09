@@ -1,10 +1,16 @@
 ---
 import Stats from '~/components/widgets/Stats.astro';
 import Steps from '~/components/widgets/Steps.astro';
+
+interface Props {
+  id?: string;
+}
+
+const { id = "overview" } = Astro.props;
 ---
 
 <Stats
-  id="intro"
+  id={id}
   title="Edizione 2026"
   classes={{
     container: 'mb-0',
