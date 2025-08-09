@@ -51,5 +51,23 @@ import '@fontsource-variable/outfit';
     margin-bottom: 0.7rem !important;
   }
 
+  /* Enable all ligatures including optional ones */
+  :root {
+    font-feature-settings: "liga" 1, "clig" 1, "dlig" 1, "hlig" 1, "calt" 1;
+    font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures contextual;
+  }
+  
+  /* Apply to all text elements */
+  *, *::before, *::after {
+    font-feature-settings: inherit;
+    font-variant-ligatures: inherit;
+  }
+  
+  /* Specific typography classes */
+  .font-sans, .font-serif, .font-heading {
+    font-feature-settings: "liga" 1, "clig" 1, "dlig" 1, "hlig" 1, "calt" 1;
+    font-variant-ligatures: common-ligatures discretionary-ligatures historical-ligatures contextual;
+  }
+  
 </style>
 
