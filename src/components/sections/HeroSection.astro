@@ -1,36 +1,17 @@
 ---
 import SlideHero from '~/components/widgets/SlideHero.astro';
-
-const heroImages = [
-  '/assets/images/top-slideshow/0010.jpg',
-  '/assets/images/top-slideshow/0020.jpg',
-  '/assets/images/top-slideshow/0030.jpg',
-  '/assets/images/top-slideshow/0040.jpg',
-  '/assets/images/top-slideshow/0050.jpg',
-  '/assets/images/top-slideshow/0060.jpg',
-  '/assets/images/top-slideshow/0070.jpg',
-  '/assets/images/top-slideshow/0080.jpg',
-  '/assets/images/top-slideshow/0090.jpg',
-  '/assets/images/top-slideshow/0100.jpg',
-  '/assets/images/top-slideshow/0110.jpg',
-  '/assets/images/top-slideshow/0120.jpg',
-  '/assets/images/top-slideshow/0130.jpg',
-  '/assets/images/top-slideshow/0140.jpg',
-  '/assets/images/top-slideshow/0150.jpg',
-  '/assets/images/top-slideshow/0160.jpg',
-  '/assets/images/top-slideshow/0170.jpg',
-  '/assets/images/top-slideshow/0180.jpg',
-  '/assets/images/top-slideshow/0190.jpg',
-  '/assets/images/top-slideshow/0200.jpg',
-];
+import { slideshowImages } from '~/assets/images/slideshow/config';
 ---
 
 <SlideHero
   anchorId="intro"
-  images={heroImages}
-  imageDuration={500}
   title="THE SOUL AND THE MACHINE"
   subtitle="Programma biennale di fotografia autoriale"
+  slideshow={{
+    images: slideshowImages,
+    folder: 'slideshow',
+    duration: 500  // Back to 500ms
+  }}
 >
   <Fragment slot="subtitle">
     <span class="inline">

@@ -1,7 +1,15 @@
 ---
 import Button from '~/components/ui/Button.astro';
-
+import { Image } from 'astro:assets';
 import type { Hero as Props } from '~/types';
+
+export interface SlideHeroProps extends Props {
+  slideshow?: {
+    images?: Array<{ filename: string; alt?: string }>;
+    folder?: string;
+    duration?: number;
+  };
+}
 
 const {
   title = await Astro.slots.render('title'),
@@ -9,28 +17,114 @@ const {
   tagline,
   content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
-  images = [], // Array of image sources
-  poster, // Fallback image for initial display
   id,
   anchorId,
-  imageDuration = 3000, // Duration for each image in milliseconds (default 3 seconds)
-} = Astro.props;
+  slideshow = { folder: 'slideshow', duration: 3000 },
+} = Astro.props as SlideHeroProps;
+
+const slideshowImages = slideshow.images;
+const slideshowFolder = slideshow.folder || 'slideshow';
+const imageDuration = slideshow.duration || 3000;
+
+const imageModules = import.meta.glob('/src/assets/images/**/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: false });
+
+let processedImages = [];
+
+if (slideshowImages) {
+  for (const config of slideshowImages) {
+    const imagePath = `/src/assets/images/${slideshowFolder}/${config.filename}`;
+    const imageModule = imageModules[imagePath];
+    
+    if (imageModule) {
+      try {
+        const { default: imageImport } = await imageModule();
+        processedImages.push({
+          src: imageImport,
+          alt: config.alt || 'Slideshow image',
+          filename: config.filename
+        });
+      } catch (error) {
+        // Silent error handling
+      }
+    }
+  }
+} else {
+  const folderPattern = `/src/assets/images/${slideshowFolder}/`;
+  const imagePaths = Object.keys(imageModules)
+    .filter(path => path.startsWith(folderPattern))
+    .sort((a, b) => {
+      const filenameA = a.split('/').pop();
+      const filenameB = b.split('/').pop();
+      return filenameA.localeCompare(filenameB, undefined, { numeric: true });
+    });
+  
+  for (const imagePath of imagePaths) {
+    const imageModule = imageModules[imagePath];
+    try {
+      const { default: imageImport } = await imageModule();
+      const filename = imagePath.split('/').pop();
+      
+      processedImages.push({
+        src: imageImport,
+        alt: `Slideshow image: ${filename}`,
+        filename
+      });
+    } catch (error) {
+      // Silent error handling
+    }
+  }
+}
+
+const validImages = processedImages.filter(Boolean);
+const optimizedImageSources = validImages.map(img => img?.src?.src).filter(Boolean);
+const imageWidths = [400, 768, 1024, 2040];
+const imageSizes = "(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px";
 ---
 
 <section class="relative w-full overflow-hidden not-prose select-none" id="slide-hero-section" {...id ? { id } : {}}>
-  <img 
-    src={poster || (images.length > 0 ? images[0] : '')}
-    alt="Background"
-    class="absolute top-0 left-0 w-full h-full object-cover"
-    loading="eager"
-  />
+  <!-- Preload first few images -->
+  {validImages.slice(0, 5).map(img => (
+    <link rel="preload" as="image" href={img.src.src} />
+  ))}
 
   <div id="slideshow-container" class="absolute top-0 left-0 w-full h-full">
-    <!-- Slideshow images will be inserted here by JavaScript -->
+    <!-- Layer 1: Eager loaded -->
+    <div id="slideshow-layer-1" class="absolute top-0 left-0 w-full h-full" style="z-index: 2;">
+      {validImages.map((img, index) => (
+        <Image
+          src={img.src}
+          alt={img.alt}
+          class={`absolute top-0 left-0 w-full h-full object-cover slideshow-image layer-1-image ${index === 0 ? 'active' : ''}`}
+          loading="eager"
+          widths={imageWidths}
+          sizes={imageSizes}
+          format="webp"
+          style={index === 0 ? 'display: block;' : 'display: none;'}
+          data-slide-index={index}
+        />
+      ))}
+    </div>
+    
+    <!-- Layer 2: Lazy loaded -->
+    <div id="slideshow-layer-2" class="absolute top-0 left-0 w-full h-full" style="z-index: 1;">
+      {validImages.map((img, index) => (
+        <Image
+          src={img.src}
+          alt={img.alt}
+          class="absolute top-0 left-0 w-full h-full object-cover slideshow-image layer-2-image"
+          loading="lazy"
+          widths={imageWidths}
+          sizes={imageSizes}
+          format="webp"
+          style="display: none;"
+          data-slide-index={index}
+        />
+      ))}
+    </div>
   </div>
 
   <!-- Content Overlay -->
-  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center" style="z-index: 10;">
     <div class="text-center max-w-5xl mx-auto px-4 sm:px-6">
       {tagline && (
         <p
@@ -74,178 +168,131 @@ const {
   </div>
 </section>
 
-<script define:vars={{ images, imageDuration }}>
+<style>
+  .slideshow-image {
+    transform: translateZ(0);
+    will-change: display;
+  }
+  
+  .slideshow-image.active {
+    display: block !important;
+  }
+</style>
+
+<script define:vars={{ optimizedImageSources, imageDuration }}>
   let currentImageIndex = 0;
   let slideshowInterval;
-  let observer;
-  let isHolding = false;
-  let lastImageChangeTime = 0;
+  let hasStarted = false;
+  let activeLayer = 1;
+  let layer2Loaded = false;
 
-  function createSlideshow() {
-    const slideshowContainer = document.getElementById('slideshow-container');
-    if (slideshowContainer && images && images.length > 0) {
-      // Create simple img elements
-      images.forEach((imageSrc, index) => {
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.alt = `Slide ${index + 1}`;
-        img.className = 'absolute top-0 left-0 w-full h-full object-cover';
-        img.loading = index === 0 ? 'eager' : 'lazy';
-        img.style.display = index === 0 ? 'block' : 'none';
-        
-        slideshowContainer.appendChild(img);
-      });
+  function waitForLayer1Images() {
+    const layer1Images = document.querySelectorAll('.layer-1-image');
+    if (layer1Images.length === 0) return;
+
+    let loadedCount = 0;
+    const totalImages = layer1Images.length;
+    const promises = [];
+
+    layer1Images.forEach(function(img) {
+      if (img.complete && img.naturalWidth > 0) {
+        loadedCount++;
+      } else {
+        const promise = new Promise(function(resolve) {
+          img.addEventListener('load', function() {
+            loadedCount++;
+            resolve();
+          });
+          img.addEventListener('error', resolve);
+        });
+        promises.push(promise);
+      }
+    });
+
+    if (promises.length === 0) {
+      startSlideshowWhenReady();
+    } else {
+      Promise.all(promises).then(startSlideshowWhenReady);
+    }
+  }
+
+  function loadLayer2Images() {
+    if (layer2Loaded) return;
+    
+    const layer2Images = document.querySelectorAll('.layer-2-image');
+    layer2Images.forEach(function(img) {
+      img.loading = 'eager';
+    });
+    layer2Loaded = true;
+  }
+
+  function startSlideshowWhenReady() {
+    if (hasStarted) return;
+    
+    hasStarted = true;
+    
+    if (optimizedImageSources.length > 1) {
+      setTimeout(loadLayer2Images, 100);
+      scheduleNextTransition();
+    }
+  }
+
+  function scheduleNextTransition() {
+    if (optimizedImageSources.length > 1) {
+      slideshowInterval = setTimeout(function() {
+        nextImage();
+        scheduleNextTransition();
+      }, imageDuration);
     }
   }
 
   function nextImage() {
-    const slideshowContainer = document.getElementById('slideshow-container');
-    if (slideshowContainer && images && images.length > 1) {
-      const allImages = slideshowContainer.querySelectorAll('img');
-      
-      // Hide current image
-      allImages[currentImageIndex].style.display = 'none';
-      
-      // Move to next image
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      
-      // Show next image
-      allImages[currentImageIndex].style.display = 'block';
-      
-      // Update last change time
-      lastImageChangeTime = Date.now();
-    }
-  }
-
-  function startSlideshow() {
-    if (images && images.length > 1 && !isHolding) {
-      // Clear any existing interval to prevent multiple intervals
-      stopSlideshow();
-      
-      // Reset timing reference
-      lastImageChangeTime = Date.now();
-      
-      // Use setTimeout instead of setInterval for more precise timing
-      function scheduleNext() {
-        if (!isHolding && images && images.length > 1) {
-          slideshowInterval = setTimeout(() => {
-            nextImage();
-            scheduleNext(); // Schedule the next one
-          }, imageDuration);
-        }
-      }
-      
-      scheduleNext();
-    }
-  }
-
-  function stopSlideshow() {
-    if (slideshowInterval) {
-      clearTimeout(slideshowInterval);
-      slideshowInterval = null;
-    }
-  }
-
-  function handleHoldStart(e) {
-    // Only prevent default for mouse events, not touch events
-    if (e.type === 'mousedown') {
-      e.preventDefault();
-    }
-    isHolding = true;
-    stopSlideshow();
-  }
-
-  function handleHoldEnd(e) {
-    // Only prevent default for mouse events, not touch events  
-    if (e && e.type === 'mouseup') {
-      e.preventDefault();
-    }
-    isHolding = false;
+    const nextImageIndex = (currentImageIndex + 1) % optimizedImageSources.length;
     
-    // Only restart if the slideshow container is in view
-    const slideshowContainer = document.getElementById('slideshow-container');
-    if (slideshowContainer) {
-      const rect = slideshowContainer.getBoundingClientRect();
-      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (isInView) {
-        // Small delay to ensure clean restart
-        setTimeout(() => {
-          startSlideshow();
-        }, 50);
-      }
-    }
-  }
-
-  function handleIntersection(entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !isHolding) {
-        startSlideshow();
-      } else {
-        stopSlideshow();
-      }
-    });
-  }
-
-  function initSlideshow() {
-    createSlideshow();
+    const currentLayerClass = activeLayer === 1 ? '.layer-1-image' : '.layer-2-image';
+    const nextLayerClass = activeLayer === 1 ? '.layer-2-image' : '.layer-1-image';
+    const currentLayer = activeLayer === 1 ? document.getElementById('slideshow-layer-1') : document.getElementById('slideshow-layer-2');
+    const nextLayer = activeLayer === 1 ? document.getElementById('slideshow-layer-2') : document.getElementById('slideshow-layer-1');
     
-    // Set up Intersection Observer to start/stop slideshow when in/out of view
-    const slideshowContainer = document.getElementById('slideshow-container');
-    if (slideshowContainer) {
-      observer = new IntersectionObserver(handleIntersection, {
-        threshold: 0.5 // Trigger when 50% of the slideshow is visible
-      });
-      observer.observe(slideshowContainer);
-
-      // Add hold event listeners for desktop and mobile
-      const heroSection = slideshowContainer.closest('section');
-      if (heroSection) {
-        // Desktop: mouse events (keep passive: false for preventDefault)
-        heroSection.addEventListener('mousedown', handleHoldStart, { passive: false });
-        heroSection.addEventListener('mouseup', handleHoldEnd, { passive: false });
-        heroSection.addEventListener('mouseleave', handleHoldEnd, { passive: false });
-
-        // Mobile: touch events (use passive: true to allow scrolling)
-        heroSection.addEventListener('touchstart', handleHoldStart, { passive: true });
-        heroSection.addEventListener('touchend', handleHoldEnd, { passive: true });
-        heroSection.addEventListener('touchcancel', handleHoldEnd, { passive: true });
-      }
+    const nextLayerImages = document.querySelectorAll(nextLayerClass);
+    nextLayerImages.forEach(function(img) {
+      img.style.display = 'none';
+      img.classList.remove('active');
+    });
+    
+    const nextImage = document.querySelector(nextLayerClass + '[data-slide-index="' + nextImageIndex + '"]');
+    if (nextImage) {
+      nextImage.style.display = 'block';
+      nextImage.classList.add('active');
     }
+    
+    if (activeLayer === 1) {
+      nextLayer.style.zIndex = '3';
+      currentLayer.style.zIndex = '2';
+      activeLayer = 2;
+    } else {
+      nextLayer.style.zIndex = '2';
+      currentLayer.style.zIndex = '1';
+      activeLayer = 1;
+    }
+    
+    currentImageIndex = nextImageIndex;
   }
 
-  // Run initSlideshow when the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', initSlideshow);
-  document.addEventListener('DOMContentLoaded', () => {
-    const scrollLinks = document.querySelectorAll('.js-scroll');
-    scrollLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').slice(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  });
-
-  // Clean up on page unload
-  window.addEventListener('beforeunload', () => {
-    stopSlideshow();
-    if (observer) {
-      observer.disconnect();
-    }
-  });
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('header'); // Adjust selector as needed
+  function adjustHeroHeight() {
+    const header = document.querySelector('header');
     const heroSection = document.getElementById('slide-hero-section');
     
     if (header && heroSection) {
       const headerHeight = header.offsetHeight;
-      heroSection.style.height = `calc(100vh - ${headerHeight}px)`;
+      heroSection.style.height = 'calc(100vh - ' + headerHeight + 'px)';
     }
-  });
+  }
+
+  function initSlideshow() {
+    waitForLayer1Images();
+    adjustHeroHeight();
+  }
+
+  document.addEventListener('DOMContentLoaded', initSlideshow);
 </script>
