@@ -4,7 +4,7 @@ export const headerData = {
   links: [
     {
       text: 'Edizione 2026',
-      href: getPermalink('/#intro'),
+      href: getPermalink('/#cosa-facciamo'),
     },
     {
       text: 'Docenti',
