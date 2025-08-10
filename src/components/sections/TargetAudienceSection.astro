@@ -1,6 +1,7 @@
 ---
 import Content from '~/components/widgets/Content.astro';
 import PortraTitle from '~/components/ui/PortraTitle.astro';
+import studentImage from '~/assets/images/studenti_opere/fabiosolfanelli_SCAN091.jpg';
 
 interface Props {
   id?: string;
@@ -13,7 +14,7 @@ const { id = "a-chi" } = Astro.props;
   title="Che cosa facciamo"
   id={id}
   image={{
-    src: '~/assets/images/studenti_opere/fabiosolfanelli_SCAN091.jpg',
+    src: studentImage,
     alt: 'Colorful Image',
   }}
   imageCredit="© Fabio Solfanelli"
