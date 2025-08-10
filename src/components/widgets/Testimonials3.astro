@@ -27,38 +27,44 @@ const {
       testimonials &&
         testimonials.map(({ title, testimonial, name, job, image }) => (
           <div class="flex h-auto">
-            <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
-              {title && <h2 class="text-lg font-medium leading-6 pb-4">{title}</h2>}
-              {testimonial && (
-                <blockquote class="flex-auto">
-                  <p set:html={testimonial} class="font-serif"> </p>
-                </blockquote>
-              )}
+            <div class="flex flex-col rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600 h-full">
+              <div class="p-4 md:p-6 flex-grow flex flex-col">
+                <div class="flex-grow">
+                  {title && <h2 class="text-xl font-medium leading-6 pb-4 pt-2">{title}</h2>}
+                  {testimonial && (
+                    <blockquote class="flex-auto">
+                      <p set:html={testimonial} class="font-serif text-lg leading-snug"> </p>
+                    </blockquote>
+                  )}
+                </div>
 
-              <hr class="border-slate-200 dark:border-slate-600 my-4" />
+                <div class="mt-auto">
+                  <hr class="border-slate-200 dark:border-slate-600 my-4" />
 
-              <div class="flex items-center">
-                {image && (
-                  <div class="h-10 w-10">
-                    {typeof image === 'string' ? (
-                      <Fragment set:html={image} />
-                    ) : (
-                      <Image
-                        class="h-10 w-10 min-w-full min-h-full rounded-full"
-                        width={40}
-                        height={40}
-                        widths={[400, 768]}
-                        objectFit='cover'
-                        objectPosition='top'
-                        {...image}
-                      />
+                  <div class="flex items-center">
+                    {image && (
+                      <div class="h-12 w-12 flex-shrink-0">
+                        {typeof image === 'string' ? (
+                          <Fragment set:html={image} />
+                        ) : (
+                          <Image
+                            class="h-12 w-12 min-w-full min-h-full rounded-md"
+                            width={48}
+                            height={48} 
+                            widths={[400, 768]}
+                            objectFit='cover'
+                            objectPosition='top'
+                            {...image}
+                          />
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
 
-                <div class="grow ml-3 rtl:ml-0 rtl:mr-3">
-                  {name && <p class="text-base font-semibold">{name}</p>}
-                  {job && <p class="text-xs text-muted">{job}</p>}
+                    <div class="grow ml-3 rtl:ml-0 rtl:mr-3 flex flex-col justify-center -space-y-1">
+                      {name && <p class="text-lg font-semibold leading-none">{name}</p>}
+                      {job && <p class="text-sm text-muted leading-none">{job}</p>}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
