@@ -55,6 +55,8 @@ const {
             {testimonials[0].testimonial && (
               <p class="font-serif text-lg leading-snug -mx-4 md:mx-0">{testimonials[0].testimonial}</p>
             )}
+            <hr class="border-slate-200 dark:border-slate-600 my-4 -mx-4 md:mx-0" />
+            <slot name="afterFirstTestimonial" />
           </div>
         </div>
       </div>
