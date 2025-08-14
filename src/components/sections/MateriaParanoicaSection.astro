@@ -1,7 +1,15 @@
 ---
 import Content from '~/components/widgets/Content.astro';
 import PortraTitle from '~/components/ui/PortraTitle.astro';
+import Image from '~/components/common/Image.astro';
 import elisaBrandi from '~/assets/images/studenti_opere/Elisa-Brandi-MATERIA.jpg';
+
+// Import logo images
+import zeroideeImg from '~/assets/images/logos/Zeroidee.png';
+import logoNeroImg from '~/assets/images/logos/LOGO_NERO.png';
+import idaLogoImg from '~/assets/images/logos/logotipo-ida-grande.png';
+import fvgLogoNeroImg from '~/assets/images/logos/logo_fvg_nero.png';
+import fvgRegionImg from '~/assets/images/logos/FVG_denominativo_riquadro_bianco_RGB.png';
 ---
 
 <Content
@@ -27,9 +35,9 @@ import elisaBrandi from '~/assets/images/studenti_opere/Elisa-Brandi-MATERIA.jpg
       <div class="mb-6">
         <p class="text-center text-sm text-gray-600 mb-3 font-medium"><em>Materia paranoica</em> è una residenza promossa da</p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <img src="/assets/images/logos/Zeroidee.png" alt="Zeroidee" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
-          <img src="/assets/images/logos/LOGO_NERO.png" alt="Logo Nero" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
-          <img src="/assets/images/logos/logotipo-ida-grande.png" alt="IDA" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+          <Image src={zeroideeImg} alt="Zeroidee" width={160} height={40} style="height: 40px; width: auto; object-fit: contain;" class="opacity-70 hover:opacity-100 transition-opacity" />
+          <Image src={logoNeroImg} alt="Logo Nero" width={160} height={40} style="height: 40px; width: auto; object-fit: contain;" class="opacity-70 hover:opacity-100 transition-opacity" />
+          <Image src={idaLogoImg} alt="IDA" width={40} height={40} style="height: 40px; width: auto; object-fit: contain;" class="opacity-70 hover:opacity-100 transition-opacity" />
         </div>
       </div>
       
@@ -37,8 +45,8 @@ import elisaBrandi from '~/assets/images/studenti_opere/Elisa-Brandi-MATERIA.jpg
       <div>
         <p class="text-center text-sm text-gray-600 mb-3 font-medium">Con il contributo di</p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <img src="/assets/images/logos/logo_fvg_nero.png" alt="FVG Logo Nero" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
-          <img src="/assets/images/logos/FVG_denominativo_riquadro_bianco_RGB.png" alt="Regione Friuli Venezia Giulia" class="h-10 opacity-70 hover:opacity-100 transition-opacity">
+          <Image src={fvgLogoNeroImg} alt="FVG Logo Nero" width={195} height={40} style="height: 40px; width: auto; object-fit: contain;" class="opacity-70 hover:opacity-100 transition-opacity" />
+          <Image src={fvgRegionImg} alt="Regione Friuli Venezia Giulia" width={40} height={40} style="height: 40px; width: auto; object-fit: contain;" class="opacity-70 hover:opacity-100 transition-opacity" />
         </div>
       </div>
     </div>
