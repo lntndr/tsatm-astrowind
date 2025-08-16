@@ -2,17 +2,11 @@
 import Content from '~/components/widgets/Content.astro';
 import PortraTitle from '~/components/ui/PortraTitle.astro';
 import studentImage from '~/assets/images/studenti_opere/fabiosolfanelli_SCAN091.jpg';
-
-interface Props {
-  id?: string;
-}
-
-const { id = "a-chi" } = Astro.props;
 ---
 
 <Content
   title="Edizione 2026"
-  id={id}
+  id="edizione-2026"
   image={{
     src: studentImage,
     alt: 'Colorful Image',

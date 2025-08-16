@@ -1,16 +1,10 @@
 ---
 import Stats from '~/components/widgets/Stats.astro';
 import Steps from '~/components/widgets/Steps.astro';
-
-interface Props {
-  id?: string;
-}
-
-const { id = "overview" } = Astro.props;
 ---
 
 <Stats
-  id={id}
+  id="cos-e"
   title="Cos'è TSATM?"
   classes={{
     container: 'mb-0',
