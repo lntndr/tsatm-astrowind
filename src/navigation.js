@@ -48,7 +48,27 @@ export const footerData = {
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://instagram.com/thesoulandthemachine' },
     { ariaLabel: 'E-mail', icon: 'tabler:mail', href: 'mailto:education@idafotografia.com'},
   ],
+  photoCredits: [
+    { text: 'Nicolae Barizza' },
+    { text: 'Elena Prola' },
+    { text: 'Fabio Solfanelli' },
+    { text: 'Elisa Mercadante' },
+    { text: 'Barbara Malacart' },
+    { text: 'Patrizia' },
+    { text: 'Sergio Ferri' },
+    { text: 'Pier Luigi Ciambra' },
+    { text: 'Valeria Bitonto' },
+    { text: 'Simona Ramponi' },
+    { text: 'Serafina Figliuzzi' },
+    { text: 'Nicla Sisto' },
+    { text: 'Kristina Babusci' },
+    { text: 'Nicoletta Deva Tortone' },
+    { text: 'Jacopo Casolai' },
+    { text: 'Zoe Ferrara' },
+    { text: 'Palmira Benetti' },
+    { text: 'Piana' },
+  ],
   footNote: `
     Un corso di <a href="https://giuliabianchi.com/" target="_blank" >Nausicaa Giulia Bianchi</a> per <a href="https://idafotografia.com/" target="_blank" >IDA</a>
   `,
-}; 
+};
