@@ -193,6 +193,11 @@ const crossfadeMs = 25;
   let intersectionObserver;
   let resizeObserver;
   let mutationObserver;
+  let isPausedByUser = false;
+  let pauseTimeout;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+  let hasScrolled = false;
 
   function getRoot() {
     return document.getElementById(baseId);
@@ -252,19 +257,138 @@ const crossfadeMs = 25;
     if (images.length <= 1) return;
     timer = setTimeout(async () => {
       await showIndex(currentImageIndex + 1);
-      if (running) schedule();
+      if (running && !isPausedByUser) schedule();
     }, imageDuration);
   }
 
   function start() {
     if (running) return;
     running = true;
-    schedule();
+    if (!isPausedByUser) {
+      schedule();
+    }
   }
 
   function stop() {
     running = false;
     clearTimeout(timer);
+  }
+
+  function pauseSlideshow() {
+    if (isPausedByUser) return;
+    isPausedByUser = true;
+    clearTimeout(timer);
+    clearTimeout(pauseTimeout);
+  }
+
+  function resumeSlideshow() {
+    if (!isPausedByUser) return;
+    isPausedByUser = false;
+    clearTimeout(pauseTimeout);
+    
+    // Resume after a short delay to prevent immediate triggering
+    pauseTimeout = setTimeout(() => {
+      if (running && !isPausedByUser) {
+        schedule();
+      }
+    }, 100);
+  }
+
+  function setupUserInteractionPause() {
+    const root = getRoot();
+    if (!root) return;
+
+    // Mouse events for desktop
+    const handleMouseDown = (e) => {
+      // Only pause on left click
+      if (e.button === 0) {
+        pauseSlideshow();
+      }
+    };
+
+    const handleMouseUp = (e) => {
+      if (e.button === 0) {
+        resumeSlideshow();
+      }
+    };
+
+    const handleMouseLeave = () => {
+      resumeSlideshow();
+    };
+
+    // Touch events for mobile with scroll detection
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      hasScrolled = false;
+      
+      // Start a timer to detect if this is a tap vs scroll
+      setTimeout(() => {
+        if (!hasScrolled && Date.now() - touchStartTime < 200) {
+          pauseSlideshow();
+        }
+      }, 50);
+    };
+
+    const handleTouchMove = (e) => {
+      if (!e.touches[0]) return;
+      
+      const currentY = e.touches[0].clientY;
+      const deltaY = Math.abs(currentY - touchStartY);
+      
+      // If moved more than 10px, consider it scrolling
+      if (deltaY > 10) {
+        hasScrolled = true;
+        resumeSlideshow();
+      }
+    };
+
+    const handleTouchEnd = (e) => {
+      const touchDuration = Date.now() - touchStartTime;
+      
+      // If it was a quick tap without scrolling, pause briefly then resume
+      if (!hasScrolled && touchDuration < 300) {
+        // Already paused in touchStart, now resume after a moment
+        setTimeout(() => {
+          resumeSlideshow();
+        }, 1000); // Hold pause for 1 second on tap
+      } else {
+        // Was scrolling or long press, resume immediately
+        resumeSlideshow();
+      }
+    };
+
+    const handleTouchCancel = () => {
+      hasScrolled = true;
+      resumeSlideshow();
+    };
+
+    // Add event listeners
+    root.addEventListener('mousedown', handleMouseDown);
+    root.addEventListener('mouseup', handleMouseUp);
+    root.addEventListener('mouseleave', handleMouseLeave);
+    
+    // Touch events with passive: false only for touchstart to allow preventDefault if needed
+    root.addEventListener('touchstart', handleTouchStart, { passive: true });
+    root.addEventListener('touchmove', handleTouchMove, { passive: true });
+    root.addEventListener('touchend', handleTouchEnd, { passive: true });
+    root.addEventListener('touchcancel', handleTouchCancel, { passive: true });
+
+    // Cleanup function
+    const cleanup = () => {
+      root.removeEventListener('mousedown', handleMouseDown);
+      root.removeEventListener('mouseup', handleMouseUp);
+      root.removeEventListener('mouseleave', handleMouseLeave);
+      root.removeEventListener('touchstart', handleTouchStart);
+      root.removeEventListener('touchmove', handleTouchMove);
+      root.removeEventListener('touchend', handleTouchEnd);
+      root.removeEventListener('touchcancel', handleTouchCancel);
+    };
+
+    // Store cleanup for later use
+    window.addEventListener('pagehide', cleanup, { once: true });
+    
+    return cleanup;
   }
 
   // Completely rewritten header height calculation
@@ -390,6 +514,9 @@ const crossfadeMs = 25;
 
   function cleanup() {
     stop();
+    isPausedByUser = false;
+    clearTimeout(pauseTimeout);
+    
     if (visibilityHandler) {
       document.removeEventListener('visibilitychange', visibilityHandler);
       visibilityHandler = null;
@@ -416,6 +543,7 @@ const crossfadeMs = 25;
       decodeIfNeeded(second);
       setupIntersectionGate();
       setupVisibilityPause();
+      setupUserInteractionPause(); // Add user interaction pause
     });
     
     // Start height observation immediately
