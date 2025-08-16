@@ -3,9 +3,12 @@ import Button from '~/components/ui/Button.astro';
 import { Image } from 'astro:assets';
 import type { Hero as Props } from '~/types';
 
+// Import the slideshow config
+import { slideshowImages as configSlideshowImages } from '~/assets/images/slideshow/config';
+
 export interface SlideHeroProps extends Props {
   slideshow?: {
-    images?: Array<{ filename: string; alt?: string }>;
+    images?: Array<{ filename: string; alt?: string; caption?: string }>;
     folder?: string;
     duration?: number;
   };
@@ -22,7 +25,7 @@ const {
   slideshow = { folder: 'slideshow', duration: 3000 },
 } = Astro.props as SlideHeroProps;
 
-const slideshowImages = slideshow.images;
+const slideshowImagesConfig = slideshow.images || configSlideshowImages;
 const slideshowFolder = slideshow.folder || 'slideshow';
 const imageDuration = slideshow.duration || 3000;
 
@@ -30,8 +33,8 @@ const imageModules = import.meta.glob('/src/assets/images/**/*.{jpg,jpeg,png,web
 
 let processedImages = [];
 
-if (slideshowImages) {
-  for (const config of slideshowImages) {
+if (slideshowImagesConfig) {
+  for (const config of slideshowImagesConfig) {
     const imagePath = `/src/assets/images/${slideshowFolder}/${config.filename}`;
     const imageModule = imageModules[imagePath];
     if (imageModule) {
@@ -40,6 +43,7 @@ if (slideshowImages) {
         processedImages.push({
           src: imageImport,
           alt: config.alt || 'Slideshow image',
+          caption: config.caption || '',
           filename: config.filename
         });
       } catch (error) {
@@ -64,6 +68,7 @@ if (slideshowImages) {
       processedImages.push({
         src: imageImport,
         alt: `Slideshow image: ${filename}`,
+        caption: '',
         filename
       });
     } catch (error) {
@@ -82,6 +87,9 @@ const baseId = id ?? `slide-hero-${instanceSuffix}`;
 
 // Optional: set to 0 for no visible fade; try 20 to test near-invisible crossfade
 const crossfadeMs = 25;
+
+// Pass captions to the script
+const imageCaptions = validImages.map(img => img.caption || '');
 ---
 
 <section
@@ -109,6 +117,15 @@ const crossfadeMs = 25;
         data-slide-index={index}
       />
     ))}
+  </div>
+
+  <!-- Caption overlay -->
+  <div 
+    id={`${baseId}-caption`}
+    class="caption-overlay absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm font-medium opacity-0 transition-opacity duration-300 pointer-events-none"
+    style="z-index: 15;"
+  >
+    <span class="caption-text"></span>
   </div>
 
   <!-- Content Overlay -->
@@ -180,12 +197,19 @@ const crossfadeMs = 25;
   }
   .slideshow-image.active { opacity: 1; }
   .slideshow-image.wc { will-change: opacity; }
+  
+  .caption-overlay {
+    max-width: 90%;
+    backdrop-filter: blur(4px);
+  }
+  
   @media (prefers-reduced-motion: reduce) {
     .slideshow-image { transition-duration: 0ms !important; }
+    .caption-overlay { transition-duration: 0ms !important; }
   }
 </style>
 
-<script define:vars={{ imageDuration, baseId, crossfadeMs }}>
+<script define:vars={{ imageDuration, baseId, crossfadeMs, imageCaptions }}>
   let currentImageIndex = 0;
   let timer;
   let running = false;
@@ -206,6 +230,29 @@ const crossfadeMs = 25;
   function getImages() {
     const root = getRoot();
     return root ? Array.from(root.querySelectorAll('.slideshow-image')) : [];
+  }
+
+  function getCaptionElement() {
+    return document.getElementById(`${baseId}-caption`);
+  }
+
+  function updateCaption() {
+    const captionElement = getCaptionElement();
+    if (!captionElement) return;
+
+    const currentCaption = imageCaptions[currentImageIndex];
+    const captionText = captionElement.querySelector('.caption-text');
+    
+    if (captionText) {
+      captionText.textContent = currentCaption || '';
+    }
+
+    // Show caption only when paused and caption exists
+    if (isPausedByUser && currentCaption && currentCaption.trim()) {
+      captionElement.style.opacity = '1';
+    } else {
+      captionElement.style.opacity = '0';
+    }
   }
 
   function decodeIfNeeded(img) {
@@ -238,6 +285,10 @@ const crossfadeMs = 25;
       requestAnimationFrame(() => {
         if (current) current.classList.remove('active');
         currentImageIndex = nextIndex;
+        
+        // Update caption after image change
+        updateCaption();
+        
         const dropWC = () => {
           next && next.classList.remove('wc');
           current && current.classList.remove('wc');
@@ -279,12 +330,14 @@ const crossfadeMs = 25;
     isPausedByUser = true;
     clearTimeout(timer);
     clearTimeout(pauseTimeout);
+    updateCaption(); // Show caption when paused
   }
 
   function resumeSlideshow() {
     if (!isPausedByUser) return;
     isPausedByUser = false;
     clearTimeout(pauseTimeout);
+    updateCaption(); // Hide caption when resumed
     
     // Resume after a short delay to prevent immediate triggering
     pauseTimeout = setTimeout(() => {
@@ -544,6 +597,7 @@ const crossfadeMs = 25;
       setupIntersectionGate();
       setupVisibilityPause();
       setupUserInteractionPause(); // Add user interaction pause
+      updateCaption(); // Initialize caption
     });
     
     // Start height observation immediately
