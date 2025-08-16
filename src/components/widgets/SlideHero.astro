@@ -87,7 +87,7 @@ const crossfadeMs = 25;
 <section
   class="relative w-full overflow-hidden not-prose select-none"
   id={baseId}
-  style={`--xfade-ms:${crossfadeMs}ms; min-height:100dvh; height:calc(100dvh - var(--header-h, 0px));`}
+  style={`--xfade-ms:${crossfadeMs}ms; --header-h: 0px;`}
 >
   <!-- First slide is preloaded via <Image preload /> -->
 
@@ -157,6 +157,17 @@ const crossfadeMs = 25;
 </section>
 
 <style>
+  section {
+    /* Use a single height declaration that will be updated by JavaScript */
+    height: 100vh; /* Initial fallback */
+    height: 100dvh; /* Modern browsers */
+  }
+  
+  /* Remove the calc() from CSS and let JavaScript handle it entirely */
+  section.header-calculated {
+    height: var(--calculated-height);
+  }
+  
   .slideshow-image {
     position: absolute;
     inset: 0;
@@ -181,6 +192,7 @@ const crossfadeMs = 25;
   let visibilityHandler;
   let intersectionObserver;
   let resizeObserver;
+  let mutationObserver;
 
   function getRoot() {
     return document.getElementById(baseId);
@@ -213,17 +225,14 @@ const crossfadeMs = 25;
     const current = images[currentImageIndex];
     const next = images[nextIndex];
 
-    // Ensure the next image is ready to paint
     await decodeIfNeeded(next);
 
-    // Add next first, then remove current on the next frame to avoid any transparent gap
     requestAnimationFrame(() => {
       if (next) next.classList.add('active', 'wc');
       if (current) current.classList.add('wc');
       requestAnimationFrame(() => {
         if (current) current.classList.remove('active');
         currentImageIndex = nextIndex;
-        // Drop will-change after the transition window
         const dropWC = () => {
           next && next.classList.remove('wc');
           current && current.classList.remove('wc');
@@ -258,22 +267,101 @@ const crossfadeMs = 25;
     clearTimeout(timer);
   }
 
-  // Observe header height and set a CSS var so the section height = 100dvh - header
+  // Completely rewritten header height calculation
   function observeHeaderOffset() {
     const root = getRoot();
-    const header = document.querySelector('header');
-    if (!root || !header) return;
+    if (!root) return;
 
-    const apply = () => {
-      const h = header.offsetHeight || 0;
-      root.style.setProperty('--header-h', `${h}px`);
+    const updateHeight = () => {
+      // Try to find the header element
+      const header = document.querySelector('header') || 
+                    document.querySelector('[data-aw-sticky-header]');
+      
+      let headerHeight = 0;
+      
+      if (header) {
+        // Force a reflow to get accurate measurements
+        header.offsetHeight;
+        const rect = header.getBoundingClientRect();
+        headerHeight = Math.ceil(rect.height);
+        console.log('Header height detected:', headerHeight);
+      } else {
+        console.log('Header not found, using fallback');
+        // Fallback based on your header CSS - looks like it should be around 70-80px
+        headerHeight = 76; // A reasonable estimate based on typical header heights
+      }
+      
+      // Calculate the height using JavaScript
+      const viewportHeight = window.innerHeight;
+      const calculatedHeight = Math.max(viewportHeight - headerHeight, 300); // Minimum 300px
+      
+      console.log('Viewport height:', viewportHeight, 'Header height:', headerHeight, 'Calculated height:', calculatedHeight);
+      
+      // Apply the calculated height
+      root.style.setProperty('--calculated-height', `${calculatedHeight}px`);
+      root.classList.add('header-calculated');
+      
+      // Force a repaint
+      root.offsetHeight;
     };
 
-    resizeObserver = new ResizeObserver(apply);
-    resizeObserver.observe(header);
-    apply();
+    // Multiple attempts to get accurate height
+    const scheduleUpdate = () => {
+      // Immediate update
+      updateHeight();
+      
+      // Additional updates to catch any layout changes
+      setTimeout(updateHeight, 100);
+      setTimeout(updateHeight, 300);
+      setTimeout(updateHeight, 500);
+      setTimeout(updateHeight, 1000);
+    };
 
-    window.addEventListener('resize', apply);
+    // Initial update
+    if (document.readyState === 'complete') {
+      scheduleUpdate();
+    } else {
+      window.addEventListener('load', scheduleUpdate, { once: true });
+      // Also try on DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scheduleUpdate, { once: true });
+      } else {
+        scheduleUpdate();
+      }
+    }
+
+    // Watch for header changes
+    const header = document.querySelector('header');
+    if (header && window.ResizeObserver) {
+      resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(updateHeight);
+      });
+      resizeObserver.observe(header);
+    }
+
+    // Watch for window resize
+    const resizeHandler = () => {
+      requestAnimationFrame(updateHeight);
+    };
+    window.addEventListener('resize', resizeHandler);
+
+    // Watch for header attribute changes (like sticky state)
+    if (header && window.MutationObserver) {
+      mutationObserver = new MutationObserver(() => {
+        requestAnimationFrame(updateHeight);
+      });
+      mutationObserver.observe(header, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+    }
+
+    // Cleanup
+    window.addEventListener('pagehide', () => {
+      window.removeEventListener('resize', resizeHandler);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
+    }, { once: true });
   }
 
   function setupVisibilityPause() {
@@ -314,6 +402,10 @@ const crossfadeMs = 25;
       resizeObserver.disconnect();
       resizeObserver = null;
     }
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      mutationObserver = null;
+    }
   }
 
   function init() {
@@ -324,10 +416,18 @@ const crossfadeMs = 25;
       decodeIfNeeded(second);
       setupIntersectionGate();
       setupVisibilityPause();
-     });
-     observeHeaderOffset();
-     window.addEventListener('pagehide', cleanup, { once: true });
+    });
+    
+    // Start height observation immediately
+    observeHeaderOffset();
+    
+    window.addEventListener('pagehide', cleanup, { once: true });
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  // Start initialization
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
