@@ -85,31 +85,52 @@ const imageSizes = "100vw";
 const instanceSuffix = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 const baseId = id ?? `slide-hero-${instanceSuffix}`;
 
-// Optional: set to 0 for no visible fade; try 20 to test near-invisible crossfade
-const crossfadeMs = 25;
+// Reduced crossfade for better performance
+const crossfadeMs = 20;
 
-// Pass captions to the script
-const imageCaptions = validImages.map(img => img.caption || '');
+// Pass data to the script
+const scriptData = {
+  imageDuration,
+  baseId,
+  crossfadeMs,
+  imageCaptions: validImages.map(img => img.caption || ''),
+  imageAlts: validImages.map(img => img.alt || ''),
+  totalImages: validImages.length
+};
 ---
 
 <section
   class="relative w-full overflow-hidden not-prose select-none"
   id={baseId}
+  role="img"
+  aria-label={`Image slideshow with ${validImages.length} slides`}
   style={`--xfade-ms:${crossfadeMs}ms; --header-h: 0px;`}
+  tabindex="0"
 >
-  <!-- First slide is preloaded via <Image preload /> -->
+  <!-- Accessibility: Live region for slide announcements -->
+  <div 
+    id={`${baseId}-announcer`}
+    class="sr-only" 
+    aria-live="polite" 
+    aria-atomic="true"
+  ></div>
 
+  <!-- Accessibility: Screen reader instructions -->
+  <div class="sr-only">
+    <p>Use arrow keys to navigate slides, spacebar to pause or resume slideshow</p>
+  </div>
+
+  <!-- Image container -->
   <div class="absolute top-0 left-0 w-full h-full">
-    <!-- Single layer: one image per slide -->
     {validImages.map((img, index) => (
       <Image
         src={img.src}
-        alt={img.alt ?? ''}            /* Empty alt by default; overlay carries content */
-        aria-hidden="true"             /* Treat slide images as decorative */
+        alt=""                         /* Keep empty - slideshow is decorative, content is in overlay */
+        aria-hidden="true"
         class={`absolute top-0 left-0 w-full h-full object-cover slideshow-image ${index === 0 ? 'active' : ''}`}
         preload={index === 0}
         loading={index === 0 ? 'eager' : 'lazy'}
-        fetchpriority={index === 0 ? 'high' : undefined}
+        fetchpriority={index === 0 ? 'high' : 'low'}
         widths={imageWidths}
         sizes={imageSizes}
         format="avif"
@@ -119,13 +140,16 @@ const imageCaptions = validImages.map(img => img.caption || '');
     ))}
   </div>
 
-  <!-- Caption overlay -->
+  <!-- Combined caption and counter overlay -->
   <div 
     id={`${baseId}-caption`}
     class="caption-overlay absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm font-medium opacity-0 transition-opacity duration-300 pointer-events-none"
     style="z-index: 15;"
   >
-    <span class="caption-text"></span>
+    <div class="flex flex-col items-center gap-1">
+      <span class="counter-text text-xs opacity-75">1 / {validImages.length}</span>
+      <span class="caption-text"></span>
+    </div>
   </div>
 
   <!-- Content Overlay -->
@@ -160,8 +184,12 @@ const imageCaptions = validImages.map(img => img.caption || '');
         )}
         {anchorId && (
           <div class="mt-12 flex justify-center">
-            <a href={`#${anchorId}`} class="js-scroll bg-transparent hover:bg-white/10 text-white rounded-full p-3 transition-all duration-300 transform hover:translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50" aria-label="Scroll to content">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <a 
+              href={`#${anchorId}`} 
+              class="js-scroll bg-transparent hover:bg-white/10 text-white rounded-full p-3 transition-all duration-300 transform hover:translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 focus:ring-opacity-75" 
+              aria-label="Scroll to content below"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
             </a>
@@ -174,13 +202,23 @@ const imageCaptions = validImages.map(img => img.caption || '');
 </section>
 
 <style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   section {
-    /* Use a single height declaration that will be updated by JavaScript */
-    height: 100vh; /* Initial fallback */
-    height: 100dvh; /* Modern browsers */
+    height: 100vh;
+    height: 100dvh;
   }
   
-  /* Remove the calc() from CSS and let JavaScript handle it entirely */
   section.header-calculated {
     height: var(--calculated-height);
   }
@@ -195,78 +233,184 @@ const imageCaptions = validImages.map(img => img.caption || '');
     transition: opacity var(--xfade-ms, 0ms) ease;
     pointer-events: none;
   }
-  .slideshow-image.active { opacity: 1; }
-  .slideshow-image.wc { will-change: opacity; }
+  
+  .slideshow-image.active { 
+    opacity: 1; 
+  }
+  
+  .slideshow-image.will-change { 
+    will-change: opacity; 
+  }
   
   .caption-overlay {
     max-width: 90%;
     backdrop-filter: blur(4px);
   }
   
+  /* Focus styles for keyboard navigation */
+  section:focus {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+  }
+  
   @media (prefers-reduced-motion: reduce) {
-    .slideshow-image { transition-duration: 0ms !important; }
-    .caption-overlay { transition-duration: 0ms !important; }
+    .slideshow-image { 
+      transition-duration: 0ms !important; 
+    }
+    .caption-overlay { 
+      transition-duration: 0ms !important; 
+    }
   }
 </style>
 
-<script define:vars={{ imageDuration, baseId, crossfadeMs, imageCaptions }}>
+<script define:vars={{ scriptData }}>
+  // Destructure script data
+  const { imageDuration, baseId, crossfadeMs, imageCaptions, imageAlts, totalImages } = scriptData;
+  
+  // State management
   let currentImageIndex = 0;
   let timer;
   let running = false;
-  let visibilityHandler;
-  let intersectionObserver;
-  let resizeObserver;
-  let mutationObserver;
   let isPausedByUser = false;
   let pauseTimeout;
   let touchStartY = 0;
   let touchStartTime = 0;
   let hasScrolled = false;
+  
+  // Performance: Cache DOM elements
+  let cachedRoot = null;
+  let cachedImages = null;
+  let cachedCaptionElement = null;
+  let cachedAnnouncerElement = null;
+  let cachedHeader = null;
+  
+  // Observers
+  let visibilityHandler;
+  let intersectionObserver;
+  let resizeObserver;
+  let mutationObserver;
+  let imageIntersectionObserver;
+  
+  // Cleanup tracking
+  let eventCleanupFunctions = [];
 
+  // Cached DOM getters
   function getRoot() {
-    return document.getElementById(baseId);
+    if (!cachedRoot) {
+      cachedRoot = document.getElementById(baseId);
+    }
+    return cachedRoot;
   }
 
   function getImages() {
-    const root = getRoot();
-    return root ? Array.from(root.querySelectorAll('.slideshow-image')) : [];
+    if (!cachedImages) {
+      const root = getRoot();
+      cachedImages = root ? Array.from(root.querySelectorAll('.slideshow-image')) : [];
+    }
+    return cachedImages;
   }
 
   function getCaptionElement() {
-    return document.getElementById(`${baseId}-caption`);
+    if (!cachedCaptionElement) {
+      cachedCaptionElement = document.getElementById(`${baseId}-caption`);
+    }
+    return cachedCaptionElement;
   }
 
-  function updateCaption() {
+  function getAnnouncerElement() {
+    if (!cachedAnnouncerElement) {
+      cachedAnnouncerElement = document.getElementById(`${baseId}-announcer`);
+    }
+    return cachedAnnouncerElement;
+  }
+
+  // Check if user prefers reduced motion
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // Announce slide changes to screen readers
+  function announceSlideChange() {
+    const announcer = getAnnouncerElement();
+    if (!announcer) return;
+
+    const slideNumber = currentImageIndex + 1;
+    const slideAlt = imageAlts[currentImageIndex] || '';
+    const slideCaption = imageCaptions[currentImageIndex] || '';
+    
+    let announcement = `Slide ${slideNumber} of ${totalImages}`;
+    if (slideCaption) {
+      announcement += `: ${slideCaption}`;
+    } else if (slideAlt && slideAlt !== 'Slideshow image') {
+      announcement += `: ${slideAlt}`;
+    }
+    
+    announcer.textContent = announcement;
+  }
+
+  // Update combined caption and counter
+  function updateCaptionAndCounter() {
     const captionElement = getCaptionElement();
     if (!captionElement) return;
 
     const currentCaption = imageCaptions[currentImageIndex];
     const captionText = captionElement.querySelector('.caption-text');
+    const counterText = captionElement.querySelector('.counter-text');
+    
+    if (counterText) {
+      counterText.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+    }
     
     if (captionText) {
       captionText.textContent = currentCaption || '';
     }
 
-    // Show caption only when paused and caption exists
-    if (isPausedByUser && currentCaption && currentCaption.trim()) {
+    // Show overlay when paused (always show counter, caption only if exists)
+    if (isPausedByUser) {
       captionElement.style.opacity = '1';
     } else {
       captionElement.style.opacity = '0';
     }
   }
 
+  // Optimized image decoding with error handling
   function decodeIfNeeded(img) {
     if (!img) return Promise.resolve();
-    if (typeof img.decode === 'function') {
-      return img.decode().catch(() => {});
+    
+    return new Promise((resolve) => {
+      if (img.complete) {
+        resolve();
+        return;
+      }
+      
+      const onLoad = () => {
+        img.removeEventListener('load', onLoad);
+        img.removeEventListener('error', onError);
+        if (typeof img.decode === 'function') {
+          img.decode().then(resolve).catch(resolve);
+        } else {
+          resolve();
+        }
+      };
+      
+      const onError = () => {
+        img.removeEventListener('load', onLoad);
+        img.removeEventListener('error', onError);
+        resolve();
+      };
+      
+      img.addEventListener('load', onLoad, { once: true });
+      img.addEventListener('error', onError, { once: true });
+    });
+  }
+
+  // Clean up will-change property after transition
+  function cleanupWillChange(element) {
+    if (element && crossfadeMs > 0) {
+      setTimeout(() => {
+        element.classList.remove('will-change');
+      }, crossfadeMs + 50);
     }
-    if (!img.complete) {
-      return new Promise((resolve) => {
-        img.addEventListener('load', resolve, { once: true });
-        img.addEventListener('error', resolve, { once: true });
-      });
-    }
-    return Promise.resolve();
   }
 
   async function showIndex(index) {
@@ -277,27 +421,26 @@ const imageCaptions = validImages.map(img => img.caption || '');
     const current = images[currentImageIndex];
     const next = images[nextIndex];
 
+    // Preload next image
     await decodeIfNeeded(next);
 
     requestAnimationFrame(() => {
-      if (next) next.classList.add('active', 'wc');
-      if (current) current.classList.add('wc');
+      if (next) {
+        next.classList.add('active', 'will-change');
+        cleanupWillChange(next);
+      }
+      if (current) {
+        current.classList.add('will-change');
+        cleanupWillChange(current);
+      }
+      
       requestAnimationFrame(() => {
         if (current) current.classList.remove('active');
         currentImageIndex = nextIndex;
         
-        // Update caption after image change
-        updateCaption();
-        
-        const dropWC = () => {
-          next && next.classList.remove('wc');
-          current && current.classList.remove('wc');
-        };
-        if (crossfadeMs > 0) {
-          setTimeout(dropWC, crossfadeMs + 20);
-        } else {
-          dropWC();
-        }
+        // Update all UI elements
+        updateCaptionAndCounter();
+        announceSlideChange();
       });
     });
   }
@@ -306,6 +449,7 @@ const imageCaptions = validImages.map(img => img.caption || '');
     clearTimeout(timer);
     const images = getImages();
     if (images.length <= 1) return;
+    
     timer = setTimeout(async () => {
       await showIndex(currentImageIndex + 1);
       if (running && !isPausedByUser) schedule();
@@ -315,7 +459,9 @@ const imageCaptions = validImages.map(img => img.caption || '');
   function start() {
     if (running) return;
     running = true;
-    if (!isPausedByUser) {
+    
+    // Don't auto-advance if user prefers reduced motion
+    if (!isPausedByUser && !prefersReducedMotion()) {
       schedule();
     }
   }
@@ -329,216 +475,304 @@ const imageCaptions = validImages.map(img => img.caption || '');
     if (isPausedByUser) return;
     isPausedByUser = true;
     clearTimeout(timer);
-    clearTimeout(pauseTimeout);
-    updateCaption(); // Show caption when paused
+    updateCaptionAndCounter();
   }
 
   function resumeSlideshow() {
     if (!isPausedByUser) return;
     isPausedByUser = false;
-    clearTimeout(pauseTimeout);
-    updateCaption(); // Hide caption when resumed
+    updateCaptionAndCounter();
     
-    // Resume after a short delay to prevent immediate triggering
-    pauseTimeout = setTimeout(() => {
-      if (running && !isPausedByUser) {
-        schedule();
-      }
-    }, 100);
+    // Don't resume if user prefers reduced motion
+    if (prefersReducedMotion()) return;
+    
+    if (running) {
+      schedule();
+    }
   }
 
+  // Navigate to specific slide
+  function goToSlide(index) {
+    const images = getImages();
+    if (index >= 0 && index < images.length && index !== currentImageIndex) {
+      showIndex(index);
+    }
+  }
+
+  // Keyboard navigation with hold behavior
+  function setupKeyboardControls() {
+    const root = getRoot();
+    if (!root) return;
+
+    let spacePressed = false;
+    let arrowPressed = false;
+
+    const handleKeyDown = (e) => {
+      // Only handle if the slideshow or its children have focus
+      if (!root.contains(e.target) && e.target !== root) return;
+      
+      switch (e.key) {
+        case ' ':
+        case 'Spacebar':
+          e.preventDefault();
+          if (!spacePressed) {
+            spacePressed = true;
+            pauseSlideshow();
+          }
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          e.preventDefault();
+          if (!arrowPressed) {
+            arrowPressed = true;
+            pauseSlideshow();
+            const prevIndex = currentImageIndex === 0 ? totalImages - 1 : currentImageIndex - 1;
+            goToSlide(prevIndex);
+          }
+          break;
+        case 'ArrowRight':
+        case 'ArrowDown':
+          e.preventDefault();
+          if (!arrowPressed) {
+            arrowPressed = true;
+            pauseSlideshow();
+            const nextIndex = (currentImageIndex + 1) % totalImages;
+            goToSlide(nextIndex);
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          pauseSlideshow();
+          goToSlide(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          pauseSlideshow();
+          goToSlide(totalImages - 1);
+          break;
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      switch (e.key) {
+        case ' ':
+        case 'Spacebar':
+          e.preventDefault();
+          if (spacePressed) {
+            spacePressed = false;
+            resumeSlideshow();
+          }
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'ArrowRight':
+        case 'ArrowDown':
+          e.preventDefault();
+          if (arrowPressed) {
+            arrowPressed = false;
+            resumeSlideshow();
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+    
+    eventCleanupFunctions.push(() => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    });
+  }
+
+  // Click and hold behavior for mouse and touch
   function setupUserInteractionPause() {
     const root = getRoot();
     if (!root) return;
 
-    // Mouse events for desktop
-    const handleMouseDown = (e) => {
-      // Only pause on left click
-      if (e.button === 0) {
-        pauseSlideshow();
+    let isPointerDown = false;
+
+    const handlePointerDown = (e) => {
+      // Prevent default only for touch to avoid scroll interference
+      if (e.type === 'touchstart') {
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        hasScrolled = false;
       }
-    };
-
-    const handleMouseUp = (e) => {
-      if (e.button === 0) {
-        resumeSlideshow();
-      }
-    };
-
-    const handleMouseLeave = () => {
-      resumeSlideshow();
-    };
-
-    // Touch events for mobile with scroll detection
-    const handleTouchStart = (e) => {
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-      hasScrolled = false;
       
-      // Start a timer to detect if this is a tap vs scroll
-      setTimeout(() => {
-        if (!hasScrolled && Date.now() - touchStartTime < 200) {
-          pauseSlideshow();
-        }
-      }, 50);
+      isPointerDown = true;
+      pauseSlideshow();
     };
 
-    const handleTouchMove = (e) => {
-      if (!e.touches[0]) return;
+    const handlePointerMove = (e) => {
+      if (!isPointerDown) return;
       
-      const currentY = e.touches[0].clientY;
-      const deltaY = Math.abs(currentY - touchStartY);
-      
-      // If moved more than 10px, consider it scrolling
-      if (deltaY > 10) {
-        hasScrolled = true;
-        resumeSlideshow();
-      }
-    };
-
-    const handleTouchEnd = (e) => {
-      const touchDuration = Date.now() - touchStartTime;
-      
-      // If it was a quick tap without scrolling, pause briefly then resume
-      if (!hasScrolled && touchDuration < 300) {
-        // Already paused in touchStart, now resume after a moment
-        setTimeout(() => {
+      // Only check for scrolling on touch events
+      if (e.type === 'touchmove') {
+        const currentY = e.touches[0]?.clientY;
+        if (currentY === undefined) return;
+        
+        const deltaY = Math.abs(currentY - touchStartY);
+        
+        if (deltaY > 15) {
+          hasScrolled = true;
+          isPointerDown = false;
           resumeSlideshow();
-        }, 1000); // Hold pause for 1 second on tap
-      } else {
-        // Was scrolling or long press, resume immediately
+        }
+      }
+    };
+
+    const handlePointerEnd = () => {
+      if (isPointerDown) {
+        isPointerDown = false;
         resumeSlideshow();
       }
     };
 
-    const handleTouchCancel = () => {
-      hasScrolled = true;
-      resumeSlideshow();
+    const handlePointerLeave = () => {
+      if (isPointerDown) {
+        isPointerDown = false;
+        resumeSlideshow();
+      }
     };
 
-    // Add event listeners
-    root.addEventListener('mousedown', handleMouseDown);
-    root.addEventListener('mouseup', handleMouseUp);
-    root.addEventListener('mouseleave', handleMouseLeave);
+    // Mouse events
+    root.addEventListener('mousedown', handlePointerDown);
+    root.addEventListener('mousemove', handlePointerMove);
+    root.addEventListener('mouseup', handlePointerEnd);
+    root.addEventListener('mouseleave', handlePointerLeave);
     
-    // Touch events with passive: false only for touchstart to allow preventDefault if needed
-    root.addEventListener('touchstart', handleTouchStart, { passive: true });
-    root.addEventListener('touchmove', handleTouchMove, { passive: true });
-    root.addEventListener('touchend', handleTouchEnd, { passive: true });
-    root.addEventListener('touchcancel', handleTouchCancel, { passive: true });
+    // Touch events
+    root.addEventListener('touchstart', handlePointerDown, { passive: true });
+    root.addEventListener('touchmove', handlePointerMove, { passive: true });
+    root.addEventListener('touchend', handlePointerEnd, { passive: true });
+    root.addEventListener('touchcancel', handlePointerLeave, { passive: true });
 
-    // Cleanup function
-    const cleanup = () => {
-      root.removeEventListener('mousedown', handleMouseDown);
-      root.removeEventListener('mouseup', handleMouseUp);
-      root.removeEventListener('mouseleave', handleMouseLeave);
-      root.removeEventListener('touchstart', handleTouchStart);
-      root.removeEventListener('touchmove', handleTouchMove);
-      root.removeEventListener('touchend', handleTouchEnd);
-      root.removeEventListener('touchcancel', handleTouchCancel);
-    };
-
-    // Store cleanup for later use
-    window.addEventListener('pagehide', cleanup, { once: true });
-    
-    return cleanup;
+    // Store cleanup functions
+    eventCleanupFunctions.push(() => {
+      root.removeEventListener('mousedown', handlePointerDown);
+      root.removeEventListener('mousemove', handlePointerMove);
+      root.removeEventListener('mouseup', handlePointerEnd);
+      root.removeEventListener('mouseleave', handlePointerLeave);
+      root.removeEventListener('touchstart', handlePointerDown);
+      root.removeEventListener('touchmove', handlePointerMove);
+      root.removeEventListener('touchend', handlePointerEnd);
+      root.removeEventListener('touchcancel', handlePointerLeave);
+    });
   }
 
-  // Completely rewritten header height calculation
+  // Debounced height calculation
+  let heightUpdateTimeout;
+  function debounceHeightUpdate(fn, delay = 150) {
+    clearTimeout(heightUpdateTimeout);
+    heightUpdateTimeout = setTimeout(fn, delay);
+  }
+
   function observeHeaderOffset() {
     const root = getRoot();
     if (!root) return;
 
     const updateHeight = () => {
-      // Try to find the header element
-      const header = document.querySelector('header') || 
-                    document.querySelector('[data-aw-sticky-header]');
+      // Cache header element
+      if (!cachedHeader) {
+        cachedHeader = document.querySelector('header') || 
+                      document.querySelector('[data-aw-sticky-header]') ||
+                      { getBoundingClientRect: () => ({ height: 76 }) }; // Fallback object
+      }
       
       let headerHeight = 0;
       
-      if (header) {
-        // Force a reflow to get accurate measurements
-        header.offsetHeight;
-        const rect = header.getBoundingClientRect();
-        headerHeight = Math.ceil(rect.height);
-        console.log('Header height detected:', headerHeight);
+      if (cachedHeader && typeof cachedHeader.getBoundingClientRect === 'function') {
+        const rect = cachedHeader.getBoundingClientRect();
+        headerHeight = Math.ceil(rect.height || 76);
       } else {
-        console.log('Header not found, using fallback');
-        // Fallback based on your header CSS - looks like it should be around 70-80px
-        headerHeight = 76; // A reasonable estimate based on typical header heights
+        headerHeight = 76; // Fallback
       }
       
-      // Calculate the height using JavaScript
       const viewportHeight = window.innerHeight;
-      const calculatedHeight = Math.max(viewportHeight - headerHeight, 300); // Minimum 300px
+      const calculatedHeight = Math.max(viewportHeight - headerHeight, 300);
       
-      console.log('Viewport height:', viewportHeight, 'Header height:', headerHeight, 'Calculated height:', calculatedHeight);
+      // Only update if height actually changed
+      const currentHeight = root.style.getPropertyValue('--calculated-height');
+      const newHeight = `${calculatedHeight}px`;
       
-      // Apply the calculated height
-      root.style.setProperty('--calculated-height', `${calculatedHeight}px`);
-      root.classList.add('header-calculated');
-      
-      // Force a repaint
-      root.offsetHeight;
+      if (currentHeight !== newHeight) {
+        root.style.setProperty('--calculated-height', newHeight);
+        root.classList.add('header-calculated');
+      }
     };
 
-    // Multiple attempts to get accurate height
+    const debouncedUpdate = () => debounceHeightUpdate(updateHeight);
+
+    // Initial update with multiple attempts
     const scheduleUpdate = () => {
-      // Immediate update
       updateHeight();
-      
-      // Additional updates to catch any layout changes
       setTimeout(updateHeight, 100);
-      setTimeout(updateHeight, 300);
       setTimeout(updateHeight, 500);
-      setTimeout(updateHeight, 1000);
     };
 
-    // Initial update
     if (document.readyState === 'complete') {
       scheduleUpdate();
     } else {
       window.addEventListener('load', scheduleUpdate, { once: true });
-      // Also try on DOMContentLoaded
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', scheduleUpdate, { once: true });
-      } else {
-        scheduleUpdate();
       }
     }
 
-    // Watch for header changes
-    const header = document.querySelector('header');
-    if (header && window.ResizeObserver) {
-      resizeObserver = new ResizeObserver(() => {
-        requestAnimationFrame(updateHeight);
-      });
-      resizeObserver.observe(header);
+    // Observe header changes
+    if (cachedHeader && cachedHeader !== window && window.ResizeObserver) {
+      resizeObserver = new ResizeObserver(debouncedUpdate);
+      resizeObserver.observe(cachedHeader);
     }
 
-    // Watch for window resize
-    const resizeHandler = () => {
-      requestAnimationFrame(updateHeight);
-    };
-    window.addEventListener('resize', resizeHandler);
+    // Window resize
+    window.addEventListener('resize', debouncedUpdate);
+    eventCleanupFunctions.push(() => {
+      window.removeEventListener('resize', debouncedUpdate);
+    });
 
-    // Watch for header attribute changes (like sticky state)
-    if (header && window.MutationObserver) {
-      mutationObserver = new MutationObserver(() => {
-        requestAnimationFrame(updateHeight);
-      });
-      mutationObserver.observe(header, {
+    // Header attribute changes
+    if (cachedHeader && cachedHeader !== window && window.MutationObserver) {
+      mutationObserver = new MutationObserver(debouncedUpdate);
+      mutationObserver.observe(cachedHeader, {
         attributes: true,
         attributeFilter: ['class', 'style']
       });
     }
+  }
 
-    // Cleanup
-    window.addEventListener('pagehide', () => {
-      window.removeEventListener('resize', resizeHandler);
-      if (resizeObserver) resizeObserver.disconnect();
-      if (mutationObserver) mutationObserver.disconnect();
-    }, { once: true });
+  // Lazy loading for non-visible slides
+  function setupLazyLoading() {
+    if (!('IntersectionObserver' in window)) return;
+
+    const images = getImages();
+    
+    imageIntersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          // Preload next and previous images when current is visible
+          const slideIndex = parseInt(img.dataset.slideIndex, 10);
+          const nextIndex = (slideIndex + 1) % images.length;
+          const prevIndex = slideIndex === 0 ? images.length - 1 : slideIndex - 1;
+          
+          // Decode current, next, and previous
+          Promise.all([
+            decodeIfNeeded(images[slideIndex]),
+            decodeIfNeeded(images[nextIndex]),
+            decodeIfNeeded(images[prevIndex])
+          ]);
+          
+          imageIntersectionObserver.unobserve(img);
+        }
+      });
+    }, { rootMargin: '50px' });
+
+    // Observe all images
+    images.forEach(img => {
+      imageIntersectionObserver.observe(img);
+    });
   }
 
   function setupVisibilityPause() {
@@ -547,6 +781,9 @@ const imageCaptions = validImages.map(img => img.caption || '');
       else start();
     };
     document.addEventListener('visibilitychange', visibilityHandler);
+    eventCleanupFunctions.push(() => {
+      document.removeEventListener('visibilitychange', visibilityHandler);
+    });
   }
 
   function setupIntersectionGate() {
@@ -555,25 +792,33 @@ const imageCaptions = validImages.map(img => img.caption || '');
       start();
       return;
     }
+    
     intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.target !== root) return;
-        if (e.isIntersecting && e.intersectionRatio > 0) start();
-        else stop();
+      entries.forEach((entry) => {
+        if (entry.target !== root) return;
+        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+          start();
+        } else {
+          stop();
+        }
       });
     }, { root: null, threshold: 0.1 });
+    
     intersectionObserver.observe(root);
   }
 
+  // Comprehensive cleanup
   function cleanup() {
     stop();
     isPausedByUser = false;
     clearTimeout(pauseTimeout);
+    clearTimeout(heightUpdateTimeout);
     
-    if (visibilityHandler) {
-      document.removeEventListener('visibilitychange', visibilityHandler);
-      visibilityHandler = null;
-    }
+    // Clean up all event listeners
+    eventCleanupFunctions.forEach(fn => fn());
+    eventCleanupFunctions = [];
+    
+    // Clean up observers
     if (intersectionObserver) {
       intersectionObserver.disconnect();
       intersectionObserver = null;
@@ -586,29 +831,77 @@ const imageCaptions = validImages.map(img => img.caption || '');
       mutationObserver.disconnect();
       mutationObserver = null;
     }
+    if (imageIntersectionObserver) {
+      imageIntersectionObserver.disconnect();
+      imageIntersectionObserver = null;
+    }
+    
+    // Clear cached elements
+    cachedRoot = null;
+    cachedImages = null;
+    cachedCaptionElement = null;
+    cachedAnnouncerElement = null;
+    cachedHeader = null;
+  }
+
+  // Listen for reduced motion preference changes
+  function setupMotionPreference() {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    const handleMotionChange = () => {
+      if (mediaQuery.matches) {
+        // Stop auto-advance but keep manual navigation
+        stop();
+      } else if (!isPausedByUser) {
+        // Resume auto-advance if not manually paused
+        start();
+      }
+    };
+    
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleMotionChange);
+      eventCleanupFunctions.push(() => {
+        mediaQuery.removeEventListener('change', handleMotionChange);
+      });
+    }
   }
 
   function init() {
     const images = getImages();
-    const first = images[0];
-    decodeIfNeeded(first).then(() => {
-      const second = images[1];
-      decodeIfNeeded(second);
+    if (images.length === 0) return;
+
+    // Initialize first slide
+    currentImageIndex = 0;
+    
+    // Preload first few images
+    Promise.all([
+      decodeIfNeeded(images[0]),
+      images[1] ? decodeIfNeeded(images[1]) : Promise.resolve()
+    ]).then(() => {
+      // Initialize UI
+      updateCaptionAndCounter();
+      announceSlideChange();
+      
+      // Setup all functionality
       setupIntersectionGate();
       setupVisibilityPause();
-      setupUserInteractionPause(); // Add user interaction pause
-      updateCaption(); // Initialize caption
+      setupUserInteractionPause();
+      setupKeyboardControls();
+      setupLazyLoading();
+      setupMotionPreference();
     });
     
     // Start height observation immediately
     observeHeaderOffset();
     
+    // Setup cleanup on page unload
     window.addEventListener('pagehide', cleanup, { once: true });
+    window.addEventListener('beforeunload', cleanup, { once: true });
   }
 
-  // Start initialization
+  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
     init();
   }
