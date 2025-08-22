@@ -54,9 +54,9 @@ export const footerData = {
     { text: 'Fabio Solfanelli' },
     { text: 'Elisa Mercadante' },
     { text: 'Barbara Malacart' },
-    { text: 'Patrizia' },
+    { text: 'Patrizia Pratesi' },
     { text: 'Sergio Ferri' },
-    { text: 'Pier Luigi Ciambra' },
+    { text: 'Elena Indoitu' },
     { text: 'Valeria Bitonto' },
     { text: 'Simona Ramponi' },
     { text: 'Serafina Figliuzzi' },
@@ -66,7 +66,8 @@ export const footerData = {
     { text: 'Jacopo Casolai' },
     { text: 'Zoe Ferrara' },
     { text: 'Palmira Benetti' },
-    { text: 'Piana' },
+    { text: 'Elena Prola' },
+    { text: 'Michael Bertolasi' },
   ],
   footNote: `
     Un corso di <a href="https://giuliabianchi.com/" target="_blank" >Nausicaa Giulia Bianchi</a> per <a href="https://idafotografia.com/" target="_blank" >IDA</a>
