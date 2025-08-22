@@ -4,6 +4,7 @@ export const headerData = {
   links: [
     {
       text: 'Edizione 2026',
+      shortText: 'Ed. 2026',
       href: getPermalink('/#edizione-2026'),
     },
     {
@@ -31,8 +32,8 @@ export const headerData = {
     */
   ],
   actions: [
-    { text: 'Scarica il PDF', href: '#anno-prossimo' },
-    { text: 'Contattaci', href: 'mailto:education@idafotografia.com', target: '_blank' },
+    { text: 'Scarica il PDF', shortText: 'Programma', href: 'https://forms.gle/1iC8wvqYNbffmzJr5', target: '_blank' },
+    { text: 'Candidati', href: 'https://forms.gle/pi8jvxY1SbRXRFURA', target: '_blank' },
   ],
 };
 
