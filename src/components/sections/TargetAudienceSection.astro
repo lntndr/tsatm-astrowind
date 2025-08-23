@@ -1,0 +1,27 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+import studentImage from '~/assets/images/studenti_opere/fabiosolfanelli_SCAN091.jpg';
+---
+
+<Content
+  title="Edizione 2026"
+  id="edizione-2026"
+  image={{
+    src: studentImage,
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Fabio Solfanelli"
+>
+  <Fragment slot="content">
+    <PortraTitle title="A chi è rivolto"/>
+    <p>
+      The Soul and the Machine è rivolto a chi vuole essere un autore e sente di avere qualcosa da dire attraverso la fotografia. È rivolto a tutti quei fotografi il cui lavoro si posiziona tra <span class='highlighter'>la documentaristica e l'arte</span>, a chi vuole fotografare per cambiare il mondo. Sono parole forti, ma non usate a caso. Questo corso non è per chi vede la fotografia come un passatempo o un mezzo commerciale. 
+    </p>
+    <p>
+      Si tratta di un <span class='highlighter'>corso impegnativo, che richiede studio e pratica</span>, ma non è un
+      corso full-time. È concepito per coesistere con altre attività, con altri studi
+      o con periodi di viaggio.
+    </p>
+  </Fragment>
+</Content>

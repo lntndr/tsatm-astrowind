@@ -3,8 +3,9 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Edizione 2025',
-      href: getPermalink('/#intro'),
+      text: 'Edizione 2026',
+      shortText: 'Ed. 2026',
+      href: getPermalink('/#edizione-2026'),
     },
     {
       text: 'Docenti',
@@ -31,8 +32,8 @@ export const headerData = {
     */
   ],
   actions: [
-    { text: 'Scarica il PDF', href: '#anno-prossimo' },
-    { text: 'Contattaci', href: 'mailto:education@idafotografia.com', target: '_blank' },
+    { text: 'Candìdati', href: 'https://forms.gle/pi8jvxY1SbRXRFURA', target: '_blank' },
+    { text: 'Scarica il PDF', shortText: 'PDF', href: 'https://forms.gle/1iC8wvqYNbffmzJr5', target: '_blank' },
   ],
 };
 
@@ -48,7 +49,28 @@ export const footerData = {
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://instagram.com/thesoulandthemachine' },
     { ariaLabel: 'E-mail', icon: 'tabler:mail', href: 'mailto:education@idafotografia.com'},
   ],
+  photoCredits: [
+    { text: 'Nicolae Barizza' },
+    { text: 'Elena Prola' },
+    { text: 'Fabio Solfanelli' },
+    { text: 'Elisa Mercadante' },
+    { text: 'Barbara Malacart' },
+    { text: 'Patrizia Pratesi' },
+    { text: 'Sergio Ferri' },
+    { text: 'Elena Indoitu' },
+    { text: 'Valeria Bitonto' },
+    { text: 'Simona Ramponi' },
+    { text: 'Serafina Figliuzzi' },
+    { text: 'Nicla Sisto' },
+    { text: 'Kristina Babusci' },
+    { text: 'Nicoletta Deva Tortone' },
+    { text: 'Jacopo Casolai' },
+    { text: 'Zoe Ferrara' },
+    { text: 'Palmira Benetti' },
+    { text: 'Elena Prola' },
+    { text: 'Michael Bertolasi' },
+  ],
   footNote: `
     Un corso di <a href="https://giuliabianchi.com/" target="_blank" >Nausicaa Giulia Bianchi</a> per <a href="https://idafotografia.com/" target="_blank" >IDA</a>
   `,
-}; 
+};

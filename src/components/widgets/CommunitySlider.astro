@@ -1,0 +1,167 @@
+---
+import WidgetWrapper from '../ui/WidgetWrapper.astro';
+import Headline from '../ui/Headline.astro';
+import type { Widget } from '~/types';
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  content?: string;
+  images?: Array<{
+    src: string;
+    alt: string;
+  }>;
+  slideDuration?: number;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  images = [],
+  slideDuration = 4000,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<!-- Full width container, no margins -->
+<section class="relative min-h-[500px] w-full overflow-hidden" {...id ? { id } : {}}>
+  
+  <!-- Background Gallery Slider -->
+  <div class="absolute inset-0">
+    <div id="community-slider" class="flex h-full">
+      <!-- Images will be inserted here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Foreground Content Box -->
+  <div class="relative z-10 flex items-center justify-center min-h-[500px] p-8">
+    <div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-2xl mx-auto">
+      <Headline
+        title={title}
+        subtitle={subtitle}
+        tagline={tagline}
+        classes={{
+          container: 'text-center mb-6',
+          title: 'text-3xl lg:text-4xl text-gray-900 dark:text-white',
+          subtitle: 'text-lg text-gray-600 dark:text-gray-300',
+          tagline: 'text-sm text-primary font-semibold uppercase tracking-wider',
+        }}
+      />
+      {content && (
+        <div class="text-gray-700 dark:text-gray-300 leading-relaxed" set:html={content} />
+      )}
+      <slot name="content" />
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ images, slideDuration }}>
+  let animationId;
+
+  function createSlider() {
+    const slider = document.getElementById('community-slider');
+    if (slider && images && images.length > 0) {
+      slider.innerHTML = '';
+      
+      // Calculate width: each image takes up screen width divided by number of images
+      // Add 0.5% gap between images
+      const totalGapPercent = 0.5 * (images.length - 1);
+      const imageWidthPercent = (100 - totalGapPercent) / images.length;
+      
+      // Create images for seamless loop (duplicate array for infinite circular scroll)
+      const allImages = [...images, ...images];
+      
+      allImages.forEach((image, index) => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'flex-shrink-0 relative';
+        imgContainer.style.width = `${imageWidthPercent}%`;
+        
+        // Add gap after each image except the last
+        if (index < allImages.length - 1) {
+          imgContainer.style.marginRight = '0.5%';
+        }
+        
+        const imgElement = document.createElement('img');
+        imgElement.src = image.src;
+        imgElement.alt = image.alt;
+        imgElement.className = 'w-full h-full object-cover';
+        imgElement.loading = index < images.length ? 'eager' : 'lazy';
+        
+        imgContainer.appendChild(imgElement);
+        slider.appendChild(imgContainer);
+      });
+
+      // Set total width
+      const totalWidth = (imageWidthPercent + 0.5) * allImages.length;
+      slider.style.width = `${totalWidth}%`;
+      
+      // Start at the beginning of the first set
+      slider.style.transform = 'translateX(0%)';
+    }
+  }
+
+  function startContinuousSlider() {
+    const slider = document.getElementById('community-slider');
+    if (!slider || !images || images.length <= 1) return;
+    
+    let startTime = Date.now();
+    const imageWidthPercent = (100 - 0.5 * (images.length - 1)) / images.length;
+    const stepPercent = imageWidthPercent + 0.5;
+    
+    // Distance to move through one complete set of original images
+    const oneSetDistance = stepPercent * images.length;
+    
+    // Much slower: multiply by 3 to make it 3x slower
+    const cycleDuration = slideDuration * images.length * 3;
+    
+    function animate() {
+      const currentTime = Date.now();
+      const elapsed = currentTime - startTime;
+      
+      // Calculate progress through one complete set (0 to 1)
+      const progress = (elapsed % cycleDuration) / cycleDuration;
+      
+      // Move through exactly one set of images, then reset seamlessly
+      const translateX = -(progress * oneSetDistance);
+      
+      slider.style.transform = `translateX(${translateX}%)`;
+      
+      // When we complete one cycle, reset seamlessly
+      if (progress === 0 && elapsed > 0) {
+        startTime = currentTime;
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+  }
+
+  function stopSlider() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  // Initialize when component loads
+  document.addEventListener('DOMContentLoaded', () => {
+    createSlider();
+    startContinuousSlider();
+  });
+
+  // Stop slider when page becomes hidden, restart when visible
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopSlider();
+    } else {
+      startContinuousSlider();
+    }
+  });
+</script>

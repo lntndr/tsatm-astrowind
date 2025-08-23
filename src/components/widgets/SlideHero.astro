@@ -1,0 +1,908 @@
+---
+import Button from '~/components/ui/Button.astro';
+import { Image } from 'astro:assets';
+import type { Hero as Props } from '~/types';
+
+// Import the slideshow config
+import { slideshowImages as configSlideshowImages } from '~/assets/images/slideshow/config';
+
+export interface SlideHeroProps extends Props {
+  slideshow?: {
+    images?: Array<{ filename: string; alt?: string; caption?: string }>;
+    folder?: string;
+    duration?: number;
+  };
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
+  id,
+  anchorId,
+  slideshow = { folder: 'slideshow', duration: 3000 },
+} = Astro.props as SlideHeroProps;
+
+const slideshowImagesConfig = slideshow.images || configSlideshowImages;
+const slideshowFolder = slideshow.folder || 'slideshow';
+const imageDuration = slideshow.duration || 3000;
+
+const imageModules = import.meta.glob('/src/assets/images/**/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: false });
+
+let processedImages = [];
+
+if (slideshowImagesConfig) {
+  for (const config of slideshowImagesConfig) {
+    const imagePath = `/src/assets/images/${slideshowFolder}/${config.filename}`;
+    const imageModule = imageModules[imagePath];
+    if (imageModule) {
+      try {
+        const { default: imageImport } = await imageModule();
+        processedImages.push({
+          src: imageImport,
+          alt: config.alt || 'Slideshow image',
+          caption: config.caption || '',
+          filename: config.filename
+        });
+      } catch (error) {
+        // Silent error handling
+      }
+    }
+  }
+} else {
+  const folderPattern = `/src/assets/images/${slideshowFolder}/`;
+  const imagePaths = Object.keys(imageModules)
+    .filter(path => path.startsWith(folderPattern))
+    .sort((a, b) => {
+      const filenameA = a.split('/').pop();
+      const filenameB = b.split('/').pop();
+      return filenameA.localeCompare(filenameB, undefined, { numeric: true });
+    });
+  for (const imagePath of imagePaths) {
+    const imageModule = imageModules[imagePath];
+    try {
+      const { default: imageImport } = await imageModule();
+      const filename = imagePath.split('/').pop();
+      processedImages.push({
+        src: imageImport,
+        alt: `Slideshow image: ${filename}`,
+        caption: '',
+        filename
+      });
+    } catch (error) {
+      // Silent error handling
+    }
+  }
+}
+
+const validImages = processedImages.filter(Boolean);
+const imageWidths = [400, 768, 1024, 1536, 2048, 2560];
+const imageSizes = "100vw";
+
+// Per-instance id
+const instanceSuffix = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+const baseId = id ?? `slide-hero-${instanceSuffix}`;
+
+// Reduced crossfade for better performance
+const crossfadeMs = 20;
+
+// Pass data to the script
+const scriptData = {
+  imageDuration,
+  baseId,
+  crossfadeMs,
+  imageCaptions: validImages.map(img => img.caption || ''),
+  imageAlts: validImages.map(img => img.alt || ''),
+  totalImages: validImages.length
+};
+---
+
+<section
+  class="relative w-full overflow-hidden not-prose select-none"
+  id={baseId}
+  role="img"
+  aria-label={`Image slideshow with ${validImages.length} slides`}
+  style={`--xfade-ms:${crossfadeMs}ms; --header-h: 0px;`}
+  tabindex="0"
+>
+  <!-- Accessibility: Live region for slide announcements -->
+  <div 
+    id={`${baseId}-announcer`}
+    class="sr-only" 
+    aria-live="polite" 
+    aria-atomic="true"
+  ></div>
+
+  <!-- Accessibility: Screen reader instructions -->
+  <div class="sr-only">
+    <p>Use arrow keys to navigate slides, spacebar to pause or resume slideshow</p>
+  </div>
+
+  <!-- Image container -->
+  <div class="absolute top-0 left-0 w-full h-full">
+    {validImages.map((img, index) => (
+      <Image
+        src={img.src}
+        alt=""                         /* Keep empty - slideshow is decorative, content is in overlay */
+        aria-hidden="true"
+        class={`absolute top-0 left-0 w-full h-full object-cover slideshow-image ${index === 0 ? 'active' : ''}`}
+        preload={index === 0}
+        loading={index === 0 ? 'eager' : 'lazy'}
+        fetchpriority={index === 0 ? 'high' : 'low'}
+        widths={imageWidths}
+        sizes={imageSizes}
+        format="avif"
+        quality="30"
+        data-slide-index={index}
+      />
+    ))}
+  </div>
+
+  <!-- Combined caption and counter overlay -->
+  <div 
+    id={`${baseId}-caption`}
+    class="caption-overlay absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg text-sm font-medium opacity-0 transition-opacity duration-300 pointer-events-none"
+    style="z-index: 15;"
+  >
+    <div class="flex flex-col items-center gap-1">
+      <span class="counter-text text-xs opacity-75">1 / {validImages.length}</span>
+      <span class="caption-text"></span>
+    </div>
+  </div>
+
+  <!-- Content Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center" style="z-index: 10;">
+    <div class="text-center max-w-5xl mx-auto px-4 sm:px-6">
+      {tagline && (
+        <p
+          class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase"
+          set:html={tagline}
+        />
+      )}
+      {title && (
+        <h1
+          class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading text-white"
+          set:html={title}
+        />
+      )}
+      <div class="max-w-3xl mx-auto">
+        {subtitle && <p class="text-xl text-white mb-6" set:html={subtitle} />}
+        {actions && (
+          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 mb-8">
+            {Array.isArray(actions) ? (
+              actions.map((action) => (
+                <div class="flex w-full sm:w-auto">
+                  <Button {...(action || {})} class="w-full sm:mb-0" />
+                </div>
+              ))
+            ) : (
+              <Fragment set:html={actions} />
+            )}
+          </div>
+        )}
+        {anchorId && (
+          <div class="mt-12 flex justify-center">
+            <a 
+              href={`#${anchorId}`} 
+              class="js-scroll bg-transparent hover:bg-white/10 text-white rounded-full p-3 transition-all duration-300 transform hover:translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 focus:ring-opacity-75" 
+              aria-label="Scroll to content below"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        )}
+      </div>
+      {content && <Fragment set:html={content} />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  section {
+    height: 100vh;
+    height: 100dvh;
+  }
+  
+  section.header-calculated {
+    height: var(--calculated-height);
+  }
+  
+  .slideshow-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--xfade-ms, 0ms) ease;
+    pointer-events: none;
+  }
+  
+  .slideshow-image.active { 
+    opacity: 1; 
+  }
+  
+  .slideshow-image.will-change { 
+    will-change: opacity; 
+  }
+  
+  .caption-overlay {
+    max-width: 90%;
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Focus styles for keyboard navigation */
+  section:focus {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .slideshow-image { 
+      transition-duration: 0ms !important; 
+    }
+    .caption-overlay { 
+      transition-duration: 0ms !important; 
+    }
+  }
+</style>
+
+<script define:vars={{ scriptData }}>
+  // Destructure script data
+  const { imageDuration, baseId, crossfadeMs, imageCaptions, imageAlts, totalImages } = scriptData;
+  
+  // State management
+  let currentImageIndex = 0;
+  let timer;
+  let running = false;
+  let isPausedByUser = false;
+  let pauseTimeout;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+  let hasScrolled = false;
+  
+  // Performance: Cache DOM elements
+  let cachedRoot = null;
+  let cachedImages = null;
+  let cachedCaptionElement = null;
+  let cachedAnnouncerElement = null;
+  let cachedHeader = null;
+  
+  // Observers
+  let visibilityHandler;
+  let intersectionObserver;
+  let resizeObserver;
+  let mutationObserver;
+  let imageIntersectionObserver;
+  
+  // Cleanup tracking
+  let eventCleanupFunctions = [];
+
+  // Cached DOM getters
+  function getRoot() {
+    if (!cachedRoot) {
+      cachedRoot = document.getElementById(baseId);
+    }
+    return cachedRoot;
+  }
+
+  function getImages() {
+    if (!cachedImages) {
+      const root = getRoot();
+      cachedImages = root ? Array.from(root.querySelectorAll('.slideshow-image')) : [];
+    }
+    return cachedImages;
+  }
+
+  function getCaptionElement() {
+    if (!cachedCaptionElement) {
+      cachedCaptionElement = document.getElementById(`${baseId}-caption`);
+    }
+    return cachedCaptionElement;
+  }
+
+  function getAnnouncerElement() {
+    if (!cachedAnnouncerElement) {
+      cachedAnnouncerElement = document.getElementById(`${baseId}-announcer`);
+    }
+    return cachedAnnouncerElement;
+  }
+
+  // Check if user prefers reduced motion
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // Announce slide changes to screen readers
+  function announceSlideChange() {
+    const announcer = getAnnouncerElement();
+    if (!announcer) return;
+
+    const slideNumber = currentImageIndex + 1;
+    const slideAlt = imageAlts[currentImageIndex] || '';
+    const slideCaption = imageCaptions[currentImageIndex] || '';
+    
+    let announcement = `Slide ${slideNumber} of ${totalImages}`;
+    if (slideCaption) {
+      announcement += `: ${slideCaption}`;
+    } else if (slideAlt && slideAlt !== 'Slideshow image') {
+      announcement += `: ${slideAlt}`;
+    }
+    
+    announcer.textContent = announcement;
+  }
+
+  // Update combined caption and counter
+  function updateCaptionAndCounter() {
+    const captionElement = getCaptionElement();
+    if (!captionElement) return;
+
+    const currentCaption = imageCaptions[currentImageIndex];
+    const captionText = captionElement.querySelector('.caption-text');
+    const counterText = captionElement.querySelector('.counter-text');
+    
+    if (counterText) {
+      counterText.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+    }
+    
+    if (captionText) {
+      captionText.textContent = currentCaption || '';
+    }
+
+    // Show overlay when paused (always show counter, caption only if exists)
+    if (isPausedByUser) {
+      captionElement.style.opacity = '1';
+    } else {
+      captionElement.style.opacity = '0';
+    }
+  }
+
+  // Optimized image decoding with error handling
+  function decodeIfNeeded(img) {
+    if (!img) return Promise.resolve();
+    
+    return new Promise((resolve) => {
+      if (img.complete) {
+        resolve();
+        return;
+      }
+      
+      const onLoad = () => {
+        img.removeEventListener('load', onLoad);
+        img.removeEventListener('error', onError);
+        if (typeof img.decode === 'function') {
+          img.decode().then(resolve).catch(resolve);
+        } else {
+          resolve();
+        }
+      };
+      
+      const onError = () => {
+        img.removeEventListener('load', onLoad);
+        img.removeEventListener('error', onError);
+        resolve();
+      };
+      
+      img.addEventListener('load', onLoad, { once: true });
+      img.addEventListener('error', onError, { once: true });
+    });
+  }
+
+  // Clean up will-change property after transition
+  function cleanupWillChange(element) {
+    if (element && crossfadeMs > 0) {
+      setTimeout(() => {
+        element.classList.remove('will-change');
+      }, crossfadeMs + 50);
+    }
+  }
+
+  async function showIndex(index) {
+    const images = getImages();
+    if (images.length === 0) return;
+
+    const nextIndex = ((index % images.length) + images.length) % images.length;
+    const current = images[currentImageIndex];
+    const next = images[nextIndex];
+
+    // Preload next image
+    await decodeIfNeeded(next);
+
+    requestAnimationFrame(() => {
+      if (next) {
+        next.classList.add('active', 'will-change');
+        cleanupWillChange(next);
+      }
+      if (current) {
+        current.classList.add('will-change');
+        cleanupWillChange(current);
+      }
+      
+      requestAnimationFrame(() => {
+        if (current) current.classList.remove('active');
+        currentImageIndex = nextIndex;
+        
+        // Update all UI elements
+        updateCaptionAndCounter();
+        announceSlideChange();
+      });
+    });
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    const images = getImages();
+    if (images.length <= 1) return;
+    
+    timer = setTimeout(async () => {
+      await showIndex(currentImageIndex + 1);
+      if (running && !isPausedByUser) schedule();
+    }, imageDuration);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    
+    // Don't auto-advance if user prefers reduced motion
+    if (!isPausedByUser && !prefersReducedMotion()) {
+      schedule();
+    }
+  }
+
+  function stop() {
+    running = false;
+    clearTimeout(timer);
+  }
+
+  function pauseSlideshow() {
+    if (isPausedByUser) return;
+    isPausedByUser = true;
+    clearTimeout(timer);
+    updateCaptionAndCounter();
+  }
+
+  function resumeSlideshow() {
+    if (!isPausedByUser) return;
+    isPausedByUser = false;
+    updateCaptionAndCounter();
+    
+    // Don't resume if user prefers reduced motion
+    if (prefersReducedMotion()) return;
+    
+    if (running) {
+      schedule();
+    }
+  }
+
+  // Navigate to specific slide
+  function goToSlide(index) {
+    const images = getImages();
+    if (index >= 0 && index < images.length && index !== currentImageIndex) {
+      showIndex(index);
+    }
+  }
+
+  // Keyboard navigation with hold behavior
+  function setupKeyboardControls() {
+    const root = getRoot();
+    if (!root) return;
+
+    let spacePressed = false;
+    let arrowPressed = false;
+
+    const handleKeyDown = (e) => {
+      // Only handle if the slideshow or its children have focus
+      if (!root.contains(e.target) && e.target !== root) return;
+      
+      switch (e.key) {
+        case ' ':
+        case 'Spacebar':
+          e.preventDefault();
+          if (!spacePressed) {
+            spacePressed = true;
+            pauseSlideshow();
+          }
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          e.preventDefault();
+          if (!arrowPressed) {
+            arrowPressed = true;
+            pauseSlideshow();
+            const prevIndex = currentImageIndex === 0 ? totalImages - 1 : currentImageIndex - 1;
+            goToSlide(prevIndex);
+          }
+          break;
+        case 'ArrowRight':
+        case 'ArrowDown':
+          e.preventDefault();
+          if (!arrowPressed) {
+            arrowPressed = true;
+            pauseSlideshow();
+            const nextIndex = (currentImageIndex + 1) % totalImages;
+            goToSlide(nextIndex);
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          pauseSlideshow();
+          goToSlide(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          pauseSlideshow();
+          goToSlide(totalImages - 1);
+          break;
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      switch (e.key) {
+        case ' ':
+        case 'Spacebar':
+          e.preventDefault();
+          if (spacePressed) {
+            spacePressed = false;
+            resumeSlideshow();
+          }
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'ArrowRight':
+        case 'ArrowDown':
+          e.preventDefault();
+          if (arrowPressed) {
+            arrowPressed = false;
+            resumeSlideshow();
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+    
+    eventCleanupFunctions.push(() => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
+    });
+  }
+
+  // Click and hold behavior for mouse and touch
+  function setupUserInteractionPause() {
+    const root = getRoot();
+    if (!root) return;
+
+    let isPointerDown = false;
+
+    const handlePointerDown = (e) => {
+      // Prevent default only for touch to avoid scroll interference
+      if (e.type === 'touchstart') {
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        hasScrolled = false;
+      }
+      
+      isPointerDown = true;
+      pauseSlideshow();
+    };
+
+    const handlePointerMove = (e) => {
+      if (!isPointerDown) return;
+      
+      // Only check for scrolling on touch events
+      if (e.type === 'touchmove') {
+        const currentY = e.touches[0]?.clientY;
+        if (currentY === undefined) return;
+        
+        const deltaY = Math.abs(currentY - touchStartY);
+        
+        if (deltaY > 15) {
+          hasScrolled = true;
+          isPointerDown = false;
+          resumeSlideshow();
+        }
+      }
+    };
+
+    const handlePointerEnd = () => {
+      if (isPointerDown) {
+        isPointerDown = false;
+        resumeSlideshow();
+      }
+    };
+
+    const handlePointerLeave = () => {
+      if (isPointerDown) {
+        isPointerDown = false;
+        resumeSlideshow();
+      }
+    };
+
+    // Mouse events
+    root.addEventListener('mousedown', handlePointerDown);
+    root.addEventListener('mousemove', handlePointerMove);
+    root.addEventListener('mouseup', handlePointerEnd);
+    root.addEventListener('mouseleave', handlePointerLeave);
+    
+    // Touch events
+    root.addEventListener('touchstart', handlePointerDown, { passive: true });
+    root.addEventListener('touchmove', handlePointerMove, { passive: true });
+    root.addEventListener('touchend', handlePointerEnd, { passive: true });
+    root.addEventListener('touchcancel', handlePointerLeave, { passive: true });
+
+    // Store cleanup functions
+    eventCleanupFunctions.push(() => {
+      root.removeEventListener('mousedown', handlePointerDown);
+      root.removeEventListener('mousemove', handlePointerMove);
+      root.removeEventListener('mouseup', handlePointerEnd);
+      root.removeEventListener('mouseleave', handlePointerLeave);
+      root.removeEventListener('touchstart', handlePointerDown);
+      root.removeEventListener('touchmove', handlePointerMove);
+      root.removeEventListener('touchend', handlePointerEnd);
+      root.removeEventListener('touchcancel', handlePointerLeave);
+    });
+  }
+
+  // Debounced height calculation
+  let heightUpdateTimeout;
+  function debounceHeightUpdate(fn, delay = 150) {
+    clearTimeout(heightUpdateTimeout);
+    heightUpdateTimeout = setTimeout(fn, delay);
+  }
+
+  function observeHeaderOffset() {
+    const root = getRoot();
+    if (!root) return;
+
+    const updateHeight = () => {
+      // Cache header element
+      if (!cachedHeader) {
+        cachedHeader = document.querySelector('header') || 
+                      document.querySelector('[data-aw-sticky-header]') ||
+                      { getBoundingClientRect: () => ({ height: 76 }) }; // Fallback object
+      }
+      
+      let headerHeight = 0;
+      
+      if (cachedHeader && typeof cachedHeader.getBoundingClientRect === 'function') {
+        const rect = cachedHeader.getBoundingClientRect();
+        headerHeight = Math.ceil(rect.height || 76);
+      } else {
+        headerHeight = 76; // Fallback
+      }
+      
+      const viewportHeight = window.innerHeight;
+      const calculatedHeight = Math.max(viewportHeight - headerHeight, 300);
+      
+      // Only update if height actually changed
+      const currentHeight = root.style.getPropertyValue('--calculated-height');
+      const newHeight = `${calculatedHeight}px`;
+      
+      if (currentHeight !== newHeight) {
+        root.style.setProperty('--calculated-height', newHeight);
+        root.classList.add('header-calculated');
+      }
+    };
+
+    const debouncedUpdate = () => debounceHeightUpdate(updateHeight);
+
+    // Initial update with multiple attempts
+    const scheduleUpdate = () => {
+      updateHeight();
+      setTimeout(updateHeight, 100);
+      setTimeout(updateHeight, 500);
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleUpdate();
+    } else {
+      window.addEventListener('load', scheduleUpdate, { once: true });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', scheduleUpdate, { once: true });
+      }
+    }
+
+    // Observe header changes
+    if (cachedHeader && cachedHeader !== window && window.ResizeObserver) {
+      resizeObserver = new ResizeObserver(debouncedUpdate);
+      resizeObserver.observe(cachedHeader);
+    }
+
+    // Window resize
+    window.addEventListener('resize', debouncedUpdate);
+    eventCleanupFunctions.push(() => {
+      window.removeEventListener('resize', debouncedUpdate);
+    });
+
+    // Header attribute changes
+    if (cachedHeader && cachedHeader !== window && window.MutationObserver) {
+      mutationObserver = new MutationObserver(debouncedUpdate);
+      mutationObserver.observe(cachedHeader, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+    }
+  }
+
+  // Lazy loading for non-visible slides
+  function setupLazyLoading() {
+    if (!('IntersectionObserver' in window)) return;
+
+    const images = getImages();
+    
+    imageIntersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          // Preload next and previous images when current is visible
+          const slideIndex = parseInt(img.dataset.slideIndex, 10);
+          const nextIndex = (slideIndex + 1) % images.length;
+          const prevIndex = slideIndex === 0 ? images.length - 1 : slideIndex - 1;
+          
+          // Decode current, next, and previous
+          Promise.all([
+            decodeIfNeeded(images[slideIndex]),
+            decodeIfNeeded(images[nextIndex]),
+            decodeIfNeeded(images[prevIndex])
+          ]);
+          
+          imageIntersectionObserver.unobserve(img);
+        }
+      });
+    }, { rootMargin: '50px' });
+
+    // Observe all images
+    images.forEach(img => {
+      imageIntersectionObserver.observe(img);
+    });
+  }
+
+  function setupVisibilityPause() {
+    visibilityHandler = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+    document.addEventListener('visibilitychange', visibilityHandler);
+    eventCleanupFunctions.push(() => {
+      document.removeEventListener('visibilitychange', visibilityHandler);
+    });
+  }
+
+  function setupIntersectionGate() {
+    const root = getRoot();
+    if (!root || !('IntersectionObserver' in window)) {
+      start();
+      return;
+    }
+    
+    intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.target !== root) return;
+        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+          start();
+        } else {
+          stop();
+        }
+      });
+    }, { root: null, threshold: 0.1 });
+    
+    intersectionObserver.observe(root);
+  }
+
+  // Comprehensive cleanup
+  function cleanup() {
+    stop();
+    isPausedByUser = false;
+    clearTimeout(pauseTimeout);
+    clearTimeout(heightUpdateTimeout);
+    
+    // Clean up all event listeners
+    eventCleanupFunctions.forEach(fn => fn());
+    eventCleanupFunctions = [];
+    
+    // Clean up observers
+    if (intersectionObserver) {
+      intersectionObserver.disconnect();
+      intersectionObserver = null;
+    }
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
+    }
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      mutationObserver = null;
+    }
+    if (imageIntersectionObserver) {
+      imageIntersectionObserver.disconnect();
+      imageIntersectionObserver = null;
+    }
+    
+    // Clear cached elements
+    cachedRoot = null;
+    cachedImages = null;
+    cachedCaptionElement = null;
+    cachedAnnouncerElement = null;
+    cachedHeader = null;
+  }
+
+  // Listen for reduced motion preference changes
+  function setupMotionPreference() {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    const handleMotionChange = () => {
+      if (mediaQuery.matches) {
+        // Stop auto-advance but keep manual navigation
+        stop();
+      } else if (!isPausedByUser) {
+        // Resume auto-advance if not manually paused
+        start();
+      }
+    };
+    
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleMotionChange);
+      eventCleanupFunctions.push(() => {
+        mediaQuery.removeEventListener('change', handleMotionChange);
+      });
+    }
+  }
+
+  function init() {
+    const images = getImages();
+    if (images.length === 0) return;
+
+    // Initialize first slide
+    currentImageIndex = 0;
+    
+    // Preload first few images
+    Promise.all([
+      decodeIfNeeded(images[0]),
+      images[1] ? decodeIfNeeded(images[1]) : Promise.resolve()
+    ]).then(() => {
+      // Initialize UI
+      updateCaptionAndCounter();
+      announceSlideChange();
+      
+      // Setup all functionality
+      setupIntersectionGate();
+      setupVisibilityPause();
+      setupUserInteractionPause();
+      setupKeyboardControls();
+      setupLazyLoading();
+      setupMotionPreference();
+    });
+    
+    // Start height observation immediately
+    observeHeaderOffset();
+    
+    // Setup cleanup on page unload
+    window.addEventListener('pagehide', cleanup, { once: true });
+    window.addEventListener('beforeunload', cleanup, { once: true });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+</script>

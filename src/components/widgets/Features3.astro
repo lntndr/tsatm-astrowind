@@ -1,6 +1,5 @@
 ---
 import Headline from '~/components/ui/Headline.astro';
-import ItemGrid from '~/components/ui/ItemGrid.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
 import type { Features as Props } from '~/types';
@@ -26,45 +25,65 @@ const {
 <WidgetWrapper
   id={id}
   isDark={isDark}
-  containerClass={`${isBeforeContent ? 'md:pb-8 lg:pb-12' : ''} ${isAfterContent ? 'pt-0 md:pt-0 lg:pt-0' : ''} ${
+  containerClass={`max-w-6xl mx-auto ${isBeforeContent ? 'md:pb-8 lg:pb-12' : ''} ${isAfterContent ? 'pt-0 md:pt-0 lg:pt-0' : ''} ${
     classes?.container ?? ''
   }`}
   bg={bg}
 >
   <Headline title={title} subtitle={subtitle} tagline={tagline} classes={classes?.headline as Record<string, string>} />
 
-  <div aria-hidden="true" class="aspect-w-16 aspect-h-7">
-    {
-      image && (
-        <div class="w-full h-80 object-cover rounded-xl mx-auto bg-gray-500 shadow-lg">
-          {typeof image === 'string' ? (
-            <Fragment set:html={image} />
-          ) : (
-            <Image
-              class="w-full h-80 object-cover rounded-xl mx-auto bg-gray-500 shadow-lg"
-              width="auto"
-              height={320}
-              widths={[400, 768]}
-              layout="fullWidth"
-              {...image}
-            />
-          )}
+  {image && (
+    <div class="mb-8 md:mb-12">
+      <div class="aspect-w-16 aspect-h-7 rounded-xl overflow-hidden shadow-lg">
+        {typeof image === 'string' ? (
+          <div set:html={image} class="w-full h-full object-cover" />
+        ) : (
+          <Image
+            class="w-full h-full object-cover"
+            width="auto"
+            height={320}
+            widths={[400, 768, 1200]}
+            layout="fullWidth"
+            {...image}
+          />
+        )}
+      </div>
+    </div>
+  )}
+
+  <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+    {items.map(({ title, description, icon }, index) => {
+      const colorVariants = [
+        'border-[#e53c3c]/30 hover:border-[#e53c3c] [&_.icon]:text-[#e53c3c]/70 hover:[&_.icon]:text-[#e53c3c]',
+        'border-[#f9e40a]/30 hover:border-[#f9e40a] [&_.icon]:text-[#f9e40a]/70 hover:[&_.icon]:text-[#f9e40a]', 
+        'border-[#7879b9]/30 hover:border-[#7879b9] [&_.icon]:text-[#7879b9]/70 hover:[&_.icon]:text-[#7879b9]',
+        'border-[#b82f92]/30 hover:border-[#b82f92] [&_.icon]:text-[#b82f92]/70 hover:[&_.icon]:text-[#b82f92]',
+      ];
+      const colorClass = colorVariants[index % colorVariants.length];
+      
+      return (
+        <div class={`break-inside-avoid p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600 bg-white dark:bg-slate-800 hover:shadow-2xl transition-all duration-300 border-l-4 ${colorClass}`}>
+          <div class="flex items-start space-x-3">
+            {icon && (
+              <div class="flex-shrink-0 mt-1">
+                {typeof icon === 'string' ? (
+                  <Fragment set:html={icon} />
+                ) : (
+                  <icon.name class="w-6 h-6 icon drop-shadow-sm transition-colors duration-300" />
+                )}
+              </div>
+            )}
+            <div class="flex-1 min-w-0">
+              {title && (
+                <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-white">{title}</h3>
+              )}
+              {description && (
+                <p class="text-muted leading-relaxed">{description}</p>
+              )}
+            </div>
+          </div>
         </div>
       )
-    }
+    })}
   </div>
-
-  <ItemGrid
-    items={items}
-    columns={columns}
-    defaultIcon={defaultIcon}
-    classes={{
-      container: 'mt-12',
-      panel: 'max-w-full sm:max-w-md',
-      title: 'text-lg font-semibold',
-      description: 'mt-0.5',
-      icon: 'flex-shrink-0 mt-1 text-primary w-6 h-6',
-      ...((classes?.items as object) ?? {}),
-    }}
-  />
 </WidgetWrapper>

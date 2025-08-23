@@ -1,0 +1,29 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+import febbreImage from '~/assets/images/studenti_opere/febbre3_fenili.jpg';
+---
+
+<Content
+  id='ilgioco'
+  title="Il biennio"
+  image={{
+    src: febbreImage,
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Matteo Fenili"
+>
+  <Fragment slot="content">
+    <PortraTitle tagline="primo anno" title="ILGIOCO"/>
+    <p>Nausicaa Giulia Bianchi ha deciso di chiamare il primo anno ILGIOCO pensando all’artista Luciano Fabro che esortava a «Giocare come i gatti, con le unghie di fuori». Giocare sul serio è un passaggio fondamentale e lo scopo del primo anno è quello di allenare i partecipanti al rischio creativo, alla ricerca artistica e intellettuale.
+    </p>
+    <p>Cos’è l’autorialità? Abbandonate formule e mode, non basta dirsi che vogliamo essere originali, occorre costruire una propria visione e un proprio linguaggio, passo a passo, tramite studio, esperienza e continue revisioni insieme.
+    </p>
+    <p><span class="highlighter">Dobbiamo costruire il fotografo in voi</span>, ancora prima delle sue foto. Come ci si muove nel mondo? Come entrare in casa delle persone? Come costruire relazioni? Come trovare una storia da raccontare? Analizzeremo quindi le azioni del fotografo, il suo punto di vista, l’intimità che riesce a costruire con un luogo o con una persona. Approfondiremo moltissimo la composizione, lo stile, il processo creativo, la storia della fotografia. <span class="highlighter">Saper leggere e comprendere le immagini è un prerequisito fondamentale</span> per poter costruire la consapevolezza di cosa facciamo come fotografi. Approfondiremo cosa significa lavorare in modo realmente concettuale – lontano da approcci superficiali – e, con il procedere del percorso, il lavoro di ciascuno diventerà sempre più personale grazie a “giochi” individuali mirati. L’anno si conclude con un workshop intenso ed emotivamente coinvolgente, interamente dedicato alla persona e alle storie della sua vita.
+    </p>
+    <p>Il percorso TSATM vuole andare al di là della separazione dei generi fotografici, una tendenza comune alla maggior parte degli autori fine-art dell’ultima generazione: ci occuperemo di <span class="highlighter">esplorare e rafforzare tutti i generi necessari per fare fotografia del reale, e in particolare il ritratto e il paesaggio fine-art</span>. Un corso si occuperà anche di esplorare la fotografia in modo multidisciplinare: come interagire con le foto attraverso collage, disegno o l’aggiunta di testo.
+    </p>
+    <p>Ci sono anche due corsi di supporto: storia e filosofia della fotografia e tecnica fotografica per fotografi fine-art, con un forte incoraggiamento ad esplorare la fotografia analogica.
+    </p>
+  </Fragment>
+</Content>

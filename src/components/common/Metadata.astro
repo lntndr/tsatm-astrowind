@@ -14,6 +14,8 @@ export interface Props extends MetaData {
   dontUseTitleTemplate?: boolean;
 }
 
+const isDevBranch = import.meta.env.DEPLOY_BRANCH === 'development';
+
 const {
   title,
   ignoreTitleTemplate = false,
@@ -23,6 +25,9 @@ const {
   openGraph = {},
   twitter = {},
 } = Astro.props;
+
+const forceNoIndex = isDevBranch ? true : (typeof robots?.index !== 'undefined' ? !robots.index : undefined);
+const forceNoFollow = isDevBranch ? true : (typeof robots?.follow !== 'undefined' ? !robots.follow : undefined);
 
 const seoProps: AstroSeoProps = merge(
   {
@@ -56,8 +61,8 @@ const seoProps: AstroSeoProps = merge(
     title: title,
     titleTemplate: ignoreTitleTemplate ? '%s' : undefined,
     canonical: canonical,
-    noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
-    nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
+    noindex: forceNoIndex,
+    nofollow: forceNoFollow,
     description: description,
     openGraph: { url: canonical, ...openGraph },
     twitter: twitter,

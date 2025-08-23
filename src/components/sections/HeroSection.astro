@@ -1,0 +1,21 @@
+---
+import SlideHero from '~/components/widgets/SlideHero.astro';
+import { slideshowImages } from '~/assets/images/slideshow/config';
+---
+
+<SlideHero
+  anchorId="cos-e"
+  title="THE SOUL AND THE MACHINE"
+  subtitle="Programma biennale di fotografia autoriale"
+  slideshow={{
+    images: slideshowImages,
+    folder: 'slideshow',
+    duration: 500
+  }}
+>
+  <Fragment slot="subtitle">
+    <span class="inline">
+      Programma biennale di fotografia autoriale
+    </span>
+  </Fragment>
+</SlideHero>

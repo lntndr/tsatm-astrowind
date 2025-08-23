@@ -1,0 +1,112 @@
+---
+import Testimonials3 from '~/components/widgets/Testimonials3.astro';
+import gallianoImage from '~/assets/images/studenti_ritratti/galliano.jpg';
+import sistoImage from '~/assets/images/studenti_ritratti/sisto.jpg';
+import criaraImage from '~/assets/images/studenti_ritratti/criara.jpg';
+import figliuzziImage from '~/assets/images/studenti_ritratti/figliuzzi.jpg';
+import massazzaImage from '~/assets/images/studenti_ritratti/massazza.jpg';
+import prolaImage from '~/assets/images/studenti_ritratti/prola.jpg';
+import zanichelliImage from '~/assets/images/studenti_ritratti/zanichelli.jpg';
+import buscagliaImage from '~/assets/images/studenti_ritratti/buscaglia.jpg';
+import bertolasiImage from '~/assets/images/studenti_ritratti/bertolasi.jpg';
+import patriziaImage from '~/assets/images/studenti_ritratti/patrizia.jpg';
+
+const testimonials = [
+  {
+    testimonial: `A volte, quando sei un professionista, arrivi a un punto in cui ciò che hai costruito sembra sottrarti l’energia creativa. Senti il bisogno di tornare a quel fuoco che ti ha fatto iniziare, a un approccio in cui la fotografia nasceva da una relazione con le persone e con il mondo, e non solo da una performance lavorativa. TSATM ti prende per mano e ti apre a nuove prospettive e riflessioni. Passo dopo passo, si prende cura di quella scintilla, aiutandoti a scoprire non solo che quel fuoco è ancora lì, pronto a bruciare, ma che è più grande e vivo che mai. IL GIOCO è un percorso intenso, ma in un ambiente protetto e sicuro, in cui sei stimolato a provare, sbagliare, analizzare, studiare, crescere e ripartire ogni volta con più intenzionalità. È il luogo in cui, finalmente, puoi prenderti il tempo per aver cura del fotografo che sogni di diventare.`,
+    name: 'Michael',
+    job: '@michaelbertolasi',
+    image: {
+      src: bertolasiImage,
+      alt: 'Foto di Michael Bertolasi',
+    },
+  },
+  {
+    testimonial: `Un corso che non è un semplice corso. TSATM è un’esperienza formativa totalizzante: si studia molto, si lavora molto… ma si impara ancora di più. In pochi mesi ha rivoluzionato il mio modo di guardare, di pensare e di fotografare. Ogni lezione è una miniera di stimoli, approfondimenti, cultura fotografica (e non solo). Finalmente ho trovato un luogo in cui la mia sete di sapere è stata non solo accolta, ma soddisfatta pienamente. Questo  percorso mi sta cambiando la vita come fotografa: oggi osservo il mondo con occhi nuovi, più consapevoli, più affamati. È un viaggio impegnativo non lo nego, ma ne vale la pena ogni singolo istante. Consigliato a chi non cerca scorciatoie, ma trasformazioni vere.`,
+    name: 'Patrizia',
+    job: '@ondaparacelso',
+    image: {
+      src: patriziaImage,
+      alt: 'Foto di Patrizia',
+    },
+  },
+  {
+    testimonial: `Ho frequentato moltissimi corsi ma il percorso di ngb è diverso da tutti per serietà, profondità, intensità e ricchezza dei contenuti. I docenti sono super preparati, generosi, molto disponibili e sempre propositivi. Le lezioni online sono strutturate molto bene e la presenza del tutor completa l'opera. <br> L'impegno è consistente, c'è tanto da studiare e da lavorare, non è un "corsettino" serale da frequentare come passatempo ma un vero master che tocca e approfondisce moltissimi aspetti della fotografia e non solo.`,
+    name: 'Patrizia',
+    job: '@patriziagallianofotografa',
+    image: {
+      src: gallianoImage,
+      alt: 'Foto di Patrizia Galliano',
+    },
+  },
+  {
+    testimonial: `Durante le lezioni de ILGIOCO mi sono sempre sentita in uno spazio sicuro nel quale esprimermi liberamente e senza filtri, senza giudizi ma solo consigli e confronto costruttivo. <br> Le lezioni di ngb hanno un fuoco dentro, alimentato dalla eterogeneità della sua cultura e del suo sapere. Non è solo fotografia; è arte, politica, musica, filosofia e così via. <br> Credo che ILGIOCO sia un'esperienza formativa validissima per chiunque voglia ascoltare il suo "bisogno" di espressione. <br> Il metodo di ngb ed il percorso che traccia ti insegnano a cercare uno sguardo più attento ed attivo sul mondo e sulle nostre passioni. Ascoltare ed ascoltarsi prima di guardare.`,
+    name: 'Nicla',
+    job: '@niclasisto',
+    image: {
+      src: sistoImage,
+      alt: 'Foto di Nicla Sisto',
+    },
+  },
+  {
+    testimonial: `Viviamo in un mondo di stereotipi, li respiriamo, li beviamo, li consumiamo, spesso senza esserne consapevoli. Ma c'è anche un altro tipo di mondo, quello che ho trovato a ILGIOCO, che non omologa, ma anzi, incoraggia a tirare fuori la poesia che ognuno di noi ha dentro, e che quando esce è potentissima. Ti insegna a vederla in te e negli altri, a nutrirla e a condividerla. Ti insegna a darti il permesso di tirarla fuori, di rischiare, di fallire. Si chiama libertà. Quando guardi le mostre non sono più le stesse, le tue foto non sono più le stesse, inizi a guardarti in giro con un'altra consapevolezza. Cose di cui, soprattutto oggi, c'è un terribile bisogno.`,
+    name: 'Silvia',
+    job: '@silvia_criara',
+    image: {
+      src: criaraImage,
+      alt: 'Foto di Silvia Criara',
+    },
+  },
+  {
+    testimonial: `Camus ha osservato che "gli unici che possono aiutare l'artista nella sua ostinata ricerca sono coloro che amano e coloro che, essi stessi amatori e creatori, trovano nella propria passione la misura delle proprie passioni." <br> Un percorso UNICO che ha reso più sincero il mio sguardo liberandomi dalle trappole mentali, dalle barriere, dagli stereotipi ... ILGIOCO che mi ha fatto riscoprire la libertà e mi ha aperta all'ascolto intimo affinché quella voce, ancora solo sussurrata che bussa forte dentro me, riescisse a venire fuori. <br> Ma soprattutto il cammino insieme ad una insegnante che come poche sa "imprimere un segno" e donarsi con generosità ai propri studenti.`,
+    name: 'Serafina',
+    job: '@serafina_figliuzziphoto',
+    image: {
+      src: figliuzziImage,
+      alt: 'Foto di Serafina Figliuzzi',
+    },
+  },
+  {
+    testimonial:`Non sempre il talento fotografico si accompagna al dono della comunicazione. Nella trasmissione di una conoscenza, l'esperienza professionale e il curriculum artistico dovrebbero dare spazio a una capacità didattica almeno di pari peso. Questo è proprio ciò che accade frequentando i corsi di Nausicaa Giulia Bianchi: ha il dono di saper affrontare gli argomenti con una profondità particolare, in ogni istante dimostra da una parte una conoscenza enciclopedica dell'argomento e dall'altra un amore sviscerato per la materia fotografica, frequentata quotidianamente con sacro furore. Un fare fotografico che esprime un amore sviscerato per l'essere umano e che fa si che l'esperienza didattica con ngb sia soprattutto un'esperienza di umanità fuori dal comune.`,
+    name: 'Adolfo',
+    job: '@sonicreducer62',
+    image: {
+      src: massazzaImage,
+      alt: 'Foto di Adolfo Massazza',
+    },
+  },
+  {
+    testimonial: `Mancano pochi mesi alla fine del biennio e, più avanzo, più mi rendo conto che questo percorso mi ha messa di fronte a qualcosa che eccede la misura, e questo qualcosa è l’arte. Un’esperienza che mi ha messo in crisi, ma che, proprio per questo, ha aperto. TSATM è stato da subito per me una catarsi: un incontro autentico con il reale, senza censure, per capire cosa ho da dare e da dire. Mi ha chiesto ascolto, pazienza, umiltà, coraggio, costanza, fiducia, gestione del fallimento, speranza; e mi ha donato un nuovo linguaggio, sostegno, condivisione, senso di appartenenza. In queste parole di Rainer Maria Rilke ritrovo la sintesi di ciò che è: “Le opere d'arte sono sempre il frutto dell'essere stati in pericolo, dell'essersi spinti, in un'esperienza, fino al limite estremo oltre il quale nessuno può andare”. TSATM mi ha insegnato che prima c'è la ricerca, lo studio, l'interrogazione, e poi arriva il lavoro: lento, profondo, capace di chiederti di perdere l’orientamento per trovarne uno nuovo. È uno spazio che mi ha dato la possibilità di trovare una comunità viva, composta da sguardi diversi, capaci di ascoltarsi: una casa vera, non sempre comoda, perché necessaria alla crescita.`,
+    name: 'Elena',
+    job: '@elenaprola',
+    image: {
+      src: prolaImage,
+      alt: 'Foto di Elena Prola',
+    },
+  },
+  {
+    testimonial: `Vi avevo già scritto tempo fa, ringraziandovi con stupore perché avevo aspettative davvero molto alte, e le avete travolte. E non tanto per la qualità delle lezioni di ogni docente, per l'abbondanza di materiale video, audio, testuale, quanto piuttosto per la sensazione di estrema cura e attenzione per le persone, che si percepisce anche a partire da come è stato composto un gruppo eterogeneo in cui ci sia la possibilità di arricchirsi a vicenda, fino ad arrivare ai percorsi di approfondimento con stimoli personalizzati o a come sono stati trattati temi apparentemente slegati dalla fotografia, per es. la vergogna o il permesso. <br>"Ci prendiamo cura del fotografo" è scritto sul sito, e non solo quando fotografa, aggiungerei. <br> Sento di crescere, come fotografo e come persona, è una sensazione molto bella.`,
+    name: 'Emiliano',
+    job: '@emilianozanichelli',
+    image: {
+      src: zanichelliImage,
+      alt: 'Foto di Emiliano Zanichelli',
+    },
+  },
+  {
+    testimonial: `A volte non pensiamo che chi ha vissuto prima di noi ha dato un nome alle cose e alle azioni per distinguerle, per dare delle coordinate a chi veniva dopo. <br> Esistono per questo due verbi: vedere e guardare, non sono la stessa cosa. <br> Entrambe sono azioni con la vista ma la prima è inconsapevole: chiunque abbia due occhi sani può vedere il mondo. Guardare invece è uno sguardo diverso, curioso. un qualcosa che, nel mare delle immagini che ogni giorno violentano i nostri occhi, riporta all'atto lento della meditazione, del pensiero. Avere la fortuna d'imparare a guardare, di avere gli strumenti pratici per farlo, è uno scrigno meraviglioso. Per questo non ringrazierò mai abbastanza chi mi ha insegnato in questi anni la bellezza (sicuramente grazie a Nausicaa Giulia Bianchi) perché vedere il mondo con una luce diversa è una gioia che va condivisa.`,
+    name: 'Simona',
+    job: '@simona_buscaglia',
+    image: {
+      src: buscagliaImage,
+      alt: 'Foto di Simona Buscaglia',
+    },
+  },
+];
+---
+
+<Testimonials3
+  id="recensioni"
+  title="Recensioni"
+  testimonials={testimonials}
+/>

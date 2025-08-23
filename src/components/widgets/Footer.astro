@@ -20,17 +20,18 @@ export interface Props {
   secondaryLinks: Array<Link>;
   socialLinks: Array<Link>;
   footNote?: string;
+  photoCredits?: Array<Link>;
   theme?: string;
 }
 
-const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', photoCredits = [], theme = 'light' } = Astro.props;
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
   <div class="dark:bg-dark absolute inset-0 pointer-events-none" aria-hidden="true"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 dark:text-slate-300">
-    <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
-      <div class="col-span-12 lg:col-span-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 gap-y-6 sm:gap-4 pt-8 md:pt-12">
+      <div class="col-span-1">
         <div class="mb-2">
           <a class="inline-block font-bold text-xl" href={getHomePermalink()}>{SITE?.name}</a>
         </div>
@@ -51,7 +52,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
       </div>
       {
         links.map(({ title, links }) => (
-          <div class="col-span-6 md:col-span-3 lg:col-span-2">
+          <div class="col-span-1">
             <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
             {links && Array.isArray(links) && links.length > 0 && (
               <ul class="text-sm">
@@ -72,6 +73,24 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
         ))
       }
     </div>
+    {photoCredits && photoCredits.length > 0 && (
+      <div class="py-4">
+        <div class="text-sm mb-1">Le fotografie dello slideshow sono di:</div>
+        <div class="text-sm text-muted dark:text-gray-400 columns-2 sm:columns-3 gap-4 max-w-2xl">
+          {photoCredits.map(({ text, href }) => (
+            <div class="mb-1 break-inside-avoid">
+              {href ? (
+                <a href={href} class="hover:underline" target="_blank">
+                  <Fragment set:html={text} />
+                </a>
+              ) : (
+                <Fragment set:html={text} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
     <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
       {
         socialLinks?.length ? (

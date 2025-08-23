@@ -1,0 +1,32 @@
+---
+import Content from '~/components/widgets/Content.astro';
+import PortraTitle from '~/components/ui/PortraTitle.astro';
+import manuelaPodda from '~/assets/images/studenti_opere/manuelapodda.jpg';
+---
+
+<Content
+  id='organizzazione'
+  isAfterContent
+  image={{
+    src: manuelaPodda,
+    alt: 'Colorful Image',
+  }}
+  imageCredit="© Manuela Podda"
+  classes={{
+    imageOverlay: '',
+    imageOverlayText: ' text-primary text-lg'
+  }}
+>
+  <Fragment slot="content">
+    <PortraTitle title="Organizzazione"/>
+    <p>
+     Ogni anno scolastico si articola in tre trimestri, ciascuno composto da corsi tenuti da insegnanti diversi che lavorano in sinergia per la crescita individuale degli studenti. <span class="highlighter"> Nausicaa Giulia Bianchi è l’insegnante principale, coordina il percorso come un direttore d’orchestra</span>: ogni modulo è collocato al momento giusto, ogni corso è connesso agli altri, contribuendo a un programma coerente che permette di sviluppare competenze, affinare lo sguardo, esplorare nuove modalità espressive e trovare il proprio posto nella fotografia contemporanea.
+    </p>
+    <p>
+    Il percorso si svolge ogni anno da gennaio a novembre e richiede un impegno costante: circa <span class="highlighter">cinque sere al mese online, con lezioni in diretta il martedì e il mercoledì</span>  alle 18:30. La produzione fotografica mensile, chiamata “giochi”, è al centro del lavoro e prevede revisioni regolari. È un corso intensivo, che richiede tempo e continuità.
+    </p>
+    <p>
+    A questo si aggiungono centinaia di ore di lezioni registrate e materiali esclusivi di TSATM – dispense, approfondimenti, libri – che vanno a integrare il lavoro svolto in diretta. Ogni anno prevede inoltre <span class="highlighter">due workshop in presenza a Genova</span>, in primavera e in autunno.
+    </p>
+  </Fragment>
+</Content>

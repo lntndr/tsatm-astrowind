@@ -87,7 +87,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-[0.01rem] font-medium md:justify-center text-white "
       >
         {
-          links.map(({ text, href, links }) => (
+          links.map(({ text, shortText, href, links }) => (
             <li class={links?.length ? 'dropdown' : ''}>
               {links?.length ? (
                 <>
@@ -114,12 +114,19 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
               ) : (
                 <a
                   class:list={[
-                    'hover:text-link dark:hover:text-white px-4 py-3 flex items-center',
+                    'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
                     { 'aw-link-active': href === currentPath },
                   ]}
                   href={href}
                 >
-                  {text}
+                  {shortText ? (
+                    <>
+                      <span class="inline md:hidden lg:inline">{text}</span>
+                      <span class="hidden md:inline lg:hidden">{shortText}</span>
+                    </>
+                  ) : (
+                    text
+                  )}
                 </a>
               )}
             </li>
@@ -151,9 +158,23 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         {
           actions?.length ? (
             <span class="ml-4 rtl:ml-0 rtl:mr-4">
-              {actions.map((btnProps) => (
-                <Button {...btnProps} class="ml-2 py-2.5 px-5.5 md:px-6 font-semibold shadow-none text-sm w-auto" />
-              ))}
+              <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                {actions.map((btnProps) => (
+                  <Button
+                    {...btnProps}
+                    class="py-1.5 px-4 md:px-5 font-semibold shadow-none text-base w-auto rounded-md border-0 text-muted hover:text-black"
+                  >
+                    {btnProps.shortText ? (
+                      <>
+                        <span class="inline md:hidden lg:inline">{btnProps.text}</span>
+                        <span class="hidden md:inline lg:hidden">{btnProps.shortText}</span>
+                      </>
+                    ) : (
+                      btnProps.text
+                    )}
+                  </Button>
+                ))}
+              </div>
             </span>
           ) : (
             ''

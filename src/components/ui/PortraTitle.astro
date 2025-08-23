@@ -3,37 +3,78 @@ import type { Headline as Props } from '~/types';
 import { twMerge } from 'tailwind-merge';
 
 const {
-  title = await Astro.slots.render('title'),
-  subtitle = await Astro.slots.render('subtitle'),
+  title,
+  subtitle,
   tagline,
   classes = {},
+  gradientFrom,
+  gradientTo,
 } = Astro.props;
+
+const renderedTitle = title ?? await Astro.slots.render('title');
+const renderedSubtitle = subtitle ?? await Astro.slots.render('subtitle');
 
 const {
   container: containerClass = 'max-w-3xl',
   title: titleClass = 'text-3xl md:text-4xl',
   subtitle: subtitleClass = 'text-xl',
 } = classes;
+
+// Helper: Generate a darker version of a hex color
+function darkenHex(hex: string, amount: number = 0.2): string {
+  try {
+    const normalized = hex.replace(/^#/, '');
+    const num = parseInt(normalized, 16);
+
+    const r = Math.max(0, Math.floor(((num >> 16) & 0xff) * (1 - amount)));
+    const g = Math.max(0, Math.floor(((num >> 8) & 0xff) * (1 - amount)));
+    const b = Math.max(0, Math.floor((num & 0xff) * (1 - amount)));
+
+    return `#${[r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+  } catch {
+    return hex;
+  }
+}
+
+let backgroundImageStyle = '';
+let useDefaultGradient = true;
+
+if (gradientFrom && gradientTo) {
+  backgroundImageStyle = `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`;
+  useDefaultGradient = false;
+} else if (gradientFrom) {
+  const darker = darkenHex(gradientFrom);
+  backgroundImageStyle = `linear-gradient(to right, ${gradientFrom}, ${darker})`;
+  useDefaultGradient = false;
+}
 ---
 
-{(title || subtitle || tagline) && (
-  <div class={twMerge('max-w-full', containerClass)}>
+{(renderedTitle || renderedSubtitle || tagline) && (
+  <div class={twMerge('max-w-full pb-3', containerClass)}>
     {tagline && (
-      <p class=" px-2 text-base text-primary dark:text-blue-200 font-bold font-sans tracking-wide uppercase">{tagline}</p>
+      <p class="px-2 text-base text-primary dark:text-blue-200 font-bold font-sans tracking-wide uppercase">
+        {tagline}
+      </p>
     )}
-    <div class="inline-block max-w-full p-2 px-2 mb-1">
-      <h3
-        class={twMerge(
-          'inline-block font-bold font-heading text-heading text-3xl text-white',
-          'px-3 py-1 bg-gradient-to-r from-[#7879b9] to-[#b82f92]',
-          'whitespace-nowrap max-w-full',
-          titleClass
-        )}
-      >
-        {title}
-      </h3>
-    </div>
-    {subtitle && <p class={twMerge('mt-4 font-serif', subtitleClass)}>{subtitle}</p>}
+    {renderedTitle && (
+      <div class="inline-block max-w-full p-2 mb-1">
+        <h3
+          class={twMerge(
+            'inline-block font-bold font-heading text-heading text-3xl text-white',
+            'px-3 py-1 whitespace-nowrap max-w-full',
+            useDefaultGradient
+              ? 'bg-gradient-to-r from-[#7879b9] to-[#b82f92]'
+              : '', // don't apply tailwind gradient class when using custom style
+            titleClass
+          )}
+          style={!useDefaultGradient ? `background-image: ${backgroundImageStyle};` : undefined}
+        >
+          {renderedTitle}
+        </h3>
+      </div>
+    )}
+    {renderedSubtitle && (
+      <p class={twMerge('mt-4 font-serif', subtitleClass)}>{renderedSubtitle}</p>
+    )}
   </div>
 )}
-
