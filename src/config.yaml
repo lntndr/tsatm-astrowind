@@ -18,7 +18,7 @@ metadata:
   openGraph:
     site_name: The Soul and The Machine
     images:
-      - url: '~/assets/images/default.jpg'
+      - url: '~/assets/images/og-default.jpg'
         width: 1200
         height: 628
     type: website
