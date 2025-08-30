@@ -18,12 +18,12 @@ metadata:
   openGraph:
     site_name: The Soul and The Machine
     images:
-      - url: 'https://www.thesoulandthemachine.com/og-default.jpg'  # Use absolute URL
+      - url: 'https://www.thesoulandthemachine.com/og-default.webp'  # Use absolute URL
         width: 1200
         height: 630  # Standard OG ratio 1.91:1
         alt: 'The Soul and The Machine - Corso di fotografia'
-        type: 'image/jpeg'
-      - url: 'https://www.thesoulandthemachine.com/og-square.jpg'  # Square for some platforms
+        type: 'image/webp'
+      - url: 'https://www.thesoulandthemachine.com/og-square.webp'  # Square for some platforms
         width: 1080
         height: 1080
         alt: 'The Soul and The Machine - Corso di fotografia'
